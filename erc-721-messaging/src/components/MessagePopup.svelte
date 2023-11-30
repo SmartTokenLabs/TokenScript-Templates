@@ -25,13 +25,13 @@
 	let loading = true;
 	let error = '';
 
-	function tryToDecryptMessage(msg){
+	function tryToDecryptMessage(msg) {
 		if (!msg.encrypted) return msg;
 
-		if (!secret){
-			msg.messageDecoded = "Message Encoded and Missing Secret Key. Try to reload page."
+		if (!secret) {
+			msg.messageDecoded = 'Message Encoded and Missing Secret Key. Try to reload page.';
 		} else {
-			const bytes  = CryptoJS.AES.decrypt(msg.message, hexToAscii(secret));
+			const bytes = CryptoJS.AES.decrypt(msg.message, hexToAscii(secret));
 			msg.messageDecoded = bytes.toString(CryptoJS.enc.Utf8);
 		}
 		return msg;
@@ -43,18 +43,20 @@
 
 		try {
 			const result = await client.sendMessage(
-				secret ? CryptoJS.AES.encrypt(newMessageText, hexToAscii(secret)).toString() : newMessageText, 
-				friendId, 
+				secret
+					? CryptoJS.AES.encrypt(newMessageText, hexToAscii(secret)).toString()
+					: newMessageText,
+				friendId,
 				!!secret
 			);
-			
+
 			let t = web3.tokens.data.currentInstance;
-			result.receivingTokenId = friendId
-			result.sendingTokenId = t.tokenId
+			result.receivingTokenId = friendId;
+			result.sendingTokenId = t.tokenId;
 
 			messages = [...messages, tryToDecryptMessage(result)];
 			thread.messages = messages;
-			console.log(messages)
+			console.log(messages);
 			newMessageText = '';
 			scrollToBottom(true);
 			// console.log('Message sent: ', result);
@@ -75,7 +77,7 @@
 			return;
 		}
 		messages = await client.getMessageHistory(friendId);
-		messages = messages.map(tryToDecryptMessage)
+		messages = messages.map(tryToDecryptMessage);
 		thread.messages = messages;
 		thread.unread = 0;
 
@@ -211,10 +213,10 @@
 	.loader-modal-local {
 		position: absolute;
 		left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(2px);
-	        overflow: hidden;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		backdrop-filter: blur(2px);
+		overflow: hidden;
 	}
 </style>

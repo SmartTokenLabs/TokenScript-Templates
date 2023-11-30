@@ -1,27 +1,26 @@
 <script lang="ts">
 	import context from '../lib/context';
-	import {Token} from "../lib/types"
+	import { Token } from '../lib/types';
 
 	let token: Token;
 
 	context.data.subscribe((value) => {
-		if (value.token)
-			token = value.token;
+		if (value.token) token = value.token;
 	});
 </script>
 
 {#if token}
-<div class="cat-header">
-	<div>
-		<img alt="your NFT" class="nft-image" src={token.image_preview_url} />
-	</div>
-	<div class="cat-details">
-		<h2>{token.name}</h2>
-		<div class="cat-stats">
-			<div>NFT ID: {token.tokenId}</div>
+	<div class="cat-header">
+		<div>
+			<img alt="your NFT" class="nft-image" src={token.image_preview_url} />
+		</div>
+		<div class="cat-details">
+			<h2>{token.name}</h2>
+			<div class="cat-stats">
+				<div>NFT ID: {token.tokenId}</div>
+			</div>
 		</div>
 	</div>
-</div>
 {/if}
 
 <style>

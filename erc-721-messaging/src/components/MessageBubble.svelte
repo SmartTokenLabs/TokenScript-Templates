@@ -20,13 +20,14 @@
 		} else {
 			dateString = date.toLocaleTimeString();
 		}
-		
 	}
 </script>
 
 <div class="message-bubble {message.sendingTokenId == senderTokenId ? 'sender' : ''}">
 	<div class="message-content">
-		{message.messageDecoded ? message.messageDecoded : message.message}({message.encrypted ? "enc" : "raw"})
+		{message.messageDecoded ? message.messageDecoded : message.message}({message.encrypted
+			? 'enc'
+			: 'raw'})
 	</div>
 	<small class="message-meta">
 		{message.sendingTokenId == senderTokenId && message.read ? '✓ (seen) ' : ''}

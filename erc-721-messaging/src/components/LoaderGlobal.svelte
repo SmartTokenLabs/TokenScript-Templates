@@ -1,33 +1,31 @@
-
 <script lang="ts">
-    import { fade } from 'svelte/transition'
-    import { showLoader } from "../lib/storage"
+	import { fade } from 'svelte/transition';
+	import { showLoader } from '../lib/storage';
 </script>
 
 {#if $showLoader}
-<div class="loader-modal" transition:fade>
-    <div class="loader-container">
-        <div class="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-</div>
+	<div class="loader-modal" transition:fade>
+		<div class="loader-container">
+			<div class="lds-ring">
+				<div />
+				<div />
+				<div />
+				<div />
+			</div>
+		</div>
+	</div>
 {/if}
 
-
 <style lang="scss">
-    .loader-modal {
+	.loader-modal {
 		position: absolute;
 		left: 1px;
-        top: 1px;
-        width: calc(100% - 2px);
-        height: calc(100% - 2px);
-        backdrop-filter: blur(3px);
-        border-radius: 0.5rem;
-        overflow: hidden;
+		top: 1px;
+		width: calc(100% - 2px);
+		height: calc(100% - 2px);
+		backdrop-filter: blur(3px);
+		border-radius: 0.5rem;
+		overflow: hidden;
 	}
 	.loader-container {
 		width: 100%;
@@ -73,4 +71,3 @@
 		}
 	}
 </style>
-

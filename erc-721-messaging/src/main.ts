@@ -1,19 +1,13 @@
-import App from './App.svelte'
+import App from './App.svelte';
 
 const app = new App({
-	target: document.body,
-})
+	target: document.body
+});
 
 declare global {
-    interface Window {
-        web3: unknown;
-        // ethereum: unknown;
-        // negotiator?: {
-        //     Client: unknown,
-        //     Outlet: unknown
-        // };
-        // devconTokenConfig: unknown;
-    }
+	interface Window {
+		web3: unknown;
+	}
 }
 
-export default app
+export default app;

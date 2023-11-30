@@ -17,7 +17,6 @@ export async function lookupEnsName(address: string) {
 	return await provider.lookupAddress(address);
 }
 
-
 export interface CatListItem {
 	tokenId: string;
 	tokenUri: string;
@@ -26,9 +25,7 @@ export interface CatListItem {
 	canPlay: boolean;
 }
 
-
 export async function getContract(token: Token) {
-
 	// let allRPCs = [];
 	// if (chainID == 31337) {
 	// 	allRPCs = ['http://localhost:8545'];
@@ -55,69 +52,63 @@ export async function getContract(token: Token) {
 	const provider = new JsonRpcProvider(rpcURL, network, {
 		staticNetwork: network
 	});
-	
+
 	// TODO: get contract address from engine by origin name.
 	return new Contract(
 		token.contractAddress,
 		[
 			{
-				"inputs": [
+				inputs: [
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						internalType: 'uint256',
+						name: 'tokenId',
+						type: 'uint256'
 					}
 				],
-				"name": "ownerOf",
-				"outputs": [
+				name: 'ownerOf',
+				outputs: [
 					{
-						"internalType": "address",
-						"name": "address",
-						"type": "address"
+						internalType: 'address',
+						name: 'address',
+						type: 'address'
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
+				stateMutability: 'view',
+				type: 'function'
 			},
 			{
-				"inputs": [
+				inputs: [
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						internalType: 'uint256',
+						name: 'tokenId',
+						type: 'uint256'
 					}
 				],
-				"name": "tokenURI",
-				"outputs": [
+				name: 'tokenURI',
+				outputs: [
 					{
-						"internalType": "string",
-						"name": "tokenURI",
-						"type": "string"
+						internalType: 'string',
+						name: 'tokenURI',
+						type: 'string'
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			
+				stateMutability: 'view',
+				type: 'function'
+			}
 		],
 		provider
 	);
 }
 
-export async function signMessage(msg:string): Promise<string>{
+export async function signMessage(msg: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		web3.personal.sign({ data: msg }, function (error, value) {
 			if (error != null) {
 				reject(error);
-			}
-			else
-			{
+			} else {
 				resolve(value);
 				console.log(value);
 			}
 		});
 	});
 }
-
-
-

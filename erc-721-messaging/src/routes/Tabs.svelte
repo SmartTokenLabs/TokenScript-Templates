@@ -1,5 +1,5 @@
 <script>
-	import LoaderGlobal from "../components/LoaderGlobal.svelte";
+	import LoaderGlobal from '../components/LoaderGlobal.svelte';
 
 	export let items = [];
 	export let activeTabValue = 1;

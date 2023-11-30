@@ -2,18 +2,18 @@
 	// @ts-ignore
 
 	import context from '../lib/context';
-	import {showLoader} from "../lib/storage";
-	
+	import { showLoader } from '../lib/storage';
+
 	import NftIcon from '../components/NftIcon.svelte';
 	import OwnerAddress from '../components/OwnerAddress.svelte';
 	import MessagePopup from '../components/MessagePopup.svelte';
 	import Loader from '../components/Loader.svelte';
 	import { ThreadItem, Token } from '../lib/types';
 
-	import {signMessage} from "../lib/data";
-	import {MESSAGING_GENERATOR, MESSAGING_PRIME} from "../lib/constants";
-	import { DH } from '../lib/dh'
-    import {hexStringToUint8} from "../lib/helpers"
+	import { signMessage } from '../lib/data';
+	import { MESSAGING_GENERATOR, MESSAGING_PRIME } from '../lib/constants';
+	import { DH } from '../lib/dh';
+	import { hexStringToUint8 } from '../lib/helpers';
 
 	let token: Token;
 	let contract;
@@ -28,7 +28,7 @@
 	let secret: string;
 
 	const loadThreads = async () => {
-		showLoader.set(true)
+		showLoader.set(true);
 		try {
 			client = await context.getMessageClient();
 			const res = await client.getNewMessages();
@@ -42,8 +42,8 @@
 					return {
 						tokenId: item.sendingTokenId,
 						owner: item.sendingAddress,
-						friendsSharedKey: item.sendingSharedKey || "" ,
-						yourSharedKey: item.receivingSharedKey || "",
+						friendsSharedKey: item.sendingSharedKey || '',
+						yourSharedKey: item.receivingSharedKey || '',
 						wrongOwner: false,
 						unread: res.senders[item.sendingTokenId]?.unread ?? 0
 					} as ThreadItem;
@@ -51,8 +51,8 @@
 					return {
 						tokenId: item.receivingTokenId,
 						owner: item.receivingAddress,
-						friendsSharedKey: item.receivingSharedKey || "",
-						yourSharedKey: item.sendingSharedKey || "",
+						friendsSharedKey: item.receivingSharedKey || '',
+						yourSharedKey: item.sendingSharedKey || '',
 						wrongOwner: false,
 						unread: res.senders[item.receivingTokenId]?.unread ?? 0
 					} as ThreadItem;
@@ -63,18 +63,19 @@
 				return a.unread < b.unread ? 1 : -1;
 			});
 
-			threadsList = await Promise.all(threadsList.map(async item=>{
-				let owner = await contract["ownerOf"](item.tokenId)
-				if (!owner || owner.toLowerCase() != item.owner.toLowerCase() )
-					item.wrongOwner = true;
-				
-				return item;
-			}))
-		} catch(e){
+			threadsList = await Promise.all(
+				threadsList.map(async (item) => {
+					let owner = await contract['ownerOf'](item.tokenId);
+					if (!owner || owner.toLowerCase() != item.owner.toLowerCase()) item.wrongOwner = true;
+
+					return item;
+				})
+			);
+		} catch (e) {
 			console.error(e);
 			alert('Message load failed: ' + e.message);
 		}
-		showLoader.set(false)
+		showLoader.set(false);
 	};
 
 	context.data.subscribe(async (value) => {
@@ -87,75 +88,76 @@
 
 		reloadTimer = setInterval(loadThreads, 60000);
 	});
-	context.messagingKey.subscribe(value=>{
+	context.messagingKey.subscribe((value) => {
 		userSharedKey = value;
-	})
-	context.derivedPrivateKey.subscribe(value=>{
+	});
+	context.derivedPrivateKey.subscribe((value) => {
 		derivedPrivateKey = value;
-	})
+	});
 
-	async function getDerivedKey(){
+	async function getDerivedKey() {
 		if (derivedPrivateKey) {
-			return
-		};
+			return;
+		}
 
 		let t = web3.tokens.data.currentInstance;
-		const signature = await signMessage(`Sign this message to enable encryption of messages from [${t.contractAddress}#${t.tokenId}]`);
-		const key = signature.substring(signature.length-64)
-		context.derivedPrivateKey.set(key)
+		const signature = await signMessage(
+			`Sign this message to enable encryption of messages from [${t.contractAddress}#${t.tokenId}]`
+		);
+		const key = signature.substring(signature.length - 64);
+		context.derivedPrivateKey.set(key);
 	}
 
-	async function friendSelected(friend:ThreadItem){
+	async function friendSelected(friend: ThreadItem) {
 		// @ts-ignore
-		showLoader.set(true)
+		showLoader.set(true);
 		try {
-			if (!friend.yourSharedKey && !userSharedKey){
-				await getDerivedKey()
-				
+			if (!friend.yourSharedKey && !userSharedKey) {
+				await getDerivedKey();
+
 				const walletDH = new DH(
-					// hexStringToUint8(import.meta.env.VITE_MESSAGING_PRIME), 
-					hexStringToUint8(MESSAGING_PRIME), 
+					// hexStringToUint8(import.meta.env.VITE_MESSAGING_PRIME),
+					hexStringToUint8(MESSAGING_PRIME),
 					// hexStringToUint8(import.meta.env.VITE_MESSAGING_GENERATOR)
 					hexStringToUint8(MESSAGING_GENERATOR)
 				);
 
-				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey))
+				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey));
 
-				userSharedKey = walletDH.generateKeys()
+				userSharedKey = walletDH.generateKeys();
 
-				context.messagingKey.set(userSharedKey)
+				context.messagingKey.set(userSharedKey);
 
-				await client.postSecureMessaging(userSharedKey)
-				friend.yourSharedKey = userSharedKey
+				await client.postSecureMessaging(userSharedKey);
+				friend.yourSharedKey = userSharedKey;
 			} else {
-				if (friend.yourSharedKey){
-					context.messagingKey.set(friend.yourSharedKey)
+				if (friend.yourSharedKey) {
+					context.messagingKey.set(friend.yourSharedKey);
 				}
 			}
 			// @ts-ignore
-			if (!friend.friendsSharedKey){
-				console.log("Friend have to sign and send to server")
+			if (!friend.friendsSharedKey) {
+				console.log('Friend have to sign and send to server');
 			} else {
-				await getDerivedKey()
+				await getDerivedKey();
 
 				const walletDH = new DH(
-					hexStringToUint8(MESSAGING_PRIME), 
+					hexStringToUint8(MESSAGING_PRIME),
 					hexStringToUint8(MESSAGING_GENERATOR)
 				);
-				
-				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey))
 
-				secret = walletDH.computeSecret(hexStringToUint8(friend.friendsSharedKey))
-				console.log("Secret = ", secret )
+				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey));
 
+				secret = walletDH.computeSecret(hexStringToUint8(friend.friendsSharedKey));
+				console.log('Secret = ', secret);
 			}
-		} catch(e){
-			console.log("....Shared key error....")
-			console.log(e)
+		} catch (e) {
+			console.log('....Shared key error....');
+			console.log(e);
 		}
-		showLoader.set(false)
+		showLoader.set(false);
 
-		friend.wrongOwner || (selectedFriendId = friend.tokenId)
+		friend.wrongOwner || (selectedFriendId = friend.tokenId);
 	}
 </script>
 
@@ -168,13 +170,19 @@
 					<div
 						role="button"
 						tabindex="0"
-						class="cat-list-item {friend.wrongOwner ? "failed" : ""} {friend.friendsSharedKey ? "encrypted" : "non_encrypted"}"
-						on:click={() => {friendSelected(friend)}}
-						on:keypress={() => {friendSelected(friend)}}
+						class="cat-list-item {friend.wrongOwner ? 'failed' : ''} {friend.friendsSharedKey
+							? 'encrypted'
+							: 'non_encrypted'}"
+						on:click={() => {
+							friendSelected(friend);
+						}}
+						on:keypress={() => {
+							friendSelected(friend);
+						}}
 					>
 						<NftIcon tokenId={friend.tokenId} />
 						<div class="cat-list-info">
-							<h4>NFT#{friend.tokenId} {friend.wrongOwner ? "(Owner changed)":""}</h4>
+							<h4>NFT#{friend.tokenId} {friend.wrongOwner ? '(Owner changed)' : ''}</h4>
 							<span style="position: absolute; right: 10px; top: 10px;">{friend.unread} Unread</span
 							>
 							<OwnerAddress address={friend.owner} />
@@ -182,28 +190,26 @@
 					</div>
 				{/each}
 			</div>
-		{:else}
-			{#if !$showLoader }
+		{:else if !$showLoader}
 			<h5>You don't have any messages from your friends yet</h5>
 			<p>
-				Share your NFT ID with other owners or request some NFT to be your friend and when another NFT owner approve your friendship request then you can start chatting
+				Share your NFT ID with other owners or request some NFT to be your friend and when another
+				NFT owner approve your friendship request then you can start chatting
 			</p>
-			{/if}
 		{/if}
 	{/if}
-	
+
 	{#if selectedFriendId}
 		<MessagePopup
 			{threadsList}
 			friendId={selectedFriendId}
-			secret={secret}
+			{secret}
 			closed={() => (selectedFriendId = '')}
 		/>
 	{/if}
 </div>
 
 <style lang="scss">
-
 	.cat-list {
 		margin: 0 10px;
 		display: flex;

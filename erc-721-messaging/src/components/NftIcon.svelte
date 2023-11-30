@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import context from '../lib/context';
-	import {Token} from '../lib/types';
+	import { Token } from '../lib/types';
 
 	export let tokenId: string;
 	let token: Token;
 	let contract: any;
 
 	context.data.subscribe((value) => {
-		if (value.token)
-			token = value.token;
+		if (value.token) token = value.token;
 		contract = value.contract;
 	});
 
