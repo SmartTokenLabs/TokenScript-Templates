@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
-
-const messageClient = null;
+import { Token } from '../type';
 
 const data = writable({
 	token: null
 });
 
-function setToken(token) {
+function setToken(token: Token) {
+	// TODO:
 	data.set({
 		...data,
 		token

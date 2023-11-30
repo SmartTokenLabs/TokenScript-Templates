@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
+	import { type SvelteComponent } from 'svelte';
 
 	import context from './lib/context';
 	import Info from './routes/Info.svelte';
@@ -27,7 +27,7 @@
 		page = routingMap[token.level == 0 ? '#adopt' : document.location.hash] || NotFound;
 	}
 
-	// @ts-ignore
+	// @ts-ignore  TODO:
 	web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
 		if (initialized) {
 			return;
