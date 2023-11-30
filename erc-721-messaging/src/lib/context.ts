@@ -11,6 +11,7 @@ const data = writable<{token: Token|undefined, contract:any}>({
 	contract: undefined
 });
 
+// for secure encrypting
 const messagingKey = writable<string>("");
 const derivedPrivateKey = writable<string>("");
 

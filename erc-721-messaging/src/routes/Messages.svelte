@@ -2,6 +2,7 @@
 	// @ts-ignore
 
 	import context from '../lib/context';
+	import {showLoader} from "../lib/storage";
 	
 	import NftIcon from '../components/NftIcon.svelte';
 	import OwnerAddress from '../components/OwnerAddress.svelte';
@@ -19,56 +20,61 @@
 
 	let threadsList: ThreadItem[] = [] as ThreadItem[];
 	let selectedFriendId: string = '';
-	let loading = true;
 	let reloadTimer;
 	let client;
 
-	let currentTab = 0;
 	let userSharedKey: string;
 	let derivedPrivateKey: string;
 	let secret: string;
 
 	const loadThreads = async () => {
-		client = await context.getMessageClient();
-		const res = await client.getNewMessages();
+		showLoader.set(true)
+		try {
+			client = await context.getMessageClient();
+			const res = await client.getNewMessages();
 
-		const friendsList = await client.getApprovedFriend();
+			const friendsList = await client.getApprovedFriend();
 
-		// friendship requests can be initiated by both sides
-		// extract friend data
-		let list = friendsList.map((item) => {
-			if (item.sendingTokenId != token.tokenId) {
-				return {
-					tokenId: item.sendingTokenId,
-					owner: item.sendingAddress,
-					friendsSharedKey: item.sendingSharedKey || "" ,
-					yourSharedKey: item.receivingSharedKey || "",
-					wrongOwner: false,
-					unread: res.senders[item.sendingTokenId]?.unread ?? 0
-				} as ThreadItem;
-			} else {
-				return {
-					tokenId: item.receivingTokenId,
-					owner: item.receivingAddress,
-					friendsSharedKey: item.receivingSharedKey || "",
-					yourSharedKey: item.sendingSharedKey || "",
-					wrongOwner: false,
-					unread: res.senders[item.receivingTokenId]?.unread ?? 0
-				} as ThreadItem;
-			}
-		});
+			// friendship requests can be initiated by both sides
+			// extract friend data
+			let list = friendsList.map((item) => {
+				if (item.sendingTokenId != token.tokenId) {
+					return {
+						tokenId: item.sendingTokenId,
+						owner: item.sendingAddress,
+						friendsSharedKey: item.sendingSharedKey || "" ,
+						yourSharedKey: item.receivingSharedKey || "",
+						wrongOwner: false,
+						unread: res.senders[item.sendingTokenId]?.unread ?? 0
+					} as ThreadItem;
+				} else {
+					return {
+						tokenId: item.receivingTokenId,
+						owner: item.receivingAddress,
+						friendsSharedKey: item.receivingSharedKey || "",
+						yourSharedKey: item.sendingSharedKey || "",
+						wrongOwner: false,
+						unread: res.senders[item.receivingTokenId]?.unread ?? 0
+					} as ThreadItem;
+				}
+			});
 
-		threadsList = list.sort((a, b) => {
-			return a.unread < b.unread ? 1 : -1;
-		});
+			threadsList = list.sort((a, b) => {
+				return a.unread < b.unread ? 1 : -1;
+			});
 
-		threadsList = await Promise.all(threadsList.map(async item=>{
-			let owner = await contract["ownerOf"](item.tokenId)
-			if (!owner || owner.toLowerCase() != item.owner.toLowerCase() )
-				item.wrongOwner = true;
-			
-			return item;
-		}))
+			threadsList = await Promise.all(threadsList.map(async item=>{
+				let owner = await contract["ownerOf"](item.tokenId)
+				if (!owner || owner.toLowerCase() != item.owner.toLowerCase() )
+					item.wrongOwner = true;
+				
+				return item;
+			}))
+		} catch(e){
+			console.error(e);
+			alert('Message load failed: ' + e.message);
+		}
+		showLoader.set(false)
 	};
 
 	context.data.subscribe(async (value) => {
@@ -77,16 +83,9 @@
 		token = value.token;
 		contract = value.contract;
 
-		try {
-			await loadThreads();
-		} catch (e: any) {
-			console.error(e);
-			alert('Message load failed: ' + e.message);
-		}
+		await loadThreads();
 
-		loading = false;
-
-		reloadTimer = setInterval(() => loadThreads(), 60000);
+		reloadTimer = setInterval(loadThreads, 60000);
 	});
 	context.messagingKey.subscribe(value=>{
 		userSharedKey = value;
@@ -108,6 +107,7 @@
 
 	async function friendSelected(friend:ThreadItem){
 		// @ts-ignore
+		showLoader.set(true)
 		try {
 			if (!friend.yourSharedKey && !userSharedKey){
 				await getDerivedKey()
@@ -153,9 +153,9 @@
 			console.log("....Shared key error....")
 			console.log(e)
 		}
+		showLoader.set(false)
 
 		friend.wrongOwner || (selectedFriendId = friend.tokenId)
-
 	}
 </script>
 
@@ -183,7 +183,7 @@
 				{/each}
 			</div>
 		{:else}
-			{#if !loading}
+			{#if !$showLoader }
 			<h5>You don't have any messages from your friends yet</h5>
 			<p>
 				Share your NFT ID with other owners or request some NFT to be your friend and when another NFT owner approve your friendship request then you can start chatting
@@ -191,7 +191,6 @@
 			{/if}
 		{/if}
 	{/if}
-	<Loader show={loading} />
 	
 	{#if selectedFriendId}
 		<MessagePopup

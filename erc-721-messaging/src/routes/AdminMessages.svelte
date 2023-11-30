@@ -1,5 +1,6 @@
 <script lang="ts">
 	import context from '../lib/context';
+	import { showLoader } from "../lib/storage"
 	import { Token } from '../lib/types';
 	import OperationStatus from '../components/OperationStatus.svelte';
 
@@ -24,7 +25,7 @@
 
 		token = value.token;
 		contract = value.contract;
-
+		showLoader.set(true)
 		try {
 			const client = await context.getMessageClient();
 			messages = await client.getBroadcastMessages();
@@ -35,10 +36,11 @@
 			resultMessage = e.message;
 			resultStatus = false;
 		}
+		showLoader.set(false)
 	});
 
 	async function sendMessage() {
-		// loading = true;
+		showLoader.set(true)
 		try {
 			const client = await context.getMessageClient();
 			const result = await client.sendBroadcastMessage(newMessageText);
@@ -49,8 +51,7 @@
 			resultMessage = e.message;
 			resultStatus = false;
 		}
-
-		// loading = false;
+		showLoader.set(false)
 	}
 </script>
 

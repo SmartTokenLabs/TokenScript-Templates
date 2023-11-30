@@ -136,7 +136,7 @@
 				<MessageBubble {message} senderTokenId={token.tokenId} />
 			{/each}
 		{/if}
-		<div class="loader-modal" style="display: {loading ? 'block' : 'none'}">
+		<div class="loader-modal-local" style="display: {loading ? 'block' : 'none'}">
 			<Loader show={loading} />
 		</div>
 	</div>
@@ -207,5 +207,14 @@
 			margin: 4px 4px 4px 0;
 			border-radius: 5px;
 		}
+	}
+	.loader-modal-local {
+		position: absolute;
+		left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(2px);
+	        overflow: hidden;
 	}
 </style>

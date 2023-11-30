@@ -1,5 +1,6 @@
 <script lang="ts">
     import context from "../lib/context";
+    import {showLoader} from "../lib/storage";
     import OperationStatus from "../components/OperationStatus.svelte"
 	import Loader from "../components/Loader.svelte";
 
@@ -17,13 +18,11 @@
 			return;
 
 		token = value.token;
-		client = (await context.getMessageClient());
-		// loading = false;
+		client = await context.getMessageClient();
 	});
 
     async function inviteFriend(){
-
-        loading = true;
+        showLoader.set(true)
         try {
             let t = web3.tokens.data.currentInstance;
                 
@@ -46,8 +45,7 @@
             resultStatus = false;
             console.log("Invite send failed: " + e.message);
         }
-
-        loading = false;
+        showLoader.set(false)
     }
 </script>
 
@@ -59,9 +57,6 @@
 		<button type="button" on:click={() => inviteFriend()} disabled={loading || !friendId.length}>Send Request</button>
 	</div>
     <OperationStatus result={resultStatus} message={resultMessage} ></OperationStatus>
-    <div class="loader-modal" style="display: {loading ? 'block' : 'none'}">
-        <Loader show={loading} />
-    </div>
 </div>
 
 <style>

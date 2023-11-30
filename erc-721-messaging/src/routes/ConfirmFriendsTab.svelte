@@ -1,5 +1,6 @@
 <script lang="ts">
 import context from "../lib/context";
+import {showLoader} from "../lib/storage";
 import OperationStatus from "../components/OperationStatus.svelte"
 
 let loading = false;
@@ -11,8 +12,7 @@ let resultStatus: boolean;
 let resultMessage: string;
 
 const loadInvites = async () => {
-    
-    loading = true;
+    showLoader.set(true)
     try {
         invites = await client.getFriendInvites();
         console.log(invites)
@@ -26,13 +26,11 @@ const loadInvites = async () => {
         resultMessage = "Invite send failed: " + e.message;
         resultStatus = false;
     }
-
-    loading = false;
-
+    showLoader.set(false)
 }
 
 async function inviteFriend(friendId: number){
-    loading = true;
+    showLoader.set(true)
     try {
         const result = await client.postInviteFriend(friendId);
         resultMessage = result.message;
@@ -47,8 +45,7 @@ async function inviteFriend(friendId: number){
         resultMessage = "Invite send failed: " + e.message;
         resultStatus = false;
     }
-
-    loading = false;
+    showLoader.set(false)
 }
 
 context.data.subscribe(async (value) => {
@@ -56,7 +53,7 @@ context.data.subscribe(async (value) => {
         return;
 
     token = value.token;
-    loading = true;
+    showLoader.set(true)
     client = (await context.getMessageClient());
     try {
         await loadInvites();
@@ -64,8 +61,7 @@ context.data.subscribe(async (value) => {
         resultStatus = false
         resultMessage = "Message load failed: " + e.message;
     }
-    loading = false;
-
+    showLoader.set(false)
     // reloadTimer = setInterval(() => loadThreads(), 60000);
 });
 

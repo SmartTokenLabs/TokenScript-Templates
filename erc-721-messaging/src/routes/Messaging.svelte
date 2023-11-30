@@ -1,6 +1,5 @@
 <script lang="ts">
     import Header from "../components/Header.svelte";
-
     import GetFriendsTab from "./GetFriendsTab.svelte";
     import Messages from "./Messages.svelte";
     import ConfirmFriendsTab from "./ConfirmFriendsTab.svelte";
