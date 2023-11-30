@@ -3,11 +3,10 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"start": "tokenscript emulate",
 		"build": "vite build && npm run build:ts",
 		"build:ts": "tokenscript build",
 		"sign": "tokenscript sign",
-		"emulate": "tokenscript emulate",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
