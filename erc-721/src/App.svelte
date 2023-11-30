@@ -1,19 +1,27 @@
 <script lang="ts">
+	import type { SvelteComponent } from 'svelte';
+
 	import context from './lib/context';
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
 	import Transfer from './routes/transfer.svelte';
+	import { Token } from './type';
 
-	let token;
+	let token: Token;
 
-	let initialised = false;
+	let initialized = false;
 
-	const routingMap = {
-		'#info': Info,
-		'#transfer': Transfer
+	type Page = typeof SvelteComponent;
+	interface RoutingMap {
+		[key: string]: Page;
+	}
+
+	const routingMap: RoutingMap = {
+		'#info': Info as Page,
+		'#transfer': Transfer as Page
 	};
 
-	let page;
+	let page: Page;
 
 	function routeChange() {
 		page = routingMap[token.level == 0 ? '#adopt' : document.location.hash] || NotFound;
@@ -21,14 +29,14 @@
 
 	// @ts-ignore
 	web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
-		if (initialised) {
+		if (initialized) {
 			return;
 		}
 
 		context.setToken(updatedTokens.currentInstance);
 		token = updatedTokens.currentInstance;
 
-		initialised = true;
+		initialized = true;
 
 		routeChange();
 	};
@@ -36,8 +44,6 @@
 
 <svelte:window on:hashchange={routeChange} />
 
-<div>
-	<div id="token-container">
-		<svelte:component this={page} />
-	</div>
+<div id="token-container">
+	<svelte:component this={page} />
 </div>

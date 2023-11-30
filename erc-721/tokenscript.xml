@@ -57,7 +57,6 @@
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="transfer">
 				<ts:viewContent name="common"/>
 			</ts:view>
-
 		</ts:card>
 
 	</ts:cards>
