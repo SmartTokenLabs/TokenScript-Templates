@@ -1,11 +1,10 @@
-
 * {
-	font-family: "Rubik", sans-serif;
+	font-family: 'Rubik', sans-serif;
 	box-sizing: border-box;
 }
 
 body {
-	color: #0B0B0B;
+	color: #0b0b0b;
 }
 
 h1 {
@@ -36,4 +35,3 @@ p.light {
 	width: 100%;
 	height: 100%;
 }
-

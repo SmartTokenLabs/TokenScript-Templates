@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
-		  xmlns:xml="http://www.w3.org/XML/1998/namespace"
-		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
-		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		  xmlns:ethereum="urn:ethereum:constantinople"
-		  name="erc-721">
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ethereum="urn:ethereum:constantinople" name="erc-721">
 	<ts:label>
 		<ts:plurals xml:lang="en">
 			<ts:string quantity="one">erc-721 Token</ts:string>
@@ -25,13 +23,13 @@
 	</ts:origins>
 
 	<ts:cards>
-		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
+		<ts:viewContent name="common"
+			xmlns="http://www.w3.org/1999/xhtml">
 			<ts:include type="html" src="./dist/index.html"/>
 			<ts:include type="css" src="./src/styles.css"/>
 		</ts:viewContent>
 
 		<ts:card type="token" name="Info" origins="Token">
-
 			<ts:label>
 				<ts:string xml:lang="en">Info</ts:string>
 			</ts:label>
@@ -39,7 +37,7 @@
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
-		
+
 		<ts:card type="action" name="Transfer" origins="Token">
 
 			<ts:label>
@@ -47,19 +45,19 @@
 			</ts:label>
 
 			<ts:transaction>
-        <ethereum:transaction contract="Token" function="safeTransferFrom" as="uint">
-          <ts:data>
-            <ts:address ref="sendingAccountAddress"/>
-            <ts:address ref="receivingAccountAddress"/>
-            <ts:uint256 ref="tokenId"/>
-          </ts:data>
-        </ethereum:transaction>
-      </ts:transaction>
+				<ethereum:transaction contract="Token" function="safeTransferFrom" as="uint">
+					<ts:data>
+						<ts:address ref="sendingAccountAddress"/>
+						<ts:address ref="receivingAccountAddress"/>
+						<ts:uint256 ref="tokenId"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
 
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="transfer">
 				<ts:viewContent name="common"/>
 			</ts:view>
-			
+
 		</ts:card>
 
 	</ts:cards>

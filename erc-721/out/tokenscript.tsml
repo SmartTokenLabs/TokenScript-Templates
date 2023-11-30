@@ -38,17 +38,15 @@ var Sf=Object.defineProperty;var Uf=(r,t,e)=&gt;t in r?Sf(r,t,{enumerable:!0,con
 <link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.gstatic.com"/>
 <link xmlns="http://www.w3.org/1999/xhtml" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 
-
 <style>
 					/* <![CDATA[ */
-					
-* {
-	font-family: "Rubik", sans-serif;
+					* {
+	font-family: 'Rubik', sans-serif;
 	box-sizing: border-box;
 }
 
 body {
-	color: #0B0B0B;
+	color: #0b0b0b;
 }
 
 h1 {
@@ -80,12 +78,10 @@ p.light {
 	height: 100%;
 }
 
-
 					/* ]]> */
 				</style></ts:viewContent>
 
 		<ts:card name="Info" origins="Token" type="token">
-
 			<ts:label>
 				<ts:string xml:lang="en">Info</ts:string>
 			</ts:label>
@@ -93,7 +89,7 @@ p.light {
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
-		
+
 		<ts:card name="Transfer" origins="Token" type="action">
 
 			<ts:label>
@@ -101,19 +97,19 @@ p.light {
 			</ts:label>
 
 			<ts:transaction>
-        <ethereum:transaction as="uint" contract="Token" function="safeTransferFrom">
-          <ts:data>
-            <ts:address ref="sendingAccountAddress"/>
-            <ts:address ref="receivingAccountAddress"/>
-            <ts:uint256 ref="tokenId"/>
-          </ts:data>
-        </ethereum:transaction>
-      </ts:transaction>
+				<ethereum:transaction as="uint" contract="Token" function="safeTransferFrom">
+					<ts:data>
+						<ts:address ref="sendingAccountAddress"/>
+						<ts:address ref="receivingAccountAddress"/>
+						<ts:uint256 ref="tokenId"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
 
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" urlFragment="transfer" xml:lang="en">
 				<ts:viewContent name="common"/>
 			</ts:view>
-			
+
 		</ts:card>
 
 	</ts:cards>

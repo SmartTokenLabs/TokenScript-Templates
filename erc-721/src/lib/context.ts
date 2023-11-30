@@ -1,13 +1,12 @@
+import { writable } from 'svelte/store';
 
-import {writable} from 'svelte/store';
-
-let messageClient = null;
+const messageClient = null;
 
 const data = writable({
 	token: null
 });
 
-function setToken(token){
+function setToken(token) {
 	data.set({
 		...data,
 		token
@@ -19,4 +18,4 @@ function setToken(token){
 export default {
 	data,
 	setToken
-}
+};

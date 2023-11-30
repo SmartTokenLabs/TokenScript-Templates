@@ -1,7 +1,17 @@
-
 <script lang="ts">
-	export let show;
+	export let show: boolean;
 </script>
+
+{#if show}
+	<div class="loader-container">
+		<div class="lds-ring">
+			<div />
+			<div />
+			<div />
+			<div />
+		</div>
+	</div>
+{/if}
 
 <style>
 	.loader-container {
@@ -48,14 +58,3 @@
 		}
 	}
 </style>
-
-{#if show}
-<div class="loader-container">
-	<div class="lds-ring">
-		<div></div>
-		<div></div>
-		<div></div>
-		<div></div>
-	</div>
-</div>
-{/if}

@@ -14,11 +14,7 @@
 			"token": "TOKEN_TYPE",
 			"updatePrefix": "interface=\"",
 			"prompt": "Select the token type",
-			"options": [
-				"erc721",
-				"erc20",
-				"erc1155"
-			],
+			"options": ["erc721", "erc20", "erc1155"],
 			"value": "erc721"
 		},
 		{

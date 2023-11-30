@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import { viteSingleFile } from 'vite-plugin-singlefile'
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 
 export default defineConfig({
 	/*mode: "development",
@@ -11,7 +11,7 @@ export default defineConfig({
 		svelte(),
 		viteSingleFile({
 			removeViteModuleLoader: true,
-			useRecommendedBuildConfig: true,
+			useRecommendedBuildConfig: true
 		})
-	],
+	]
 });
