@@ -1,6 +1,6 @@
 <script lang="ts">
-	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
+	import context from '../lib/context';
 	import { getPixelColor } from './../utils/index';
 
 	let token: any;
@@ -36,6 +36,7 @@
 		// @ts-ignore
 		receivingAccountAddress = event.target.value;
 		// @ts-ignore
+		// TODO:
 		web3.action.setProps({
 			sendingAccountAddress: token.ownerAddress,
 			receivingAccountAddress,
@@ -52,19 +53,19 @@
 	}
 </script>
 
-<div
-	style="background-color: {cardBackground
-		? cardBackground
-		: '#f5f5f5'}; padding: 20px; border-radius: 6px;"
->
-	{#if token.external_link_open_graph_image}
-		<img
-			style="width:100%; border-radius: 7px;"
-			src={token.external_link_open_graph_image}
-			alt={'hero image'}
-		/>
-	{/if}
-	{#if token}
+{#if token}
+	<div
+		style="background-color: {cardBackground
+			? cardBackground
+			: '#f5f5f5'}; padding: 20px; border-radius: 6px;"
+	>
+		{#if token.external_link_open_graph_image}
+			<img
+				style="width:100%; border-radius: 7px;"
+				src={token.external_link_open_graph_image}
+				alt={'hero image'}
+			/>
+		{/if}
 		<div
 			style="margin: 14px 0px 18px 0; display: flex; justify-content: space-between; align-items: center; background-color: white; border-radius: 7px; height: 142px; width: 100%;"
 		>
@@ -171,9 +172,13 @@
 				<p style="color: black;word-wrap: break-word;font-size: 14px;">{token.ownerAddress}</p>
 
 				<p style="color: #888;font-weight: 400;font-size: 14px;">To</p>
-				<p style="color: black;word-wrap: break-word;font-size: 14px;">{receivingAccountAddress}</p>
+				<p style="color: black;word-wrap: break-word;font-size: 14px;">
+					{receivingAccountAddress}
+				</p>
 			</div>
 		</div>
-	{/if}
-	<Loader show={loading} />
-</div>
+		<Loader show={loading} />
+	</div>
+{:else}
+	<!-- else content here -->
+{/if}
