@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ethereum="urn:ethereum:constantinople" name="<%= meta_name %>">
+  <ts:meta>
+    <ts:description xml:lang="en"><%= meta_description %></ts:description>
+    <ts:aboutUrl xml:lang="en"><%= meta_aboutUrl %></ts:aboutUrl>
+    <ts:iconUrl xml:lang="en"><%= meta_iconUrl %></ts:iconUrl>
+  </ts:meta>
+
+<%= contracts %>
+
+
+  <ts:cards>
+    <ts:viewContent name="common"
+      xmlns="http://www.w3.org/1999/xhtml">
+      <ts:include type="html" src="./dist/index.html"/>
+      <ts:include type="css" src="./src/styles.css"/>
+    </ts:viewContent>
+
+<%= cards %>
+  </ts:cards>
+
+
+<%= attributes %>
+
+</ts:token>
