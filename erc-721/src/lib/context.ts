@@ -1,21 +1,21 @@
-import { writable } from 'svelte/store';
-import { Token } from '../type';
+import { writable } from "svelte/store"
+import { Token } from "../type"
 
 const data = writable({
-	token: null
-});
+  token: null,
+})
 
 function setToken(token: Token) {
-	// TODO:
-	data.set({
-		...data,
-		token
-	});
+  // TODO:
+  data.set({
+    ...data,
+    token,
+  })
 
-	// Do some other stuff
+  // Do some other stuff
 }
 
 export default {
-	data,
-	setToken
-};
+  data,
+  setToken,
+}

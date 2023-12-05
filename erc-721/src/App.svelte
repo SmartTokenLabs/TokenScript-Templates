@@ -1,49 +1,51 @@
 <script lang="ts">
-	import { type SvelteComponent } from 'svelte';
+  import { type SvelteComponent } from "svelte"
 
-	import context from './lib/context';
-	import Info from './routes/Info.svelte';
-	import NotFound from './routes/NotFound.svelte';
-	import Transfer from './routes/transfer.svelte';
-	import { Token } from './type';
+  import context from "./lib/context"
+  import Info from "./routes/Info.svelte"
+  import NotFound from "./routes/NotFound.svelte"
+  import Transfer from "./routes/transfer.svelte"
+  import { Token } from "./type"
 
-	let token: Token;
+  let token: Token
 
-	let initialized = false;
+  let initialized = false
 
-	type Page = typeof SvelteComponent;
-	interface RoutingMap {
-		[key: string]: Page;
-	}
+  type Page = typeof SvelteComponent
+  interface RoutingMap {
+    [key: string]: Page
+  }
 
-	const routingMap: RoutingMap = {
-		'#info': Info as Page,
-		'#transfer': Transfer as Page
-	};
+  const routingMap: RoutingMap = {
+    "#info": Info as Page,
+    "#transfer": Transfer as Page,
+  }
 
-	let page: Page;
+  let page: Page
 
-	function routeChange() {
-		page = routingMap[token.level == 0 ? '#adopt' : document.location.hash] || NotFound;
-	}
+  function routeChange() {
+    page =
+      routingMap[token.level == 0 ? "#adopt" : document.location.hash] ||
+      NotFound
+  }
 
-	// @ts-ignore  TODO:
-	web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
-		if (initialized) {
-			return;
-		}
+  // @ts-ignore  TODO:
+  web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
+    if (initialized) {
+      return
+    }
 
-		context.setToken(updatedTokens.currentInstance);
-		token = updatedTokens.currentInstance;
+    context.setToken(updatedTokens.currentInstance)
+    token = updatedTokens.currentInstance
 
-		initialized = true;
+    initialized = true
 
-		routeChange();
-	};
+    routeChange()
+  }
 </script>
 
 <svelte:window on:hashchange={routeChange} />
 
 <div id="token-container">
-	<svelte:component this={page} />
+  <svelte:component this={page} />
 </div>
