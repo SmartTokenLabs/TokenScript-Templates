@@ -17,14 +17,17 @@
 		<ts:iconUrl xml:lang="en">https://app.ens.domains///image.jpg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
+		<!-- <ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address> -->
 		<!-- <ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address> -->
 		<ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address>
 	</ts:contract>
 	<ts:contract name="ETHRegistrarController">
+		<!-- <ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address> -->
 		<!-- <ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address> -->
-		<ts:address network="1">0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85</ts:address>
+		<ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address>
 	</ts:contract>
 	<ts:contract name="PublicResolver">
+		<!-- <ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address> -->
 		<!-- <ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address> -->
 		<ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address>
 	</ts:contract>
@@ -77,6 +80,7 @@
 						<ts:uint256 ref="baseENSTokenId"/>
 						<ts:uint256 ref="renewalSeconds"/>
 					</ts:data>
+					<ethereum:value ref="renewalPrice" />
 				</ethereum:transaction>
 			</ts:transaction>
 
