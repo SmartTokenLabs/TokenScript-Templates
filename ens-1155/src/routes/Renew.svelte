@@ -8,7 +8,7 @@
 	let token:any;
 	let loading = true;
 	let years = 1;
-	let renewalPriceUSD: number | undefined;
+	//let renewalPriceUSD: number | undefined; // TODO: ETH to USD conversion
 	const maxYears: number = 10;
 
 	let renewalPrice: bigint = 0n; // wei
@@ -30,28 +30,15 @@
 		loading = false;
 	});
 
-	// Yearly renewals cost $5/year for names that are 5 characters or longer.
-	// 4 character names cost $160/year, and 3 character names cost $640/year.
-	// Fees are paid in ETH. The ETH/USD exchange rate is set by the Chainlink ETH/USD oracle.
-	/*function setEnsNameRenewalPrice () {
-		let price;
-		if(!ensDisplayName) return;
-		const ensNameLength = ensDisplayName?.length;
-		if(ensNameLength < 4) price = years * 640;
-		else if(ensNameLength === 4) price = years * 160;
-		else price = years * 5;
-		renewalPriceUSD = price;
-		renewalSeconds = BigInt(years) * BigInt(31536000);
-		// @ts-ignore
-		web3.action.setProps({ renewalSeconds: renewalSeconds.toString() });
-	}*/
-
 	async function estimateGasPrice() {
 		const feeData = await getEthersProvider().getFeeData();
-		const gasUnits = await getEnsEthRegistrarContract().getFunction("renew").estimateGas(token.ensBaseName, renewalSeconds, {value: renewalPrice});
+
+		const gasUnits = await getEnsEthRegistrarContract().getFunction("renew").estimateGas(token.ensBaseName.replace(".eth", ""), renewalSeconds, {value: renewalPrice});
 
 		estimatedGasPriceWei = feeData.gasPrice * gasUnits;
 		estimatedGasPriceEth = formatEther(estimatedGasPriceWei);
+
+		console.log("Estimated gas: ", feeData.gasPrice, estimatedGasPriceWei, estimatedGasPriceEth);
 	}
 
 	function updateYearsSelected (increment: boolean) {
@@ -103,22 +90,23 @@
 			<div style="margin: 24px; background-color: #F5F5F5; border-radius: 20px; font-weight: 300; padding: 24px;">
 					<div style="background-color: #F5F5F5; border-radius: 20px; padding: 0px 9px;">
 
-							<p style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;">
-								Extension (Years)
-							</p>
-							<p style="font-size: 14px; color: black; word-wrap: break-word;">
-								{years > 1 ? years + ' years' : years +' year' } extension
-							</p>
-							<p style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;">
-								Price (USD)
-							</p>
-							<p style="font-size: 14px; color: black; word-wrap: break-word;">
-								{renewalPriceUSD ? '$'+renewalPriceUSD : 'loading...'}
-							</p>
-
+						<div style="color: #B6B6BF; display: flex; justify-content: space-between">
+							<p>{years > 1 ? years + ' years' : years +' year' } extension</p>
+							<p>{Number(renewalPriceEth).toFixed(5)} ETH</p>
+						</div>
+						<div style="color: #B6B6BF; display: flex; justify-content: space-between">
+							<p>Transaction </p>
+							<p>{Number(estimatedGasPriceEth).toFixed(5)} ETH</p>
+						</div>
+						<div style="color: black;display: flex; justify-content: space-between">
+							<p>Estimated total</p>
+							<p>{(Number(renewalPriceEth) + Number(estimatedGasPriceEth)).toFixed(5) } ETH</p>
+						</div>
+						<div style="color: black;display: flex; justify-content: space-between">
 							<p style="color: #9A9A9A; font-weight: 300;">
-							<small> { token.isEnsSubName ? `Note: this function will renew the expiry of ${token.ensBaseName}.` : '' }</small>
-						</p>
+								<small> { token.isEnsSubName ? `Note: this function will renew the expiry of ${token.ensBaseName}.` : '' }</small>
+							</p>
+						</div>
 					</div>
 			</div>
 		</div>

@@ -38,6 +38,7 @@
 			const data = {
 				ensName: subName ? subName : baseName,
 				ensBaseName: baseName,
+				registeredName: baseName.replace(".eth", ""),
 				isEnsSubName: !!subName,
 				nameHash,
 				expiry: tokenDataRes[2]

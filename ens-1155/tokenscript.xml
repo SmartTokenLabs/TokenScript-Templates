@@ -93,7 +93,7 @@
 				<ts:origins>
 					<ethereum:call function="rentPrice" contract="ETHRegistrarController" as="uint">
 						<ts:data>
-							<ts:uint256 ref="ensBaseName"/>
+							<ts:string local-ref="registeredName"/>
 							<ts:uint256>31622400</ts:uint256>
 						</ts:data>
 					</ethereum:call>
@@ -103,7 +103,7 @@
 			<ts:transaction>
 				<ethereum:transaction function="renew" contract="ETHRegistrarController" as="uint">
 					<ts:data>
-						<ts:uint256 ref="baseENSTokenId"/>
+						<ts:string local-ref="registeredName"/>
 						<ts:uint256 ref="renewalSeconds"/>
 					</ts:data>
 					<ethereum:value ref="renewalPrice" />
@@ -286,7 +286,7 @@
 			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
 		</ts:type>
 		<ts:label>
-			<ts:string xml:lang="en">ENS Name</ts:string>
+			<ts:string xml:lang="en">ENS Base Name</ts:string>
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="uint"/>
