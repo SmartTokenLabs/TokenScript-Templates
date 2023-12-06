@@ -22,8 +22,6 @@
 			return;
 		token = value.token;
 
-		console.log("Initialised! ", token);
-
 		init()
 
 		// You can load other data before hiding the loader
@@ -37,8 +35,6 @@
 
 		estimatedGasPriceWei = feeData.gasPrice * gasUnits;
 		estimatedGasPriceEth = formatEther(estimatedGasPriceWei);
-
-		console.log("Estimated gas: ", feeData.gasPrice, estimatedGasPriceWei, estimatedGasPriceEth);
 	}
 
 	function updateYearsSelected (increment: boolean) {
