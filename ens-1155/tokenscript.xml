@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
 		  xmlns:xml="http://www.w3.org/XML/1998/namespace"
-		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
+		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd"
 		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		  xmlns:ethereum="urn:ethereum:constantinople"
 		  name="ENS-1155">
@@ -48,7 +48,7 @@
 			</ts:view>
 		</ts:card>
 
-		<!-- <ts:card type="action" name="Renew">
+		<ts:card type="action" name="Renew">
 			<ts:label>
 				<ts:string xml:lang="en">Renew</ts:string>
 			</ts:label>
@@ -71,23 +71,6 @@
 				</ts:origins>
 			</ts:attribute>
 
-			const contractABI = [
-				{
-					"constant": false,
-					"inputs": [
-						{ "internalType": "uint256", "name": "id", "type": "uint256" },
-						{ "internalType": "uint256", "name": "duration", "type": "uint256" }
-					],
-					"name": "renew",
-					"outputs": [
-						{ "internalType": "uint256", "name": "", "type": "uint256" }
-					],
-					"payable": false,
-					"stateMutability": "nonpayable",
-					"type": "function"
-				}
-			];
-			
 			<ts:transaction>
 				<ethereum:transaction function="renew" contract="ETHRegistrarController" as="uint">
 					<ts:data>
@@ -96,11 +79,11 @@
 					</ts:data>
 				</ethereum:transaction>
 			</ts:transaction>
-			
+
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="renew">
 				<ts:viewContent name="common"/>
 			</ts:view>
-		</ts:card> -->
+		</ts:card>
 
 		<ts:card type="action" name="Record">
 			<ts:label>

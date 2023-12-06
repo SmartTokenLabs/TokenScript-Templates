@@ -9,7 +9,8 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "Node",
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		"target": "ES2020"
 	},
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//

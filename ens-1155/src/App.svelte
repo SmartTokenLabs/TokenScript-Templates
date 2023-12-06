@@ -3,7 +3,7 @@
 	import Info from "./routes/Info.svelte";
 	import NotFound from "./routes/NotFound.svelte";
 
-	// import Renew from "./routes/Renew.svelte";
+	import Renew from "./routes/Renew.svelte";
 	import Record from "./routes/Record.svelte";
 
 	let token;
@@ -11,7 +11,7 @@
 
 	const routingMap = {
 		'#info': Info,
-		// '#renew': Renew,
+		'#renew': Renew,
 		'#record': Record,
 	};
 
