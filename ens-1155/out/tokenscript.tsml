@@ -19327,7 +19327,7 @@ function create_if_block_3(ctx) {
       if (!src_url_equal(img.src, img_src_value = /*token*/
       ctx[1][
         /*selectedRecord*/
-        ctx[0].contractKey
+        ctx[0].contractKey + "Record"
       ]))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*selectedRecord*/
@@ -19341,7 +19341,7 @@ function create_if_block_3(ctx) {
       3 &amp;&amp; !src_url_equal(img.src, img_src_value = /*token*/
       ctx2[1][
         /*selectedRecord*/
-        ctx2[0].contractKey
+        ctx2[0].contractKey + "Record"
       ])) {
         attr(img, "src", img_src_value);
       }
@@ -19481,7 +19481,7 @@ function getRenewOption(renewOptions2, renewOptionKey) {
 }
 function getTokenDataByKey(token2, selectedKey) {
   let recordData = "Record not found";
-  const tokenData = token2[selectedKey];
+  const tokenData = token2[selectedKey + "Record"];
   if (tokenData)
     recordData = tokenData;
   return recordData;
@@ -19492,45 +19492,27 @@ function updateRecordInput(event) {
   });
 }
 function instance$1($$self, $$props, $$invalidate) {
-  let selectedRecord = {
-    title: "Avatar",
-    contractKey: "avatarRecord"
-  };
   const renewOptions = {
-    "Avatar": {
-      title: "Avatar",
-      contractKey: "avatarRecord"
-    },
-    "Email": {
-      title: "Email",
-      contractKey: "emailRecord"
-    },
+    "Avatar": { title: "Avatar", contractKey: "avatar" },
+    "Email": { title: "Email", contractKey: "email" },
     "Description": {
       title: "Description",
-      contractKey: "descriptionRecord"
+      contractKey: "description"
     },
     "Keywords": {
       title: "Keywords",
-      contractKey: "keywordsRecord"
+      contractKey: "keywords"
     },
-    "Phone": {
-      title: "Phone",
-      contractKey: "phoneRecord"
-    },
-    "Url": { title: "Url", contractKey: "urlRecord" },
-    "Display": {
-      title: "Display",
-      contractKey: "displayRecord"
-    },
-    "Notice": {
-      title: "Notice",
-      contractKey: "noticeRecord"
-    },
+    "Phone": { title: "Phone", contractKey: "phone" },
+    "Url": { title: "Url", contractKey: "url" },
+    "Display": { title: "Display", contractKey: "display" },
+    "Notice": { title: "Notice", contractKey: "notice" },
     "Location": {
       title: "Location",
-      contractKey: "locationRecord"
+      contractKey: "location"
     }
   };
+  let selectedRecord = renewOptions.Avatar;
   function selectRecordType(renewOption) {
     $$invalidate(0, selectedRecord = renewOption);
     web3.action.setProps({ newRecordKey: selectedRecord.contractKey });

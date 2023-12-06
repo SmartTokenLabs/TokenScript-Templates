@@ -5,19 +5,19 @@
 	import {TokenInterface} from "../lib/tokenTypes";
 	import Header from "../components/Header.svelte";
 
-	let selectedRecord = { title: "Avatar", contractKey: "avatarRecord" };
-
 	const renewOptions = {
-		"Avatar": { title: "Avatar", contractKey: "avatarRecord" },
-		"Email": { title: "Email", contractKey: "emailRecord" },
-		"Description": { title: "Description", contractKey: "descriptionRecord" },
-		"Keywords": { title: "Keywords", contractKey: "keywordsRecord" },
-		"Phone": { title: "Phone", contractKey: "phoneRecord" },
-		"Url": { title: "Url", contractKey: "urlRecord" },
-		"Display": { title: "Display", contractKey: "displayRecord" },
-		"Notice": { title: "Notice", contractKey: "noticeRecord" },
-		"Location": { title: "Location", contractKey: "locationRecord" }
+		"Avatar": { title: "Avatar", contractKey: "avatar" },
+		"Email": { title: "Email", contractKey: "email" },
+		"Description": { title: "Description", contractKey: "description" },
+		"Keywords": { title: "Keywords", contractKey: "keywords" },
+		"Phone": { title: "Phone", contractKey: "phone" },
+		"Url": { title: "Url", contractKey: "url" },
+		"Display": { title: "Display", contractKey: "display" },
+		"Notice": { title: "Notice", contractKey: "notice" },
+		"Location": { title: "Location", contractKey: "location" }
 	}
+
+	let selectedRecord = renewOptions.Avatar
 
 	interface RenewOptionsInterface {
   		[key: string]: { title: string, contractKey: string }
@@ -57,7 +57,7 @@
 
 	function getTokenDataByKey (token: TokenInterface, selectedKey: string): string | number | undefined {
 		let recordData: string | number | undefined = "Record not found";
-		const tokenData = token[selectedKey];
+		const tokenData = token[selectedKey + "Record"];
 		if(tokenData) recordData = tokenData;
 		return recordData;
 	}
@@ -101,7 +101,7 @@
 						<p style="color: #9A9A9A; font-weight: 600;">{selectedRecord.title} Value</p>
 						{#if selectedRecord.contractKey === "avatar" }
 							{#if token[selectedRecord.contractKey] }
-								<img style="width: 100px; border-radius: 80px;" src={ token[selectedRecord.contractKey]} alt={selectedRecord.title}>
+								<img style="width: 100px; border-radius: 80px;" src={ token[selectedRecord.contractKey + "Record"]} alt={selectedRecord.title}>
 							{:else }
 								<p style="color: #9A9A9A;">Record not found</p>
 							{/if}
