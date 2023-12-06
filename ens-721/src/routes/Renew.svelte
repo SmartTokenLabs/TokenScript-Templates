@@ -115,7 +115,7 @@
 					</div>
 			</div>
 			<div>
-				<img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="{token.image_preview_url}" alt={'image of ' + token.description} />
+				<img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="{token.image_preview_url}" alt={'image of ' + token.name} />
 			</div>
 		</div>
 		<div style="margin: 14px 0; background-color: white; border-radius: 7px; border: solid #C2C2C2 1px; width: 100%; height: 472px; display: flex; justify-content: space-between; flex-direction: column;">
