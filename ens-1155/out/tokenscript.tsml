@@ -19533,13 +19533,9 @@ function instance$1($$self, $$props, $$invalidate) {
   };
   function selectRecordType(renewOption) {
     $$invalidate(0, selectedRecord = renewOption);
-    web3.action.setProps({
-      newRecordKey: selectedRecord.contractKey,
-      tokenIdHex: tokenIdToHex
-    });
+    web3.action.setProps({ newRecordKey: selectedRecord.contractKey });
   }
   getEnsContract();
-  let tokenIdToHex;
   let token;
   let loading = true;
   context.data.subscribe(async (value) =&gt; {
@@ -19746,10 +19742,12 @@ function instance($$self, $$props, $$invalidate) {
       const rawENSName = await ensContract.names(tokenIdToHex);
       const rawNameToAscii = hexToAscii(rawENSName);
       const { baseName, subName } = santitiseEnsName(rawNameToAscii);
-      const nameHash = namehash(baseName);
-      const tokenDataRes = await ensContract.getData(nameHash);
+      const ensName = subName ? subName : baseName;
+      const nameHash = namehash(ensName);
+      const baseNameHash = namehash(baseName);
+      const tokenDataRes = await ensContract.getData(baseNameHash);
       const data2 = {
-        ensName: subName ? subName : baseName,
+        ensName,
         ensBaseName: baseName,
         registeredName: baseName.replace(".eth", ""),
         isEnsSubName: !!subName,
@@ -20096,7 +20094,7 @@ p.light {
 			<ts:string xml:lang="en">ENS Name</ts:string>
 		</ts:label>
 		<ts:origins>
-			<ts:user-entry as="uint"/>
+			<ts:user-entry as="utf8"/>
 		</ts:origins>
 	</ts:attribute>
 
@@ -20108,7 +20106,7 @@ p.light {
 			<ts:string xml:lang="en">ENS Base Name</ts:string>
 		</ts:label>
 		<ts:origins>
-			<ts:user-entry as="uint"/>
+			<ts:user-entry as="utf8"/>
 		</ts:origins>
 	</ts:attribute>
 
@@ -20121,6 +20119,18 @@ p.light {
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="nameHash">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">Name Hash</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="bytes"/>
 		</ts:origins>
 	</ts:attribute>
 

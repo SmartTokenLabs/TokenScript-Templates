@@ -31,8 +31,7 @@
 		selectedRecord = renewOption;
 		// @ts-ignore
 		web3.action.setProps({
-			newRecordKey: selectedRecord.contractKey,
-			tokenIdHex: tokenIdToHex
+			newRecordKey: selectedRecord.contractKey
 		});
 	}
 

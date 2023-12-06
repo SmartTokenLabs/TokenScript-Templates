@@ -32,11 +32,13 @@
 			const rawENSName = await ensContract.names(tokenIdToHex);
 			const rawNameToAscii = hexToAscii(rawENSName);
 			const { baseName, subName } = santitiseEnsName(rawNameToAscii);
-			const nameHash = namehash(baseName);
-			const tokenDataRes = await ensContract.getData(nameHash);
+			const ensName = subName ? subName : baseName;
+			const nameHash = namehash(ensName);
+			const baseNameHash = namehash(baseName);
+			const tokenDataRes = await ensContract.getData(baseNameHash);
 
 			const data = {
-				ensName: subName ? subName : baseName,
+				ensName,
 				ensBaseName: baseName,
 				registeredName: baseName.replace(".eth", ""),
 				isEnsSubName: !!subName,
