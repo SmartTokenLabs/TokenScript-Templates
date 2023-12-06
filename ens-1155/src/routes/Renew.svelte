@@ -52,11 +52,11 @@
 		renewalPriceEth = formatEther(renewalPrice);
 		// @ts-ignore
 		web3.action.setProps({renewalSeconds, renewalPrice});
-		estimateGasPrice();
 	}
 
 	async function init() {
 		setRenewalYears();
+		await estimateGasPrice();
 	}
 
 </script>
