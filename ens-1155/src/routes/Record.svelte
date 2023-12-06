@@ -54,7 +54,7 @@
 	
 	let token:any;
 	let loading = true;
-	let ensDisplayName: string | undefined = 'loading';
+	let ensDisplayName: string | undefined = 'loading...';
 	let ensBaseName = '';
 	let isEnsSubName = false;
 	

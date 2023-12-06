@@ -26,7 +26,7 @@
 	let years = 1;
 	let renewalPriceUSD: number | undefined;
 	const maxYears: number = 10;
-	let ensDisplayName: string | undefined = 'loading';
+	let ensDisplayName: string | undefined = 'loading...';
 	let ensBaseName = '';
 	let isEnsSubName = false;
 

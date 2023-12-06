@@ -48,7 +48,7 @@
 			</ts:view>
 		</ts:card>
 
-		<ts:card type="action" name="Renew">
+		<!-- <ts:card type="action" name="Renew">
 			<ts:label>
 				<ts:string xml:lang="en">Renew</ts:string>
 			</ts:label>
@@ -70,9 +70,26 @@
 					<ts:user-entry as="uint"/>
 				</ts:origins>
 			</ts:attribute>
+
+			const contractABI = [
+				{
+					"constant": false,
+					"inputs": [
+						{ "internalType": "uint256", "name": "id", "type": "uint256" },
+						{ "internalType": "uint256", "name": "duration", "type": "uint256" }
+					],
+					"name": "renew",
+					"outputs": [
+						{ "internalType": "uint256", "name": "", "type": "uint256" }
+					],
+					"payable": false,
+					"stateMutability": "nonpayable",
+					"type": "function"
+				}
+			];
 			
 			<ts:transaction>
-				<ethereum:transaction function="renew" contract="ETHRegistrarController">
+				<ethereum:transaction function="renew" contract="ETHRegistrarController" as="uint">
 					<ts:data>
 						<ts:uint256 ref="baseENSTokenId"/>
 						<ts:uint256 ref="renewalSeconds"/>
@@ -83,7 +100,7 @@
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="renew">
 				<ts:viewContent name="common"/>
 			</ts:view>
-		</ts:card>
+		</ts:card> -->
 
 		<ts:card type="action" name="Record">
 			<ts:label>
