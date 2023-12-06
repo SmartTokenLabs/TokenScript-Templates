@@ -100,7 +100,6 @@
 
 	function init() {
 		setRenewalYears();
-		estimateGasPrice();
 	}
 
 </script>

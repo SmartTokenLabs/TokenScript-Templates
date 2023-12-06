@@ -2,12 +2,7 @@
 <script lang="ts">
 	import context from "../lib/context";
 	import Loader from "../components/Loader.svelte";
-	import { decimalToHex, hexToAscii, santitiseEnsName } from "../lib/utils";
-	import {namehash} from "ethers";
-	import {getEnsContract} from "../lib/abi";
 	import Header from "../components/Header.svelte";
-
-	const ensContract = getEnsContract();
 
 	let token:any;
 	let loading = true;
@@ -19,56 +14,15 @@
 			return;
 		token = value.token;
 
-		init()
-
 		// You can load other data before hiding the loader
 		loading = false;
 	});
-
-	function dateToUIDate(dateValue:number):string {
-		if(!dateValue) return 'Could not be found';
-		const userLocale = navigator.language;
-		const options = { year: 'numeric', month: 'short', day: 'numeric' };
-		const milliseconds = Number(dateValue) * 1000;
-		return new Date(milliseconds).toLocaleDateString(userLocale, options as Intl.DateTimeFormatOptions);
-	}
-
-	async function setTokenData () {
-		const hash = namehash(ensBaseName);
-		const tokenDataRes = await ensContract.getData(hash);
-		applyValueIfNotExist('owner', tokenDataRes[0])
-		applyValueIfNotExist('expiry', dateToUIDate(tokenDataRes[2]))
-	}
-
-	async function getEnsName() {
-		try {
-			const tokenIdToHex = decimalToHex(token.tokenId);
-			const rawENSName = await ensContract.names(tokenIdToHex);
-			const rawNameToAscii = hexToAscii(rawENSName);
-			const { baseName, subName } = santitiseEnsName(rawNameToAscii);
-			ensDisplayName = subName ? subName : baseName;
-			ensBaseName = baseName;
-			await setTokenData();
-		} catch (error) {
-			ensDisplayName = 'not found';
-			console.log('error', error);
-		}
-	}
-
-	function applyValueIfNotExist (tokenKey:string, tokenValue:any) {
-		if(token[tokenKey]) return;
-		token[tokenKey] = tokenValue;
-	}
-
-	async function init() {
-		await getEnsName();
-	}
 
 </script>
 
 <div>
 	{#if token}
-		<Header name={ensDisplayName} expiry={token.expiry} image={token.image_preview_url} />
+		<Header name={token.ensName} expiry={token.expiry} image={token.image_preview_url} />
 		<div style="margin: 14px 0; background-color: white; border-radius: 7px; border: solid #C2C2C2 1px; width: 100%; display: flex; justify-content: space-between; flex-direction: column;">
 			<div style="width: 100%;">
 					<p style="
@@ -81,7 +35,7 @@
 					<div style="background-color: #F5F5F5; border-radius: 20px; padding: 0px 9px;">
 
 						<p style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;">Status </p>
-						<p style="font-size: 14px; color: black; word-wrap: break-word;">{ ensDisplayName ? "Set Correctly ✅" : "Not Set" }</p>
+						<p style="font-size: 14px; color: black; word-wrap: break-word;">{ token.ensName ? "Set Correctly ✅" : "Not Set" }</p>
 
 						{#if token.contractAddress}
 							<p style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;">Contract</p>

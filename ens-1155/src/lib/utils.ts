@@ -38,3 +38,10 @@ export const santitiseEnsName = (inputStr: string) => {
   }
 
 }
+
+export function dateToUIDate(dateValue:number):string {
+	if(!dateValue) return 'Could not be found';
+	const userLocale = navigator.language;
+	const options = { year: 'numeric', month: 'short', day: 'numeric' };
+	return new Date(dateValue * 1000).toLocaleDateString(userLocale, options as Intl.DateTimeFormatOptions);
+}

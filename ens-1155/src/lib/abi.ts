@@ -27,16 +27,23 @@ export const ensAbi = [
   },
 ];
 
-function getEthersProvider(){
-	// @ts-ignore
-	const network = new Network("mainnet", chainID);
+let provider;
 
-	// @ts-ignore
-	const RPC_URL = rpcURL;
+export function getEthersProvider(){
 
-	return new JsonRpcProvider(RPC_URL, network, {
-		staticNetwork: network
-	});
+	if (!provider) {
+		// @ts-ignore
+		const network = new Network("mainnet", chainID);
+
+		// @ts-ignore
+		const RPC_URL = rpcURL;
+
+		provider = new JsonRpcProvider(RPC_URL, network, {
+			staticNetwork: network
+		});
+	}
+
+	return provider;
 }
 
 export function getEnsContract(){
@@ -44,8 +51,40 @@ export function getEnsContract(){
 	const provider = getEthersProvider();
 
 	const nameWrapperContract =
-		"0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401"; // Mainnet
-		//"0x0635513f179D50A207757E05759CbD106d7dFcE8"; // Sepolia
+		//"0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401"; // Mainnet
+		"0x0635513f179D50A207757E05759CbD106d7dFcE8"; // Sepolia
 
 	return new Contract(nameWrapperContract, ensAbi, provider);
+}
+
+const registrarABI = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "duration",
+				"type": "uint256"
+			}
+		],
+		"name": "renew",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	}
+];
+
+export function getEnsEthRegistrarContract(){
+
+	const provider = getEthersProvider();
+
+	const nameWrapperContract =
+		//"0x253553366Da8546fC250F225fe3d25d0C782303b"; // Mainnet
+		"0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"; // Sepolia
+
+	return new Contract(nameWrapperContract, registrarABI, provider);
 }

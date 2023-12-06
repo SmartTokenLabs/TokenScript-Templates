@@ -19,17 +19,17 @@
 	<ts:contract interface="erc1155" name="Token">
 		<!-- <ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address> -->
 		<!-- <ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address> -->
-		<ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address>
+		<ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address>
 	</ts:contract>
 	<ts:contract name="ETHRegistrarController">
 		<!-- <ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address> -->
 		<!-- <ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address> -->
-		<ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address>
+		<ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address>
 	</ts:contract>
 	<ts:contract name="PublicResolver">
 		<!-- <ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address> -->
 		<!-- <ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address> -->
-		<ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address>
+		<ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address>
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
@@ -65,12 +65,38 @@
 				</ts:origins>
 			</ts:attribute>
 
+			<ts:attribute name="renewalPrice">
+				<ts:type>
+					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+				</ts:type>
+				<ts:origins>
+					<ts:user-entry as="uint"/>
+				</ts:origins>
+			</ts:attribute>
+
 			<ts:attribute name="baseENSTokenId">
 				<ts:type>
 					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
+				</ts:origins>
+			</ts:attribute>
+
+			<ts:attribute name="renewalPricePerYear">
+				<ts:type>
+					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
+				</ts:type>
+				<ts:label>
+					<ts:string xml:lang="en">renewal price per year</ts:string>
+				</ts:label>
+				<ts:origins>
+					<ethereum:call function="rentPrice" contract="ETHRegistrarController" as="uint">
+						<ts:data>
+							<ts:uint256 ref="ensBaseName"/>
+							<ts:uint256>31622400</ts:uint256>
+						</ts:data>
+					</ethereum:call>
 				</ts:origins>
 			</ts:attribute>
 
@@ -243,12 +269,36 @@
 
 	</ts:cards>
 
-	<ts:attribute name="tokenIdHex">
+	<ts:attribute name="ensName">
 		<ts:type>
 			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
 		</ts:type>
 		<ts:label>
-			<ts:string xml:lang="en">tokenIdHex</ts:string>
+			<ts:string xml:lang="en">ENS Name</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="ensBaseName">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">ENS Name</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="expiry">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">Expiry</ts:string>
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="uint"/>

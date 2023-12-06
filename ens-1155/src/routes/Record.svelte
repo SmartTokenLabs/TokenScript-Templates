@@ -1,10 +1,8 @@
 <script lang="ts">
 	import context from "../lib/context";
 	import Loader from "../components/Loader.svelte";
-	import { decimalToHex, hexToAscii, santitiseEnsName } from "../lib/utils";
 	import {getEnsContract} from '../lib/abi';
 	import {TokenInterface} from "../lib/tokenTypes";
-	import {namehash} from "ethers";
 	import Header from "../components/Header.svelte";
 
 	let selectedRecord = { title: "Avatar", contractKey: "avatar" };
@@ -59,14 +57,6 @@
 		loading = false;
 	});
 
-	function dateToUIDate(dateValue:number):string {
-		if(!dateValue) return 'Could not be found';
-		const userLocale = navigator.language;
-		const options = { year: 'numeric', month: 'short', day: 'numeric' };
-		const milliseconds = Number(dateValue) * 1000;
-		return new Date(milliseconds).toLocaleDateString(userLocale, options as Intl.DateTimeFormatOptions);
-	}
-
 	function getTokenDataByKey (token: TokenInterface, selectedKey: string): string | number | undefined {
 		let recordData: string | number | undefined = "Record not found";
 		const tokenData = token[selectedKey];
@@ -74,41 +64,12 @@
 		return recordData;
 	}
 
-	async function setTokenData () {
-		const hash = namehash(ensBaseName);
-		const tokenDataRes = await ensContract.getData(hash);
-		applyValueIfNotExist('owner', tokenDataRes[0])
-		applyValueIfNotExist('expiry', dateToUIDate(tokenDataRes[2]))
-	}
-
-	async function getEnsName() {
-		try {
-			const tokenIdToHex = decimalToHex(token.tokenId);
-			const rawENSName = await ensContract.names(tokenIdToHex);
-			const rawNameToAscii = hexToAscii(rawENSName);
-			const { baseName, subName } = santitiseEnsName(rawNameToAscii);
-			ensDisplayName = subName ? subName : baseName;
-			ensBaseName = baseName;
-			isEnsSubName = !!subName;
-			await setTokenData();
-		} catch (error) {
-			ensDisplayName = 'not found';
-			console.log('error', error);
-		}
-	}
-
 	function updateRecordInput (event:Event) {
 		// @ts-ignore
 		web3.action.setProps({ newRecordValue: (event.currentTarget as HTMLInputElement).value });
 	}
 
-	function applyValueIfNotExist (tokenKey:string, tokenValue:any) {
-		if(token[tokenKey]) return;
-		token[tokenKey] = tokenValue;
-	}
-
 	async function init() {
-		await getEnsName();
 		selectRecordType(selectedRecord);
 	}
 
@@ -116,7 +77,7 @@
 
 <div>
 	{#if token}
-		<Header name={ensDisplayName} expiry={token.expiry} image={token.image_preview_url} />
+		<Header name={token.ensName} expiry={token.expiry} image={token.image_preview_url} />
 		<div style="margin: 14px 0; background-color: white; border-radius: 7px; border: solid #C2C2C2 1px; width: 100%; display: flex; justify-content: space-between; flex-direction: column;">
 			<div style="width: 100%;">
 					<p style="

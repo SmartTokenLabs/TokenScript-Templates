@@ -5,6 +5,10 @@
 
 	import Renew from "./routes/Renew.svelte";
 	import Record from "./routes/Record.svelte";
+	import {decimalToHex, hexToAscii, santitiseEnsName} from "./lib/utils";
+	import {getEnsContract} from "./lib/abi";
+	import {namehash} from "ethers";
+	import Loader from "./components/Loader.svelte";
 
 	let token;
 	let initialised = false;
@@ -21,6 +25,34 @@
 		page = routingMap[token.level == 0 ? "#adopt" : document.location.hash] || NotFound;
 	}
 
+	async function resolveEnsName() {
+		try {
+			const ensContract = getEnsContract();
+			const tokenIdToHex = decimalToHex(token.tokenId);
+			const rawENSName = await ensContract.names(tokenIdToHex);
+			const rawNameToAscii = hexToAscii(rawENSName);
+			const { baseName, subName } = santitiseEnsName(rawNameToAscii);
+			const nameHash = namehash(baseName);
+			const tokenDataRes = await ensContract.getData(nameHash);
+
+			const data = {
+				ensName: subName ? subName : baseName,
+				ensBaseName: baseName,
+				isEnsSubName: !!subName,
+				nameHash,
+				expiry: tokenDataRes[2]
+			}
+
+			console.log("Data: ", data);
+
+			// @ts-ignore
+			web3.action.setProps(data);
+
+		} catch (error) {
+			console.log('error', error);
+		}
+	}
+
 	// @ts-ignore
 	web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
 
@@ -29,6 +61,11 @@
 
 		context.setToken(updatedTokens.currentInstance);
 		token = updatedTokens.currentInstance;
+
+		if(!token.ensBaseName) {
+			await resolveEnsName();
+			return;
+		}
 
 		initialised = true;
 
@@ -41,6 +78,11 @@
 
 <div>
 	<div id="token-container">
+		{#if !initialised}
+			<div class="init-loader">
+				<Loader show={true} />
+			</div>
+		{/if}
 		<svelte:component this={page} />
 	</div>
 </div>
