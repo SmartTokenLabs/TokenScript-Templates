@@ -41,7 +41,7 @@
 				ensName,
 				ensBaseName: baseName,
 				registeredName: baseName.replace(".eth", ""),
-				isEnsSubName: !!subName,
+				subName: subName,
 				nameHash,
 				expiry: tokenDataRes[2]
 			}

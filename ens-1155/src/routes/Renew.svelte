@@ -100,7 +100,7 @@
 						</div>
 						<div style="color: black;display: flex; justify-content: space-between">
 							<p style="color: #9A9A9A; font-weight: 300;">
-								<small> { token.isEnsSubName ? `Note: this function will renew the expiry of ${token.ensBaseName}.` : '' }</small>
+								<small> { token.subName ? `Note: this function will renew the expiry of ${token.ensBaseName}` : '' }</small>
 							</p>
 						</div>
 					</div>

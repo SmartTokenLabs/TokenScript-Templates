@@ -119,9 +119,6 @@
 						} value here" id="newRecordValue" on:change={(event) => {
 							updateRecordInput(event)
 						}} style="padding: 20px; width: 100%; border-radius: 4px; border: none;" type="text" />
-						<p style="color: #9A9A9A; font-weight: 300;">
-							<small> { isEnsSubName ? `Note: this function will update the ${selectedRecord.contractKey} record of ${ensBaseName}.` : '' }</small>
-						</p>
 					</div>
 				</div>
 			</div>

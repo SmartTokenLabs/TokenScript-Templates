@@ -17,19 +17,16 @@
 		<ts:iconUrl xml:lang="en">https://app.ens.domains///image.jpg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
-		<!-- <ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address> -->
+		<ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address>
 		<!-- <ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address> -->
-		<ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address>
 	</ts:contract>
 	<ts:contract name="ETHRegistrarController">
-		<!-- <ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address> -->
+		<ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address>
 		<!-- <ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address> -->
-		<ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address>
 	</ts:contract>
 	<ts:contract name="PublicResolver">
-		<!-- <ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address> -->
+		<ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address>
 		<!-- <ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address> -->
-		<ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address>
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
@@ -293,6 +290,18 @@
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">ENS Name</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="utf8"/>
+		</ts:origins>
+	</ts:attribute>
+	
+	<ts:attribute name="subName">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">ENS subName</ts:string>
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="utf8"/>

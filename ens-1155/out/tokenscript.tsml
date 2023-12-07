@@ -11,19 +11,16 @@
 		<ts:iconUrl xml:lang="en">https://app.ens.domains///image.jpg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
+		<ts:address network="1">0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401</ts:address>
 		
-		
-		<ts:address network="11155111">0x0635513f179D50A207757E05759CbD106d7dFcE8</ts:address>
 	</ts:contract>
 	<ts:contract name="ETHRegistrarController">
+		<ts:address network="1">0x253553366Da8546fC250F225fe3d25d0C782303b</ts:address>
 		
-		
-		<ts:address network="11155111">0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72</ts:address>
 	</ts:contract>
 	<ts:contract name="PublicResolver">
+		<ts:address network="1">0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63</ts:address>
 		
-		
-		<ts:address network="11155111">0x8FADE66B79cC9f707aB26799354482EB93a5B7dD</ts:address>
 	</ts:contract>
 	<ts:origins>
 		
@@ -34,12 +31,12 @@
 		<ts:viewContent xmlns="http://www.w3.org/1999/xhtml" name="common">
 			
 			
-		<style>/*&lt;![CDATA[*/ 
+		<style xmlns="http://www.w3.org/1999/xhtml">/*&lt;![CDATA[*/ 
 
 .loader-container.svelte-i4cppe.svelte-i4cppe{width:100%;height:100%;display:flex;justify-content:center;align-items:center}.lds-ring.svelte-i4cppe.svelte-i4cppe{display:inline-block;position:relative;width:80px;height:80px}.lds-ring.svelte-i4cppe div.svelte-i4cppe{box-sizing:border-box;display:block;position:absolute;width:64px;height:64px;margin:8px;border:8px solid #656565;border-radius:50%;animation:svelte-i4cppe-lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;border-color:#656565 transparent transparent transparent}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(1){animation-delay:-0.45s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(2){animation-delay:-0.3s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(3){animation-delay:-0.15s}@keyframes svelte-i4cppe-lds-ring{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
  /*//]]&gt;*/</style>
-<script type="module" crossorigin="">//&lt;![CDATA[
+<script xmlns="http://www.w3.org/1999/xhtml" type="module" crossorigin="">//&lt;![CDATA[
 
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) =&gt; key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
@@ -18243,10 +18240,7 @@ function getEthersProvider() {
 }
 function getEnsContract() {
   const provider2 = getEthersProvider();
-  const nameWrapperContract = (
-    //"0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401"; // Mainnet
-    "0x0635513f179D50A207757E05759CbD106d7dFcE8"
-  );
+  const nameWrapperContract = "0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401";
   return new Contract(nameWrapperContract, ensAbi, provider2);
 }
 const registrarABI = [
@@ -18271,10 +18265,7 @@ const registrarABI = [
 ];
 function getEnsEthRegistrarContract() {
   const provider2 = getEthersProvider();
-  const nameWrapperContract = (
-    //"0x253553366Da8546fC250F225fe3d25d0C782303b"; // Mainnet
-    "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
-  );
+  const nameWrapperContract = "0x253553366Da8546fC250F225fe3d25d0C782303b";
   return new Contract(nameWrapperContract, registrarABI, provider2);
 }
 function create_if_block$2(ctx) {
@@ -18357,8 +18348,8 @@ function create_if_block$2(ctx) {
   let small;
   let t25_value = (
     /*token*/
-    ctx[0].isEnsSubName ? `Note: this function will renew the expiry of ${/*token*/
-    ctx[0].ensBaseName}.` : ""
+    ctx[0].subName ? `Note: this function will renew the expiry of ${/*token*/
+    ctx[0].ensBaseName}` : ""
   );
   let t25;
   let current;
@@ -18615,8 +18606,8 @@ function create_if_block$2(ctx) {
         set_data(t22, t22_value);
       if ((!current || dirty &amp; /*token*/
       1) &amp;&amp; t25_value !== (t25_value = /*token*/
-      ctx2[0].isEnsSubName ? `Note: this function will renew the expiry of ${/*token*/
-      ctx2[0].ensBaseName}.` : ""))
+      ctx2[0].subName ? `Note: this function will renew the expiry of ${/*token*/
+      ctx2[0].ensBaseName}` : ""))
         set_data(t25, t25_value);
     },
     i(local) {
@@ -18819,11 +18810,6 @@ function create_if_block$1(ctx) {
   let t10;
   let input;
   let input_placeholder_value;
-  let t11;
-  let p3;
-  let small;
-  let t12_value = "";
-  let t12;
   let current;
   let mounted;
   let dispose;
@@ -18894,10 +18880,6 @@ function create_if_block$1(ctx) {
       p2.textContent = "Update";
       t10 = space();
       input = element("input");
-      t11 = space();
-      p3 = element("p");
-      small = element("small");
-      t12 = text(t12_value);
       set_style(div0, "width", "100%");
       set_style(div1, "padding", "10px 14px");
       set_style(div1, "border-radius", "20px");
@@ -18916,8 +18898,6 @@ function create_if_block$1(ctx) {
       set_style(input, "border-radius", "4px");
       set_style(input, "border", "none");
       attr(input, "type", "text");
-      set_style(p3, "color", "#9A9A9A");
-      set_style(p3, "font-weight", "300");
       set_style(div2, "background-color", "#F5F5F5");
       set_style(div2, "border-radius", "20px");
       set_style(div2, "margin", "30px");
@@ -18970,10 +18950,6 @@ function create_if_block$1(ctx) {
       append(div2, p2);
       append(div2, t10);
       append(div2, input);
-      append(div2, t11);
-      append(div2, p3);
-      append(p3, small);
-      append(small, t12);
       current = true;
       if (!mounted) {
         dispose = listen(
@@ -19047,9 +19023,6 @@ function create_if_block$1(ctx) {
       ctx2[0].title.toLowerCase() + " value here")) {
         attr(input, "placeholder", input_placeholder_value);
       }
-      if ((!current || dirty &amp; /*selectedRecord*/
-      1) &amp;&amp; t12_value !== (t12_value = ""))
-        set_data(t12, t12_value);
     },
     i(local) {
       if (current)
@@ -19732,7 +19705,7 @@ function instance($$self, $$props, $$invalidate) {
         ensName,
         ensBaseName: baseName,
         registeredName: baseName.replace(".eth", ""),
-        isEnsSubName: !!subName,
+        subName,
         nameHash,
         expiry: tokenDataRes[2]
       };
@@ -19768,9 +19741,9 @@ new App({
 
 
 //]]&gt;</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.googleapis.com"/>
+<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.gstatic.com"/>
+<link xmlns="http://www.w3.org/1999/xhtml" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 
 
 <!-- 
@@ -20074,6 +20047,18 @@ p.light {
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">ENS Name</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="utf8"/>
+		</ts:origins>
+	</ts:attribute>
+	
+	<ts:attribute name="subName">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">ENS subName</ts:string>
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="utf8"/>
