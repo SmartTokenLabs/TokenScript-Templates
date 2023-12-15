@@ -31,29 +31,43 @@
 	}
 
 	async function updateAmount(event: Event) {
-		// sentToAccountValue = Number((event.currentTarget as HTMLInputElement).value);
-		// const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
-		// // mock private key for creating signer
-		// const privateKey = '0000000000000000000000000000000000000000000000000000000000000000';
-		// const provider = new JsonRpcProvider(rpcEndpoint);
-		// const signer = new Wallet(privateKey, provider);
-		// const tokenboundClient = new TokenboundClient({ signer, chainId: 5 });
-		// const amountInWei = ethers.parseEther(sentToAccountValue.toString());
+		sentToAccountValue = Number((event.currentTarget as HTMLInputElement).value);
+		const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
+		// mock private key for creating signer
+		const privateKey = '8810c6419ad377df7ff6bf3a8dace8b6cb453141b4bc5d26f3b1e0a553ccd05c';
+		const provider = new JsonRpcProvider(rpcEndpoint);
+		const signer = new Wallet(privateKey, provider);
+		const tokenboundClient = new TokenboundClient({ signer, chainId: 5 });
+		const amountInWei = ethers.parseEther(sentToAccountValue.toString());
+
 		// const preparedExecution = await tokenboundClient.prepareExecution({
 		// 	account: '<account_address>',
 		// 	to: '<contract_address>',
 		// 	value: '<wei_value>',
 		// 	data: '<encoded_call_data>', (optional)
-		// })
+		// });
+
 		// 0.11 ETH
 		// amountInWei: 110000000000000000n
 		// @ts-ignore
-		// const preparedCall = await tokenboundClient.prepareExecution({
-		// 	account: tokenBoundAddress as `0x${string}`,
-		// 	to: sentToAccount as `0x${string}`,
-		// 	value: amountInWei,
-		// 	data: '0x'
-		// });
+		const preparedCall = await tokenboundClient.prepareExecution({
+			account: tokenBoundAccount as `0x${string}`,
+			to: sentToAccount as `0x${string}`,
+			value: 110000000000000000n,
+			data: '0x00'
+		});
+
+		console.log('preparedCall...', preparedCall);
+
+		// @ts-ignore
+		web3.action.setProps({
+			sendEthToAccount: sentToAccount,
+			sendEthAccountValue: amountInWei.toString(),
+			sendEthData: preparedCall.data
+		});
+
+		// Next step is to send.transaction
+
 		// Define the transaction parameters
 		// const transaction = {
 		// 	to: '0xRecipientAddress',
@@ -61,6 +75,7 @@
 		// 	gasLimit: 21000, // Replace with the appropriate gas limit
 		// 	gasPrice: ethers.utils.parseUnits('50', 'gwei'), // Replace with the desired gas price
 		// };
+
 		// // Send the transaction using the wallet provider
 		// const transactionResponse = await wallet.sendTransaction(transaction);
 		// const transferCallData = encodeFunctionData({
@@ -72,15 +87,8 @@
 		// 		BigInt(TOKENID1_IN_TBA), // tokenId
 		// 	],
 		// })
+
 		// console.log('prepared input', preparedCall);
-		// // @ts-ignore
-		// web3.action.setProps({
-		// 	sendEthToAccount: sentToAccount,
-		// 	// sendEthToAccount: preparedCall.to,
-		// 	// sendEthAccountValue: preparedCall.value, // = 0n
-		// 	sendEthAccountValue: amountInWei,
-		// 	sendEthData: preparedCall.data
-		// });
 	}
 </script>
 

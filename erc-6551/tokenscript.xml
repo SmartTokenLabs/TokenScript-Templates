@@ -94,6 +94,7 @@
 						<ts:bytes local-ref="sendEthData" />
 						<ts:uint8>0</ts:uint8>
 					</ts:data>
+					<ethereum:value local-ref="sendEthAccountValue"/>
 				</ethereum:transaction>
 			</ts:transaction>
 
