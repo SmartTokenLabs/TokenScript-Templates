@@ -11,17 +11,10 @@
 		<ts:iconUrl xml:lang="en">https://tokenbound.org/image.jpg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc721" name="Token">
-		<ts:address network="5">0xc361201E5B1005cCDE47B32F223BC145DE393F62</ts:address>
+		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{CONTRACT_ADDRESS}</ts:address>
 	</ts:contract>
-	<ts:contract name="tokenBoundAccountRegistryGoerli">
-		<ts:address network="5">0x000000006551c19487814612e58FE06813775758</ts:address>
-	</ts:contract>
-	<ts:contract name="tokenBoundImpementationGoerli">
-		<ts:address network="5">0x41C8f39463A868d3A88af00cd0fe7102F30E44eC</ts:address>
-	</ts:contract>
-	<ts:contract name="tokenBoundAccountProxyGoerli">
-		<ts:address network="5">0x55266d75D1a14E4572138116aF39863Ed6596E7F</ts:address>
-	</ts:contract>
+	
+	
 	<ts:origins>
 		
 		<ts:ethereum contract="Token"/>

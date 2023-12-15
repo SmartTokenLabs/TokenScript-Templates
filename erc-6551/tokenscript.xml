@@ -19,7 +19,8 @@
 	<ts:contract interface="erc721" name="Token">
 		<ts:address network="5">0xc361201E5B1005cCDE47B32F223BC145DE393F62</ts:address>
 	</ts:contract>
-	<ts:contract name="tokenBoundAccountRegistryGoerli">
+	<!-- see this resource to include the contract for the chain(s) needed: https://docs.tokenbound.org/contracts/deployments -->
+	<!-- <ts:contract name="tokenBoundAccountRegistryGoerli">
 		<ts:address network="5">0x000000006551c19487814612e58FE06813775758</ts:address>
 	</ts:contract>
 	<ts:contract name="tokenBoundImpementationGoerli">
@@ -27,7 +28,7 @@
 	</ts:contract>
 	<ts:contract name="tokenBoundAccountProxyGoerli">
 		<ts:address network="5">0x55266d75D1a14E4572138116aF39863Ed6596E7F</ts:address>
-	</ts:contract>
+	</ts:contract> -->
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
 		<ts:ethereum contract="Token"/>
