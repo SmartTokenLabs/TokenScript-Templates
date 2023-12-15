@@ -37,3 +37,26 @@ p.light {
 	height: 100%;
 }
 
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+	background-color: white;
+  border-radius: 3px;
+}
+
+/* Style for the scrollbar track */
+.scroll-container::-webkit-scrollbar {
+  height: 10px; /* Set the height of the scrollbar */
+}
+
+/* Style for the scrollbar handle/progress element */
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #6E47F3;
+  border-radius: 3px; /* Same border-radius as the container */
+}
+
+/* Optional: Style for the scrollbar track when the handle is being dragged */
+.scroll-container::-webkit-scrollbar-track {
+  background-color: #D6D2F8;
+}

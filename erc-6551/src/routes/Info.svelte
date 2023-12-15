@@ -169,7 +169,7 @@
 						Collectables 🖼
 					</h2>
 					{#if tokenBoundCollectables.length}
-						<div style="width: auto; overflow: scroll;">
+						<div class="scroll-container">
 							<div
 								style={`width: ${
 									tokenBoundCollectables.length
