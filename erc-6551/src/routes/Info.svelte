@@ -6,12 +6,14 @@
 		setTokenBoundAccountIsActive,
 		setChainIdName,
 		setTokenBoundAccount,
-		setTokenBoundNFTs
+		setTokenBoundCollectables,
+		setTokenBoundAssets
 	} from './../lib/utils';
 
 	let token: any;
 	let loading = true;
-	let tokenBoundNFTs: any = [];
+	let tokenBoundCollectables: any = [];
+	let tokenBoundAssets: any = [];
 	let tokenBoundChainIdName: undefined | string;
 	let tokenBoundAccountIsActive: boolean | undefined;
 	let tokenboundClient: any;
@@ -41,7 +43,11 @@
 		);
 
 		if (tokenBoundChainIdName && tokenBoundAccountIsActive) {
-			tokenBoundNFTs = await setTokenBoundNFTs(tokenBoundChainIdName, tokenBoundAccount);
+			tokenBoundCollectables = await setTokenBoundCollectables(
+				tokenBoundChainIdName,
+				tokenBoundAccount
+			);
+			tokenBoundAssets = await setTokenBoundAssets(tokenBoundChainIdName, tokenBoundAccount);
 		}
 	});
 </script>
@@ -158,18 +164,20 @@
 					{/each}
 				</div>
 
-				<div class="token-collectables">
+				<div class="token-collectables" style="margin-bottom: 30px;">
 					<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">
 						Collectables 🖼
 					</h2>
-					{#if tokenBoundNFTs.length}
+					{#if tokenBoundCollectables.length}
 						<div style="width: auto; overflow: scroll;">
 							<div
 								style={`width: ${
-									tokenBoundNFTs.length ? tokenBoundNFTs.length * 100 + 'px' : 0
+									tokenBoundCollectables.length
+										? tokenBoundCollectables.length * 100 + 'px'
+										: 0
 								} overflow: scroll; display: flex;`}
 							>
-								{#each tokenBoundNFTs as nft}
+								{#each tokenBoundCollectables as nft}
 									<img
 										style="border-radius: 12px; height: 80px; width: 90px; background: grey; margin: 10px;"
 										src={nft.image}
@@ -179,10 +187,46 @@
 							</div>
 						</div>
 					{/if}
-					{#if !tokenBoundNFTs.length}
+					{#if !tokenBoundCollectables.length}
 						<div>
-							<p style="font-size: 14px; padding: 0; color: #6D6D6D;">
+							<p
+								style="font-size: 12px; margin-top: 18px; padding: 0; color: #6D6D6D;"
+							>
 								No collectables found.
+							</p>
+						</div>
+					{/if}
+				</div>
+				<div class="token-assets" style="margin-bottom: 30px;">
+					<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">Assets 💰</h2>
+					{#if tokenBoundAssets.length}
+						<div
+							class="token-assets-wrapper"
+							style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 40px;"
+						>
+							{#each tokenBoundAssets as asset}
+								<div
+									class="token-asset"
+									style="background: #FAFAFA; width: 100%; color: #6E47F3;f ont-weight: 100; font-size: 12px;padding: 14px; margin-bottom: 12px;"
+								>
+									<div>
+										<p
+											style="font-weight: 300; font-size: 14px; padding: 0; margin: 0; margin-bottom: 7px;"
+										>
+											{asset.title}
+										</p>
+										<p style="color: black; margin: 0; font-weight: 300;">
+											{asset.balance / Math.pow(10, asset.data.decimals)}
+										</p>
+									</div>
+								</div>
+							{/each}
+						</div>
+					{/if}
+					{#if !tokenBoundAssets.length}
+						<div>
+							<p style="font-size: 12px; padding: 9px 14px; color: #6D6D6D;">
+								No assets found.
 							</p>
 						</div>
 					{/if}

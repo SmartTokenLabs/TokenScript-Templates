@@ -1,15 +1,15 @@
+import { error } from '@sveltejs/kit';
 import { TokenboundClient } from '@tokenbound/sdk';
 import { Wallet, JsonRpcProvider } from 'ethers';
 
 export const getTokenBoundClientInstance = (chainId: number) => {
   const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
-  // mock wallet created
+  // mock wallet for SDK read functionality.
   const privateKey = '8810c6419ad377df7ff6bf3a8dace8b6cb453141b4bc5d26f3b1e0a553ccd05c';
   const provider = new JsonRpcProvider(rpcEndpoint);
   const signer = new Wallet(privateKey, provider);
   return new TokenboundClient({ signer, chainId: chainId });
 }
-
 
 export const setTokenBoundAccountIsActive = async (tokenboundClient: any, tokenBoundAccount: string) => {
   return tokenboundClient.checkAccountDeployment({
@@ -34,13 +34,29 @@ export const setTokenBoundAccount = (tokenboundClient: any, tokenContract: `0x${
   return tokenboundClient.getAccount({ tokenContract, tokenId });
 }
 
-export const setTokenBoundNFTs = async (chainId: string, tba: string) => {
+export const setTokenBoundCollectables = async (chainId: string, tba: string) => {
   try {
-    // @ts-ignore
     const response = await fetch(
       `https://api.token-discovery.tokenscript.org/get-all-owner-tokens?chain=${chainId}&owner=${tba}&blockchain=evm`
     );
     return response.json();
+  } catch (error) {
+    console.log('error: ', error);
+    return [];
+  }
+}
+
+export const setTokenBoundAssets = async (chainId: string, tba: string) => {
+  try {
+    const response = await fetch(
+      `https://api.token-discovery.tokenscript.org/get-owner-fungible-tokens?blockchain=${chainId}&owner=${tba}&chain=eth`
+    );
+    const responseJson = await response.json();
+    if (responseJson.error) {
+      console.log('error: ', error);
+      return [];
+    }
+    return responseJson;
   } catch (error) {
     console.log('error: ', error);
     return [];

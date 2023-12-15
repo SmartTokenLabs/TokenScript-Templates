@@ -1,17 +1,13 @@
 <script lang="ts">
 	import context from './lib/context';
 	import Info from './routes/Info.svelte';
-	import SendEth from './routes/SendEth.svelte';
-	import SendErc20 from './routes/SendErc20.svelte';
 	import NotFound from './routes/NotFound.svelte';
 
 	let token;
 	let initialised = false;
 
 	const routingMap = {
-		'#info': Info,
-		'#sendEth': SendEth,
-		'#sendErc20': SendErc20
+		'#info': Info
 	};
 
 	let page;
@@ -26,11 +22,6 @@
 
 		context.setToken(updatedTokens.currentInstance);
 		token = updatedTokens.currentInstance;
-
-		const data = { testing: 123 };
-
-		// @ts-ignore
-		web3.action.setProps(data);
 
 		initialised = true;
 
