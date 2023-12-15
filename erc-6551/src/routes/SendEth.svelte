@@ -3,165 +3,84 @@
 	import Loader from '../components/Loader.svelte';
 	import { ethers, JsonRpcProvider, Wallet } from 'ethers';
 	import { TokenboundClient } from '@tokenbound/sdk';
+	import { encodeFunctionData } from 'viem';
+	import { getTokenBoundClientInstance, setTokenBoundAccount } from './../lib/utils';
 
-	// signer
-	let token;
+	let token: any;
 	let loading = true;
-	let tokenBoundAddress = '...loading';
-	let tokenBoundNFTs: any = [];
 	let sentToAccountValue = 0;
 	let sentToAccount: undefined | string;
+	let tokenboundClient: any;
+	let tokenBoundAccount: string;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
 		// You can load other data before hiding the loader
 		loading = false;
-		await getTokenBoundDetail();
-		await getTokenBoundNFTs();
-	});
-
-	async function getTokenBoundDetail() {
-		const goerliEthereumProviderConfig = {
-			name: 'GOERLI',
-			rpc: 'https://nodes.mewapi.io/rpc/eth',
-			explorer: 'https://goerli.etherscan.io/tx/'
-		};
-		const tokenBoundABI = [
-			{
-				inputs: [],
-				name: 'AccountCreationFailed',
-				type: 'error'
-			},
-			{
-				anonymous: false,
-				inputs: [
-					{ indexed: false, internalType: 'address', name: 'account', type: 'address' },
-					{
-						indexed: true,
-						internalType: 'address',
-						name: 'implementation',
-						type: 'address'
-					},
-					{ indexed: false, internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ indexed: false, internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{
-						indexed: true,
-						internalType: 'address',
-						name: 'tokenContract',
-						type: 'address'
-					},
-					{ indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'ERC6551AccountCreated',
-				type: 'event'
-			},
-			{
-				inputs: [
-					{ internalType: 'address', name: 'implementation', type: 'address' },
-					{ internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{ internalType: 'address', name: 'tokenContract', type: 'address' },
-					{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'account',
-				outputs: [{ internalType: 'address', name: '', type: 'address' }],
-				stateMutability: 'view',
-				type: 'function'
-			},
-			{
-				inputs: [
-					{ internalType: 'address', name: 'implementation', type: 'address' },
-					{ internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{ internalType: 'address', name: 'tokenContract', type: 'address' },
-					{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'createAccount',
-				outputs: [{ internalType: 'address', name: '', type: 'address' }],
-				stateMutability: 'nonpayable',
-				type: 'function'
-			}
-		];
-
-		const provider = new ethers.JsonRpcProvider(goerliEthereumProviderConfig.rpc);
-		const contract = new ethers.Contract(
-			'0x000000006551c19487814612e58FE06813775758',
-			tokenBoundABI,
-			provider
+		tokenboundClient = getTokenBoundClientInstance(token.chainId);
+		tokenBoundAccount = await setTokenBoundAccount(
+			tokenboundClient,
+			token.contractAddress,
+			token.tokenId
 		);
-
-		try {
-			const tokenBoundNFTData = await contract.account(
-				'0x55266d75D1a14E4572138116aF39863Ed6596E7F',
-				'0x0000000000000000000000000000000000000000000000000000000000000000',
-				5,
-				'0xc361201e5b1005ccde47b32f223bc145de393f62',
-				1
-			);
-			tokenBoundAddress = tokenBoundNFTData;
-		} catch (error) {
-			console.log('Error: ', error);
-			tokenBoundAddress = 'failed to identify Account Address';
-		}
-	}
-
-	async function getTokenBoundNFTs() {
-		if (!tokenBoundAddress) return;
-		try {
-			// @ts-ignore
-			const response = await fetch(
-				`https://api.token-discovery.tokenscript.org/get-all-owner-tokens?chain=goerli&owner=${tokenBoundAddress}&blockchain=evm`
-			);
-			tokenBoundNFTs = await response.json();
-		} catch (error) {
-			console.log(error);
-		}
-	}
+	});
 
 	function updateToAddress(event: Event) {
 		sentToAccount = (event.currentTarget as HTMLInputElement).value;
 	}
 
 	async function updateAmount(event: Event) {
-		sentToAccountValue = Number((event.currentTarget as HTMLInputElement).value);
-
-		const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
-		// mock private key for creating signer
-		const privateKey = '0000000000000000000000000000000000000000000000000000000000000000';
-		const provider = new JsonRpcProvider(rpcEndpoint);
-		const signer = new Wallet(privateKey, provider);
-		const tokenboundClient = new TokenboundClient({ signer, chainId: 5 });
-		const amountInWei = ethers.parseEther(sentToAccountValue.toString());
-
+		// sentToAccountValue = Number((event.currentTarget as HTMLInputElement).value);
+		// const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
+		// // mock private key for creating signer
+		// const privateKey = '0000000000000000000000000000000000000000000000000000000000000000';
+		// const provider = new JsonRpcProvider(rpcEndpoint);
+		// const signer = new Wallet(privateKey, provider);
+		// const tokenboundClient = new TokenboundClient({ signer, chainId: 5 });
+		// const amountInWei = ethers.parseEther(sentToAccountValue.toString());
 		// const preparedExecution = await tokenboundClient.prepareExecution({
 		// 	account: '<account_address>',
 		// 	to: '<contract_address>',
 		// 	value: '<wei_value>',
 		// 	data: '<encoded_call_data>', (optional)
 		// })
-
 		// 0.11 ETH
 		// amountInWei: 110000000000000000n
-
 		// @ts-ignore
-		const preparedCall = await tokenboundClient.prepareExecution({
-			account: tokenBoundAddress as `0x${string}`,
-			to: sentToAccount as `0x${string}`,
-			value: amountInWei,
-			data: '0x'
-		});
-
-		console.log('prepared input', preparedCall);
-
-		// @ts-ignore
-		web3.action.setProps({
-			sendEthToAccount: sentToAccount,
-			// sendEthToAccount: preparedCall.to,
-			// sendEthAccountValue: preparedCall.value, // = 0n
-			sendEthAccountValue: amountInWei,
-			sendEthData: preparedCall.data
-		});
+		// const preparedCall = await tokenboundClient.prepareExecution({
+		// 	account: tokenBoundAddress as `0x${string}`,
+		// 	to: sentToAccount as `0x${string}`,
+		// 	value: amountInWei,
+		// 	data: '0x'
+		// });
+		// Define the transaction parameters
+		// const transaction = {
+		// 	to: '0xRecipientAddress',
+		// 	value: ethers.utils.parseEther('1.0'), // Sending 1 ETH
+		// 	gasLimit: 21000, // Replace with the appropriate gas limit
+		// 	gasPrice: ethers.utils.parseUnits('50', 'gwei'), // Replace with the desired gas price
+		// };
+		// // Send the transaction using the wallet provider
+		// const transactionResponse = await wallet.sendTransaction(transaction);
+		// const transferCallData = encodeFunctionData({
+		// 	abi: zora721.abi,
+		// 	functionName: 'safeTransferFrom',
+		// 	args: [
+		// 		ANVIL_USER_0, // from
+		// 		ZORA721_TBA_ADDRESS, // to
+		// 		BigInt(TOKENID1_IN_TBA), // tokenId
+		// 	],
+		// })
+		// console.log('prepared input', preparedCall);
+		// // @ts-ignore
+		// web3.action.setProps({
+		// 	sendEthToAccount: sentToAccount,
+		// 	// sendEthToAccount: preparedCall.to,
+		// 	// sendEthAccountValue: preparedCall.value, // = 0n
+		// 	sendEthAccountValue: amountInWei,
+		// 	sendEthData: preparedCall.data
+		// });
 	}
 </script>
 
@@ -222,11 +141,11 @@
 								</p>
 							</div>
 							<a
-								href={'https://etherscan.io/address/' + tokenBoundAddress}
+								href={'https://etherscan.io/address/' + tokenBoundAccount}
 								target="_blank"
 								style="border-radius: 18px; background: white;font-size:12px;color: #6E47F3;padding: 6px 12px; word-break: break-all;"
 							>
-								{tokenBoundAddress}
+								{tokenBoundAccount}
 							</a>
 						</div>
 					</div>
@@ -263,7 +182,7 @@
 					<span style="color: #6e47f3;">{sentToAccountValue}</span>
 				</p>
 				<p style="font-size: 12px; font-weight: 300;">
-					From <span style="color: #6e47f3;"> {tokenBoundAddress}</span>
+					From <span style="color: #6e47f3;"> {tokenBoundAccount}</span>
 					<span>to</span>
 					<span style="color: #6e47f3;"> {sentToAccount} </span>
 				</p>

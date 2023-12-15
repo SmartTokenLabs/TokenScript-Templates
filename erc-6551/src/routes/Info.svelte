@@ -1,91 +1,61 @@
 <script lang="ts">
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
-	import { TokenboundClient } from '@tokenbound/sdk';
-	import { Wallet, JsonRpcProvider } from 'ethers';
+	import {
+		getTokenBoundClientInstance,
+		setTokenBoundAccountIsActive,
+		setChainIdName,
+		setTokenBoundAccount,
+		setTokenBoundNFTs
+	} from './../lib/utils';
 
-	let token;
-	let tokenboundClient: any;
+	let token: any;
 	let loading = true;
-	let tokenBoundAccount: string;
 	let tokenBoundNFTs: any = [];
 	let tokenBoundChainIdName: undefined | string;
 	let tokenBoundAccountIsActive: boolean | undefined;
+	let tokenboundClient: any;
+	let tokenBoundAccount: string;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
+
 		token = value.token;
-		// @ts-ignore
+
 		tokenBoundChainIdName = setChainIdName(token.chainId);
+
 		// You can load other data before hiding the loader
 		loading = false;
-		// initialise the card data
-		tokenboundClient = setTokenBoundClient();
-		// @ts-ignore
-		tokenBoundAccount = await setTokenBoundAccount(token.contractAddress, token.tokenId);
-		tokenBoundAccountIsActive = await setTokenBoundAccountIsActive();
+
+		tokenboundClient = getTokenBoundClientInstance(token.chainId);
+
+		tokenBoundAccount = await setTokenBoundAccount(
+			tokenboundClient,
+			token.contractAddress,
+			token.tokenId
+		);
+
+		tokenBoundAccountIsActive = await setTokenBoundAccountIsActive(
+			tokenboundClient,
+			tokenBoundAccount
+		);
+
 		if (tokenBoundChainIdName && tokenBoundAccountIsActive) {
 			tokenBoundNFTs = await setTokenBoundNFTs(tokenBoundChainIdName, tokenBoundAccount);
 		}
 	});
-
-	function setTokenBoundClient() {
-		const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
-		const privateKey = '0000000000000000000000000000000000000000000000000000000000000000';
-		const provider = new JsonRpcProvider(rpcEndpoint);
-		const signer = new Wallet(privateKey, provider);
-		// @ts-ignore
-		return new TokenboundClient({ signer, chainId: token.chainId });
-	}
-
-	async function setTokenBoundAccountIsActive() {
-		if (!tokenBoundAccount) return;
-		return tokenboundClient.checkAccountDeployment({
-			accountAddress: tokenBoundAccount as `0x${string}`
-		});
-	}
-
-	function setChainIdName(id: number) {
-		const chainMap = {
-			1: 'eth',
-			5: 'goerli',
-			11155111: 'sepolia',
-			137: 'polygon',
-			80001: 'mumbai',
-			56: 'bsc'
-		};
-		// @ts-ignore
-		return chainMap[id];
-	}
-
-	async function setTokenBoundAccount(tokenContract: string, tokenId: number) {
-		return tokenboundClient.getAccount({ tokenContract, tokenId });
-	}
-
-	async function setTokenBoundNFTs(chainId: string, tba: string) {
-		try {
-			// @ts-ignore
-			const response = await fetch(
-				`https://api.token-discovery.tokenscript.org/get-all-owner-tokens?chain=${chainId}&owner=${tba}&blockchain=evm`
-			);
-			return response.json();
-		} catch (error) {
-			console.log('error: ', error);
-			return [];
-		}
-	}
 </script>
 
 <div>
 	{#if token}
 		<div
-			style="
-    font-family: 'helvetica';
-    padding: 20px;
-    background: #fff;
-"
+			class="card-wrapper"
+			style=" font-family: 'helvetica'; padding: 20px; background: #fff;"
 		>
-			<div style="display: flex; justify-content: space-between; align-items: center;">
+			<div
+				class="card-heading"
+				style="display: flex; justify-content: space-between; align-items: center;"
+			>
 				<h1 style="color: #6E47F3;font-size: 18px;">Info</h1>
 				<div
 					style="background: black;font-weight:600;border-radius: 9px;font-size: 12px;padding: 12px;color: white;"
@@ -95,26 +65,32 @@
 			</div>
 
 			<div
+				class="card-detail-wrapper"
 				style="background: #fff; background-image: radial-gradient(#CDCDD1 1px, transparent 0); background-size: 40px 40px; background-position: -19px -19px; height: 340px; margin-top: 32px;"
 			>
-				<div style="position: relative; top: 40px;">
-					<div style="background: #fff; width: 180px;">
+				<div class="key-token-details-wrapper" style="position: relative; top: 40px;">
+					<div class="key-token-details" style="background: #fff; width: 180px;">
 						<img
 							style="height: 180px; width: 180px;border-radius: 14px;"
 							src={token.image_preview_url}
 							alt={token.description}
 						/>
 					</div>
-					<div>
+					<div class="secondary-token-details-wrapper">
 						<p
+							class="token-name"
 							style="font-size: 24px; font-weight: 600; margin: 12px 0; background: white; width: fit-content;"
 						>
 							{token.name}
 						</p>
 						<div
+							class="token-account-details-wrapper"
 							style="display: flex;align-items: center; background: white; width: fit-content;"
 						>
-							<div style="width: 94px; display: flex;align-items: center;">
+							<div
+								class="token-account-details"
+								style="width: 94px; display: flex;align-items: center;"
+							>
 								<svg
 									width="24px"
 									height="100%"
@@ -134,6 +110,7 @@
 									</g>
 								</svg>
 								<p
+									class="token-account-title"
 									style="font-size: 12px; padding: 0; color: #6D6D6D; margin: 0 7px;"
 								>
 									Account
@@ -141,6 +118,7 @@
 							</div>
 							{#if tokenBoundAccount}
 								<a
+									class="token-account"
 									href={'https://etherscan.io/address/' + tokenBoundAccount}
 									target="_blank"
 									style="border-radius: 18px; background: white;font-size:12px;color: #6E47F3;padding: 6px 12px; word-break: break-all;"
@@ -150,6 +128,7 @@
 							{/if}
 							{#if !tokenBoundAccount}
 								<div
+									class="token-account-loading"
 									style="border-radius: 18px; background: white;font-size:12px;color: #6E47F3;padding: 6px 12px; word-break: break-all;"
 								>
 									loading...
@@ -160,52 +139,54 @@
 				</div>
 			</div>
 
-			<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">Attributes</h2>
+			<div class="token-tertiary-details-wrapper">
+				<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">Attributes</h2>
 
-			<div
-				style="display: flex;justify-content: space-between;flex-wrap: wrap; margin-bottom: 40px;"
-			>
-				{#each token?.tokenInfo?.attributes as trait}
-					<div
-						style="background: #FAFAFA; width: calc(50% - 12px); color: #6E47F3;font-weight: 100;font-size: 12px;padding: 14px; margin-bottom: 12px;"
-					>
-						<p style="font-size: 14px; padding: 0; margin: 0; margin-bottom: 7px;">
-							{trait.trait_type}
-						</p>
-						<p style="color: black; margin: 0;">{trait.value}</p>
-					</div>
-				{/each}
-			</div>
-
-			<div>
-				<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">Collectables 🖼</h2>
-				{#if tokenBoundNFTs.length}
-					<div style="width: auto; overflow: scroll;">
+				<div
+					class="token-traits"
+					style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 40px;"
+				>
+					{#each token?.tokenInfo?.attributes as trait}
 						<div
-							style={`width: ${
-								tokenBoundNFTs.length ? tokenBoundNFTs.length * 100 + 'px' : 0
-							} overflow: scroll; display: flex;`}
+							style="background: #FAFAFA; width: calc(50% - 12px); color: #6E47F3;font-weight: 100;font-size: 12px;padding: 14px; margin-bottom: 12px;"
 						>
-							{#each tokenBoundNFTs as nft}
-								<img
-									style="border-radius: 12px; height: 80px; width: 90px; background: grey; margin: 10px;"
-									src={nft.image}
-									alt={nft.name}
-								/>
-							{/each}
+							<p style="font-size: 14px; padding: 0; margin: 0; margin-bottom: 7px;">
+								{trait.trait_type}
+							</p>
+							<p style="color: black; margin: 0;">{trait.value}</p>
 						</div>
-					</div>
-				{/if}
-				{#if !tokenBoundNFTs.length}
-					<div>
-						<p style="font-size: 14px; padding: 0; color: #6D6D6D;">
-							No collectables found.
-						</p>
-					</div>
-				{/if}
-				<!-- <div>
-					<h2 style="color: #A1A1AA; font-size: 16px;">Assets 💰</h2>
-				</div> -->
+					{/each}
+				</div>
+
+				<div class="token-collectables">
+					<h2 style="color: #6D6D6D; font-size: 14px; font-weight: 400;">
+						Collectables 🖼
+					</h2>
+					{#if tokenBoundNFTs.length}
+						<div style="width: auto; overflow: scroll;">
+							<div
+								style={`width: ${
+									tokenBoundNFTs.length ? tokenBoundNFTs.length * 100 + 'px' : 0
+								} overflow: scroll; display: flex;`}
+							>
+								{#each tokenBoundNFTs as nft}
+									<img
+										style="border-radius: 12px; height: 80px; width: 90px; background: grey; margin: 10px;"
+										src={nft.image}
+										alt={nft.name}
+									/>
+								{/each}
+							</div>
+						</div>
+					{/if}
+					{#if !tokenBoundNFTs.length}
+						<div>
+							<p style="font-size: 14px; padding: 0; color: #6D6D6D;">
+								No collectables found.
+							</p>
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	{/if}

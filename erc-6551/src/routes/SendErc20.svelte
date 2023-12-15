@@ -1,30 +1,29 @@
 <script lang="ts">
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
-	import { ethers } from 'ethers';
+	import { getTokenBoundClientInstance, setTokenBoundAccount } from './../lib/utils';
 
-	let token;
+	let token: any;
 	let loading = true;
-	let tokenBoundAddress = '...loading';
-	let tokenBoundNFTs: any = [];
+	let tokenboundClient: any;
+	let tokenBoundAccount: string;
 	let sentToAccountValue = 0;
 	let sentToAccount: undefined | string;
 	let erc20ContractAddress: undefined | string;
 	let erc20TokenCollectionMeta: any = {};
 	let erc20TokenCollectionChain = 'eth';
 
-	const goerliEthereumProviderConfig = {
-		name: 'GOERLI',
-		rpc: 'https://nodes.mewapi.io/rpc/eth',
-		explorer: 'https://goerli.etherscan.io/tx/'
-	};
-
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
 		// You can load other data before hiding the loader
 		loading = false;
-		await getTokenBoundDetail();
+		tokenboundClient = getTokenBoundClientInstance(token.chainId);
+		tokenBoundAccount = await setTokenBoundAccount(
+			tokenboundClient,
+			token.contractAddress,
+			token.tokenId
+		);
 	});
 
 	function init() {
@@ -32,91 +31,6 @@
 		web3.action.setProps({
 			sendERC20Chain: erc20TokenCollectionChain
 		});
-	}
-
-	async function getTokenBoundDetail() {
-		const tokenBoundABI = [
-			{
-				inputs: [],
-				name: 'AccountCreationFailed',
-				type: 'error'
-			},
-			{
-				anonymous: false,
-				inputs: [
-					{ indexed: false, internalType: 'address', name: 'account', type: 'address' },
-					{
-						indexed: true,
-						internalType: 'address',
-						name: 'implementation',
-						type: 'address'
-					},
-					{ indexed: false, internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ indexed: false, internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{
-						indexed: true,
-						internalType: 'address',
-						name: 'tokenContract',
-						type: 'address'
-					},
-					{ indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'ERC6551AccountCreated',
-				type: 'event'
-			},
-			{
-				inputs: [
-					{ internalType: 'address', name: 'implementation', type: 'address' },
-					{ internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{ internalType: 'address', name: 'tokenContract', type: 'address' },
-					{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'account',
-				outputs: [{ internalType: 'address', name: '', type: 'address' }],
-				stateMutability: 'view',
-				type: 'function'
-			},
-			{
-				inputs: [
-					{ internalType: 'address', name: 'implementation', type: 'address' },
-					{ internalType: 'bytes32', name: 'salt', type: 'bytes32' },
-					{ internalType: 'uint256', name: 'chainId', type: 'uint256' },
-					{ internalType: 'address', name: 'tokenContract', type: 'address' },
-					{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }
-				],
-				name: 'createAccount',
-				outputs: [{ internalType: 'address', name: '', type: 'address' }],
-				stateMutability: 'nonpayable',
-				type: 'function'
-			}
-		];
-
-		const provider = new ethers.JsonRpcProvider(goerliEthereumProviderConfig.rpc);
-		const contract = new ethers.Contract(
-			'0x000000006551c19487814612e58FE06813775758',
-			tokenBoundABI,
-			provider
-		);
-
-		try {
-			const tokenBoundNFTData = await contract.account(
-				'0x55266d75D1a14E4572138116aF39863Ed6596E7F',
-				'0x0000000000000000000000000000000000000000000000000000000000000000',
-				5,
-				'0xc361201e5b1005ccde47b32f223bc145de393f62',
-				1
-			);
-			tokenBoundAddress = tokenBoundNFTData;
-			// @ts-ignore
-			web3.action.setProps({
-				sendERC20FromAccount: tokenBoundAddress,
-				sendERC20Data: 0x0000000000000000000000000000000000000000000000000000000000000000
-			});
-		} catch (error) {
-			console.log('Error: ', error);
-			tokenBoundAddress = 'failed to identify Account Address';
-		}
 	}
 
 	function updateToAddress(event: Event) {
@@ -222,11 +136,11 @@
 								</p>
 							</div>
 							<a
-								href={'https://etherscan.io/address/' + tokenBoundAddress}
+								href={'https://etherscan.io/address/' + tokenBoundAccount}
 								target="_blank"
 								style="border-radius: 18px; background: white;font-size:12px;color: #6E47F3;padding: 6px 12px; word-break: break-all;"
 							>
-								{tokenBoundAddress}
+								{tokenBoundAccount}
 							</a>
 						</div>
 					</div>
@@ -313,7 +227,7 @@
 					>
 				</p>
 				<p style="font-size: 12px; font-weight: 300;">
-					From <span style="color: #6e47f3;"> {tokenBoundAddress}</span>
+					From <span style="color: #6e47f3;"> {tokenBoundAccount}</span>
 					<span>to</span>
 					<span style="color: #6e47f3;"> {sentToAccount} </span>
 				</p>

@@ -27,6 +27,11 @@
 		context.setToken(updatedTokens.currentInstance);
 		token = updatedTokens.currentInstance;
 
+		const data = { testing: 123 };
+
+		// @ts-ignore
+		web3.action.setProps(data);
+
 		initialised = true;
 
 		routeChange();
