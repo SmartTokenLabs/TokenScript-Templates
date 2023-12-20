@@ -11,7 +11,7 @@
 		<ts:iconUrl xml:lang="en">https://tokenbound.org/image.jpg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc721" name="Token">
-		<ts:address network="5">0xc361201E5B1005cCDE47B32F223BC145DE393F62</ts:address>
+		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{CONTRACT_ADDRESS}</ts:address>
 	</ts:contract>
 	
 	
