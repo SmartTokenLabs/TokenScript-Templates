@@ -1,15 +1,14 @@
 import { error } from '@sveltejs/kit';
 import { TokenboundClient } from '@tokenbound/sdk';
-import { Wallet, JsonRpcProvider } from 'ethers';
 
 export const getTokenBoundClientInstance = (chainId: number) => {
-  const rpcEndpoint = 'https://nodes.mewapi.io/rpc/eth';
-  // mock wallet for SDK read functionality.
-  const privateKey = '8810c6419ad377df7ff6bf3a8dace8b6cb453141b4bc5d26f3b1e0a553ccd05c';
-  const provider = new JsonRpcProvider(rpcEndpoint);
-  const signer = new Wallet(privateKey, provider);
-  return new TokenboundClient({ signer, chainId: chainId });
+  return new TokenboundClient({
+    chainId: chainId,
+    // @ts-ignore
+    publicClientRPCUrl: window.rpcURL, // global TS engine variable of RPC for connected chain
+  });
 }
+
 
 export const setTokenBoundAccountIsActive = async (tokenboundClient: any, tokenBoundAccount: string) => {
   return tokenboundClient.checkAccountDeployment({
