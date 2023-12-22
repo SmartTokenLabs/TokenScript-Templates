@@ -62,7 +62,7 @@
 				class="card-heading"
 				style="display: flex; justify-content: space-between; align-items: center;"
 			>
-				<h1 style="color: #6E47F3;font-size: 18px;">Info</h1>
+				<h1 style="color: #6E47F3;font-size: 18px;">Token Bound</h1>
 				<div
 					style="background: black;font-weight:600;border-radius: 9px;font-size: 12px;padding: 12px;color: white;"
 				>
