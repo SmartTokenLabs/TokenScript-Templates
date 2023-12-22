@@ -14,7 +14,7 @@
 	<ts:meta>
 		<ts:description xml:lang="en">ERC-6551 template demonstrating key functionalities of the standard.</ts:description>
 		<ts:aboutUrl xml:lang="en">https://tokenbound.org/</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">https://tokenbound.org/_next/image?url=%2Ftb-mark.svg</ts:iconUrl>
+		<ts:iconUrl xml:lang="en">https://tokenbound.org/favicon.ico</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc721" name="Token">
 		<ts:address network="5">0xc361201E5B1005cCDE47B32F223BC145DE393F62</ts:address>
