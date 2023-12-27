@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { showLoader } from '../lib/storage';
+	$: {
+		console.log("loader:", $showLoader)
+	}
 </script>
 
 {#if $showLoader}
