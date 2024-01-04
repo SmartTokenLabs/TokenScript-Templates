@@ -1,0 +1,114 @@
+<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="AutographNFT" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
+	<ts:label>
+		<ts:plurals xml:lang="en">
+			<ts:string quantity="one">AutographNFT Token</ts:string>
+			<ts:string quantity="other">AutographNFT Tokens</ts:string>
+		</ts:plurals>
+	</ts:label>
+	<ts:meta>
+		<ts:description xml:lang="en">Get your NFTs signed by your favourite people. Make your tokens more valuable. Buy &amp; Sell authenticated NFTs.</ts:description>
+		<ts:aboutUrl xml:lang="en">https://autographnft.io/</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://autographnft-foxgem.vercel.app/images/logo.svg</ts:iconUrl>
+	</ts:meta>
+	<ts:contract interface="erc721" name="Token">
+		<ts:address network="1">0x222222222291749de47895c0c0a9b17e4fca8268</ts:address>
+	</ts:contract>
+	<ts:origins>
+		
+		<ts:ethereum contract="Token"/>
+	</ts:origins>
+
+	<ts:cards>
+		<ts:viewContent xmlns="http://www.w3.org/1999/xhtml" name="common">
+			
+			
+		<style xmlns="http://www.w3.org/1999/xhtml">/*&lt;![CDATA[*/ 
+
+.loader-container.svelte-i4cppe.svelte-i4cppe{width:100%;height:100%;display:flex;justify-content:center;align-items:center}.lds-ring.svelte-i4cppe.svelte-i4cppe{display:inline-block;position:relative;width:80px;height:80px}.lds-ring.svelte-i4cppe div.svelte-i4cppe{box-sizing:border-box;display:block;position:absolute;width:64px;height:64px;margin:8px;border:8px solid #656565;border-radius:50%;animation:svelte-i4cppe-lds-ring 1.2s cubic-bezier(.5,0,.5,1) infinite;border-color:#656565 transparent transparent transparent}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(1){animation-delay:-.45s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(2){animation-delay:-.3s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(3){animation-delay:-.15s}@keyframes svelte-i4cppe-lds-ring{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+
+ /*//]]&gt;*/</style>
+<script xmlns="http://www.w3.org/1999/xhtml" type="module" crossorigin="">//&lt;![CDATA[
+
+var He=Object.defineProperty;var Be=(t,e,n)=&gt;e in t?He(t,e,{enumerable:!0,configurable:!0,writable:!0,value:n}):t[e]=n;var ie=(t,e,n)=&gt;(Be(t,typeof e!="symbol"?e+"":e,n),n);(function(){const e=document.createElement("link").relList;if(e&amp;&amp;e.supports&amp;&amp;e.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))i(o);new MutationObserver(o=&gt;{for(const r of o)if(r.type==="childList")for(const f of r.addedNodes)f.tagName==="LINK"&amp;&amp;f.rel==="modulepreload"&amp;&amp;i(f)}).observe(document,{childList:!0,subtree:!0});function n(o){const r={};return o.integrity&amp;&amp;(r.integrity=o.integrity),o.referrerPolicy&amp;&amp;(r.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?r.credentials="include":o.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(o){if(o.ep)return;o.ep=!0;const r=n(o);fetch(o.href,r)}})();function w(){}function Se(t){return t()}function ke(){return Object.create(null)}function R(t){t.forEach(Se)}function je(t){return typeof t=="function"}function E(t,e){return t!=t?e==e:t!==e||t&amp;&amp;typeof t=="object"||typeof t=="function"}let V;function Ce(t,e){return t===e?!0:(V||(V=document.createElement("a")),V.href=e,t===V.href)}function Ue(t){return Object.keys(t).length===0}function u(t,e){t.appendChild(e)}function $(t,e,n){t.insertBefore(e,n||null)}function _(t){t.parentNode&amp;&amp;t.parentNode.removeChild(t)}function De(t,e){for(let n=0;n&lt;t.length;n+=1)t[n]&amp;&amp;t[n].d(e)}function a(t){return document.createElement(t)}function S(t){return document.createTextNode(t)}function m(){return S(" ")}function Fe(){return S("")}function Ge(t,e,n,i){return t.addEventListener(e,n,i),()=&gt;t.removeEventListener(e,n,i)}function X(t,e,n){n==null?t.removeAttribute(e):t.getAttribute(e)!==n&amp;&amp;t.setAttribute(e,n)}function Je(t){return Array.from(t.childNodes)}function oe(t,e){e=""+e,t.data!==e&amp;&amp;(t.data=e)}function d(t,e,n,i){n==null?t.style.removeProperty(e):t.style.setProperty(e,n,i?"important":"")}function Le(t,e){return new t(e)}let ce;function P(t){ce=t}const N=[],Ne=[];let O=[];const Oe=[],Ke=Promise.resolve();let se=!1;function Ve(){se||(se=!0,Ke.then(qe))}function le(t){O.push(t)}const re=new Set;let C=0;function qe(){if(C!==0)return;const t=ce;do{try{for(;C&lt;N.length;){const e=N[C];C++,P(e),We(e.$$)}}catch(e){throw N.length=0,C=0,e}for(P(null),N.length=0,C=0;Ne.length;)Ne.pop()();for(let e=0;e&lt;O.length;e+=1){const n=O[e];re.has(n)||(re.add(n),n())}O.length=0}while(N.length);for(;Oe.length;)Oe.pop()();se=!1,re.clear(),P(t)}function We(t){if(t.fragment!==null){t.update(),R(t.before_update);const e=t.dirty;t.dirty=[-1],t.fragment&amp;&amp;t.fragment.p(t.ctx,e),t.after_update.forEach(le)}}function Xe(t){const e=[],n=[];O.forEach(i=&gt;t.indexOf(i)===-1?e.push(i):n.push(i)),n.forEach(i=&gt;i()),O=e}const W=new Set;let x;function Qe(){x={r:0,c:[],p:x}}function Ye(){x.r||R(x.c),x=x.p}function j(t,e){t&amp;&amp;t.i&amp;&amp;(W.delete(t),t.i(e))}function Q(t,e,n,i){if(t&amp;&amp;t.o){if(W.has(t))return;W.add(t),x.c.push(()=&gt;{W.delete(t),i&amp;&amp;(n&amp;&amp;t.d(1),i())}),t.o(e)}else i&amp;&amp;i()}function Ee(t){return(t==null?void 0:t.length)!==void 0?t:Array.from(t)}function Y(t){t&amp;&amp;t.c()}function F(t,e,n){const{fragment:i,after_update:o}=t.$$;i&amp;&amp;i.m(e,n),le(()=&gt;{const r=t.$$.on_mount.map(Se).filter(je);t.$$.on_destroy?t.$$.on_destroy.push(...r):R(r),t.$$.on_mount=[]}),o.forEach(le)}function q(t,e){const n=t.$$;n.fragment!==null&amp;&amp;(Xe(n.after_update),R(n.on_destroy),n.fragment&amp;&amp;n.fragment.d(e),n.on_destroy=n.fragment=null,n.ctx=[])}function Ze(t,e){t.$$.dirty[0]===-1&amp;&amp;(N.push(t),Ve(),t.$$.dirty.fill(0)),t.$$.dirty[e/31|0]|=1&lt;&lt;e%31}function H(t,e,n,i,o,r,f=null,c=[-1]){const s=ce;P(t);const l=t.$$={fragment:null,ctx:[],props:r,update:w,not_equal:o,bound:ke(),on_mount:[],on_destroy:[],on_disconnect:[],before_update:[],after_update:[],context:new Map(e.context||(s?s.$$.context:[])),callbacks:ke(),dirty:c,skip_bound:!1,root:e.target||s.$$.root};f&amp;&amp;f(l.root);let p=!1;if(l.ctx=n?n(t,e.props||{},(h,g,...b)=&gt;{const T=b.length?b[0]:g;return l.ctx&amp;&amp;o(l.ctx[h],l.ctx[h]=T)&amp;&amp;(!l.skip_bound&amp;&amp;l.bound[h]&amp;&amp;l.bound[h](T),p&amp;&amp;Ze(t,h)),g}):[],l.update(),p=!0,R(l.before_update),l.fragment=i?i(l.ctx):!1,e.target){if(e.hydrate){const h=Je(e.target);l.fragment&amp;&amp;l.fragment.l(h),h.forEach(_)}else l.fragment&amp;&amp;l.fragment.c();e.intro&amp;&amp;j(t.$$.fragment),F(t,e.target,e.anchor),qe()}P(s)}class B{constructor(){ie(this,"$$");ie(this,"$$set")}$destroy(){q(this,1),this.$destroy=w}$on(e,n){if(!je(n))return w;const i=this.$$.callbacks[e]||(this.$$.callbacks[e]=[]);return i.push(n),()=&gt;{const o=i.indexOf(n);o!==-1&amp;&amp;i.splice(o,1)}}$set(e){this.$$set&amp;&amp;!Ue(e)&amp;&amp;(this.$$.skip_bound=!0,this.$$set(e),this.$$.skip_bound=!1)}}const et="4";typeof window&lt;"u"&amp;&amp;(window.__svelte||(window.__svelte={v:new Set})).v.add(et);const L=[];function tt(t,e=w){let n;const i=new Set;function o(c){if(E(t,c)&amp;&amp;(t=c,n)){const s=!L.length;for(const l of i)l[1](),L.push(l,t);if(s){for(let l=0;l&lt;L.length;l+=2)L[l][0](L[l+1]);L.length=0}}}function r(c){o(c(t))}function f(c,s=w){const l=[c,s];return i.add(l),i.size===1&amp;&amp;(n=e(o,r)||w),c(t),()=&gt;{i.delete(l),i.size===0&amp;&amp;n&amp;&amp;(n(),n=null)}}return{set:o,update:r,subscribe:f}}const fe=tt({token:null});function nt(t){fe.set({...fe,token:t})}const ue={data:fe,setToken:nt};function Te(t){let e;return{c(){e=a("div"),e.innerHTML='&lt;div class="lds-ring svelte-i4cppe"&gt;&lt;div class="svelte-i4cppe"&gt;&lt;/div&gt; &lt;div class="svelte-i4cppe"&gt;&lt;/div&gt; &lt;div class="svelte-i4cppe"&gt;&lt;/div&gt; &lt;div class="svelte-i4cppe"&gt;&lt;/div&gt;&lt;/div&gt;',X(e,"class","loader-container svelte-i4cppe")},m(n,i){$(n,e,i)},d(n){n&amp;&amp;_(e)}}}function it(t){let e,n=t[0]&amp;&amp;Te();return{c(){n&amp;&amp;n.c(),e=Fe()},m(i,o){n&amp;&amp;n.m(i,o),$(i,e,o)},p(i,[o]){i[0]?n||(n=Te(),n.c(),n.m(e.parentNode,e)):n&amp;&amp;(n.d(1),n=null)},i:w,o:w,d(i){i&amp;&amp;_(e),n&amp;&amp;n.d(i)}}}function rt(t,e,n){let{show:i}=e;return t.$$set=o=&gt;{"show"in o&amp;&amp;n(0,i=o.show)},[i]}class Re extends B{constructor(e){super(),H(this,e,rt,it,E,{show:0})}}function ze(t,e,n){const i=t.slice();return i[2]=e[n],i}function Ae(t){var ve,$e,be;let e,n,i,o,r,f,c,s,l,p,h,g,b,T,U,de,z,ae,D,G=t[0].name+"",Z,pe,A,he,J,K=t[0].description+"",ee,ge,te,I,me,ne,_e,M,v=((be=($e=(ve=t[0])==null?void 0:ve.tokenInfo)==null?void 0:$e.attributes)==null?void 0:be.length)&gt;0&amp;&amp;Ie(t);return{c(){e=a("div"),n=a("div"),n.innerHTML='&lt;img src="https://autographnft.io/images/logo.svg" width="325px" style="width: 200px; display: block;"/&gt; &lt;div style="color: white; text-align: right; width: 100%;"&gt;| INFO&lt;/div&gt;',i=m(),o=a("div"),r=a("img"),c=m(),s=a("div"),l=a("p"),l.textContent="About the Collection",p=m(),h=a("p"),h.textContent=`Remixed Tokens, powered by AlchemyNFT. Backed 1:1 by their original NFT artworks, they are
+					ERC721 tokens on the Ethereum network. These NFTs are autographed and signed with the
+					author's Twitter account. Owned and controlled by their respective owners.`,g=m(),b=a("p"),b.textContent="Official Website",T=m(),U=a("p"),U.innerHTML='&lt;a target="_blank" style="color:#7e16da" href="https://autographnft.io/"&gt;https://autographnft.io/&lt;/a&gt;',de=m(),z=a("p"),z.textContent="Token Name",ae=m(),D=a("p"),Z=S(G),pe=m(),A=a("p"),A.textContent="Description",he=m(),J=a("p"),ee=S(K),ge=m(),v&amp;&amp;v.c(),te=m(),I=a("p"),I.textContent="Signatures",me=m(),ne=a("div"),ne.innerHTML='&lt;div style="display: flex; justify-content: space-between; margin: 22px 0;"&gt;&lt;div&gt;X&lt;/div&gt; &lt;div&gt;@GridsAndDots.1202216998685396998&lt;/div&gt; &lt;div&gt;Open URL&lt;/div&gt;&lt;/div&gt; &lt;div style="display: flex; justify-content: space-between; margin: 22px 0;"&gt;&lt;div&gt;Logo&lt;/div&gt; &lt;div&gt;0xc5ca...26d2&lt;/div&gt; &lt;div&gt;Open URL&lt;/div&gt;&lt;/div&gt;',_e=m(),M=a("div"),d(n,"display","flex"),d(n,"justify-content","space-between"),d(n,"width","100%"),Ce(r.src,f=t[0].image_preview_url)||X(r,"src",f),d(r,"width","100%"),d(o,"margin","20px 0"),d(l,"font-size","20px"),d(l,"margin-top","30px"),d(h,"font-size","14px"),d(b,"font-size","20px"),d(b,"margin-top","30px"),d(U,"font-size","14px"),d(z,"font-size","20px"),d(z,"margin-top","30px"),d(D,"font-size","14px"),d(A,"font-size","20px"),d(A,"margin-top","30px"),d(J,"font-size","14px"),d(I,"font-size","20px"),d(I,"margin-top","40px"),d(M,"height","1px"),d(M,"width","100%"),d(M,"background","white"),d(e,"background","black"),d(e,"height","100%"),d(e,"padding","30px"),d(e,"color","#e7e7e7")},m(y,k){$(y,e,k),u(e,n),u(e,i),u(e,o),u(o,r),u(e,c),u(e,s),u(s,l),u(s,p),u(s,h),u(s,g),u(s,b),u(s,T),u(s,U),u(s,de),u(s,z),u(s,ae),u(s,D),u(D,Z),u(s,pe),u(s,A),u(s,he),u(s,J),u(J,ee),u(s,ge),v&amp;&amp;v.m(s,null),u(s,te),u(s,I),u(s,me),u(s,ne),u(s,_e),u(s,M)},p(y,k){var we,ye,xe;k&amp;1&amp;&amp;!Ce(r.src,f=y[0].image_preview_url)&amp;&amp;X(r,"src",f),k&amp;1&amp;&amp;G!==(G=y[0].name+"")&amp;&amp;oe(Z,G),k&amp;1&amp;&amp;K!==(K=y[0].description+"")&amp;&amp;oe(ee,K),((xe=(ye=(we=y[0])==null?void 0:we.tokenInfo)==null?void 0:ye.attributes)==null?void 0:xe.length)&gt;0?v?v.p(y,k):(v=Ie(y),v.c(),v.m(s,te)):v&amp;&amp;(v.d(1),v=null)},d(y){y&amp;&amp;_(e),v&amp;&amp;v.d()}}}function Ie(t){var f,c;let e,n,i,o=Ee((c=(f=t[0])==null?void 0:f.tokenInfo)==null?void 0:c.attributes),r=[];for(let s=0;s&lt;o.length;s+=1)r[s]=Me(ze(t,o,s));return{c(){e=a("p"),e.textContent="Attributes",n=m();for(let s=0;s&lt;r.length;s+=1)r[s].c();i=Fe(),d(e,"font-size","20px"),d(e,"margin-top","40px")},m(s,l){$(s,e,l),$(s,n,l);for(let p=0;p&lt;r.length;p+=1)r[p]&amp;&amp;r[p].m(s,l);$(s,i,l)},p(s,l){var p,h;if(l&amp;1){o=Ee((h=(p=s[0])==null?void 0:p.tokenInfo)==null?void 0:h.attributes);let g;for(g=0;g&lt;o.length;g+=1){const b=ze(s,o,g);r[g]?r[g].p(b,l):(r[g]=Me(b),r[g].c(),r[g].m(i.parentNode,i))}for(;g&lt;r.length;g+=1)r[g].d(1);r.length=o.length}},d(s){s&amp;&amp;(_(e),_(n),_(i)),De(r,s)}}}function Me(t){let e,n,i=t[2].value+"",o,r;return{c(){e=a("div"),n=a("div"),o=S(i),r=m(),d(n,"border","2px solid #7e16da"),d(n,"font-size","14px"),d(n,"height","20px"),d(n,"width","fit-content"),d(n,"padding","10px 18px 27px 18px"),d(n,"border-radius","30px")},m(f,c){$(f,e,c),u(e,n),u(n,o),u(e,r)},p(f,c){c&amp;1&amp;&amp;i!==(i=f[2].value+"")&amp;&amp;oe(o,i)},d(f){f&amp;&amp;_(e)}}}function ot(t){let e,n,i,o,r=t[0]&amp;&amp;Ae(t);return i=new Re({props:{show:t[1]}}),{c(){e=a("div"),r&amp;&amp;r.c(),n=m(),Y(i.$$.fragment)},m(f,c){$(f,e,c),r&amp;&amp;r.m(e,null),u(e,n),F(i,e,null),o=!0},p(f,[c]){f[0]?r?r.p(f,c):(r=Ae(f),r.c(),r.m(e,n)):r&amp;&amp;(r.d(1),r=null);const s={};c&amp;2&amp;&amp;(s.show=f[1]),i.$set(s)},i(f){o||(j(i.$$.fragment,f),o=!0)},o(f){Q(i.$$.fragment,f),o=!1},d(f){f&amp;&amp;_(e),r&amp;&amp;r.d(),q(i)}}}function st(t,e,n){let i,o=!0;return ue.data.subscribe(async r=&gt;{r.token&amp;&amp;(n(0,i=r.token),n(1,o=!1))}),[i,o]}class lt extends B{constructor(e){super(),H(this,e,st,ot,E,{})}}function ft(t){let e;return{c(){e=a("h1"),e.textContent="404"},m(n,i){$(n,e,i)},p:w,i:w,o:w,d(n){n&amp;&amp;_(e)}}}class ct extends B{constructor(e){super(),H(this,e,null,ft,E,{})}}function Pe(t){let e,n,i;return{c(){e=a("h3"),e.textContent="Mint...",n=m(),i=a("p"),i.textContent="Actions allow you to invoke a smart contract transaction or invoke a Javascript function within the view."},m(o,r){$(o,e,r),$(o,n,r),$(o,i,r)},d(o){o&amp;&amp;(_(e),_(n),_(i))}}}function ut(t){let e,n,i,o,r=t[0]&amp;&amp;Pe();return i=new Re({props:{show:t[1]}}),{c(){e=a("div"),r&amp;&amp;r.c(),n=m(),Y(i.$$.fragment)},m(f,c){$(f,e,c),r&amp;&amp;r.m(e,null),u(e,n),F(i,e,null),o=!0},p(f,[c]){f[0]?r||(r=Pe(),r.c(),r.m(e,n)):r&amp;&amp;(r.d(1),r=null);const s={};c&amp;2&amp;&amp;(s.show=f[1]),i.$set(s)},i(f){o||(j(i.$$.fragment,f),o=!0)},o(f){Q(i.$$.fragment,f),o=!1},d(f){f&amp;&amp;_(e),r&amp;&amp;r.d(),q(i)}}}function dt(t,e,n){let i,o=!0;return ue.data.subscribe(async r=&gt;{r.token&amp;&amp;(n(0,i=r.token),n(1,o=!1))}),[i,o]}class at extends B{constructor(e){super(),H(this,e,dt,ut,E,{})}}function pt(t){let e,n,i,o,r,f;var c=t[0];function s(l,p){return{}}return c&amp;&amp;(i=Le(c,s())),{c(){e=a("div"),n=a("div"),i&amp;&amp;Y(i.$$.fragment),X(n,"id","token-container")},m(l,p){$(l,e,p),u(e,n),i&amp;&amp;F(i,n,null),o=!0,r||(f=Ge(window,"hashchange",t[1]),r=!0)},p(l,[p]){if(p&amp;1&amp;&amp;c!==(c=l[0])){if(i){Qe();const h=i;Q(h.$$.fragment,1,0,()=&gt;{q(h,1)}),Ye()}c?(i=Le(c,s()),Y(i.$$.fragment),j(i.$$.fragment,1),F(i,n,null)):i=null}},i(l){o||(i&amp;&amp;j(i.$$.fragment,l),o=!0)},o(l){i&amp;&amp;Q(i.$$.fragment,l),o=!1},d(l){l&amp;&amp;_(e),i&amp;&amp;q(i),r=!1,f()}}}function ht(t,e,n){let i,o=!1;const r={"#info":lt,"#mint":at};let f;function c(){n(0,f=r[i.level==0?"#adopt":document.location.hash]||ct)}return web3.tokens.dataChanged=async(s,l,p)=&gt;{o||(ue.setToken(l.currentInstance),i=l.currentInstance,o=!0,c())},[f,c]}class gt extends B{constructor(e){super(),H(this,e,ht,pt,E,{})}}new gt({target:document.body});
+
+
+//]]&gt;</script>
+<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.googleapis.com"/>
+<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.gstatic.com"/>
+<link xmlns="http://www.w3.org/1999/xhtml" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+
+
+<style>
+					/* <![CDATA[ */
+					
+* {
+	font-family: "Rubik", sans-serif;
+	box-sizing: border-box;
+}
+
+body {
+	color: #0B0B0B;
+}
+
+h1 {
+	font-size: 22px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h5 {
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+
+p.light {
+	color: #545454;
+}
+
+.loader-modal {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+					/* ]]> */
+				</style></ts:viewContent>
+
+		<ts:card name="Info" origins="Token" type="token">
+			<ts:label>
+				<ts:string xml:lang="en">Info</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" urlFragment="info" xml:lang="en">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+		<ts:card name="Mint" type="action">
+			<ts:label>
+				<ts:string xml:lang="en">Mint</ts:string>
+			</ts:label>
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="safeMint">
+					<ts:data>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" urlFragment="mint" xml:lang="en">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+	</ts:cards>
+
+</ts:token>
