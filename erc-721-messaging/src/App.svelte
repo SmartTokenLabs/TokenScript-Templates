@@ -49,9 +49,12 @@
 	<LoaderGlobal />
 </div>
 
-<style>
+<style lang=scss>
 	#token-container {
 		padding: 0 35px;
+		@media (max-width: 480px){
+			padding: 0 15px;
+		}
 	}
 	:global(body) {
 		margin: 0;

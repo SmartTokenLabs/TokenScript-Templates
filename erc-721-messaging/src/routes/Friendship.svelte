@@ -328,7 +328,7 @@
 				font-size: 18px;
 				cursor: pointer;
 				div {
-					padding: 0.5rem 1rem;
+					padding: 0.5rem 0.1rem;
 				}
 
 				&.active,
