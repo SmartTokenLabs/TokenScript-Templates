@@ -86,7 +86,7 @@
 				<div>
 					{#each signatures as signature}
 						<div style="display: flex; align-items: center; margin: 22px 0;">
-							<div style="width: 34px;">
+							<div style="min-width: 34px;">
 								<svg
 									viewBox="0 0 1200 1227"
 									xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@
 							</div>
 						</div>
 						<div style="display: flex; align-items: center; margin: 22px 0;">
-							<div style="width: 34px;">
+							<div style="min-width: 34px;">
 								<img
 									alt="etherscan logo"
 									width="16px"
