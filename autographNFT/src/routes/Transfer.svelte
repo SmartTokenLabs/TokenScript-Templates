@@ -72,12 +72,13 @@
 			<div
 				style="border-radius: 7px; width: 100%; display: flex; justify-content: space-between; flex-direction: column;"
 			>
-
 				<p style="font-size: 20px; margin-top: 30px; font-weight: 400;">Transfer NFT</p>
-				<div
-					style="margin-bottom: 18px; border-radius: 20px;font-weight: 300;"
-				>
-					<p style="font-family: 'Source Code Pro', monospace; margin: 7px 0; font-weight: 400; font-size: 14px; margin: 14px 0">Send To Account Address</p>
+				<div style="margin-bottom: 18px; border-radius: 20px;font-weight: 300;">
+					<p
+						style="font-family: 'Source Code Pro', monospace; margin: 7px 0; font-weight: 400; font-size: 14px; margin: 14px 0"
+					>
+						Send To Account Address
+					</p>
 					<input
 						minlength="42"
 						maxlength="42"
@@ -85,7 +86,7 @@
 							setTransactionParams(event);
 						}}
 						id="recieving-account"
-						style="font-family: 'Source Code Pro', monospace; height: 56px; padding: 0 14px; width: 100%; border-radius: 4px; border: 1px solid #B6B6BF; margin: 5px 0;"
+						style="font-family: 'Source Code Pro', monospace; height: 54px; padding: 0 14px; width: 100%; border-radius: 4px; border: 1px solid #B6B6BF; margin: 5px 0;"
 						type="text"
 					/>
 				</div>
@@ -95,42 +96,26 @@
 				<p style="font-size: 20px; margin-top: 30px; font-weight: 400;">Transfer Summary</p>
 
 				<div style="display: flex; align-items: center; margin: 22px 0;">
-					<div style="min-width: 60px;">
-						Send
-					</div>
-					<div
-						style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px"
-					>
+					<div style="min-width: 60px;">Send</div>
+					<div style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px">
 						{token.name}
 					</div>
 				</div>
 				<div style="display: flex; align-items: center; margin: 22px 0;">
-					<div style="min-width: 60px;">
-						From 
-					</div>
-					<div
-						style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px"
-					>
+					<div style="min-width: 60px;">From</div>
+					<div style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px">
 						{token.ownerAddress}
 					</div>
 				</div>
 				<div style="display: flex; align-items: center; margin: 22px 0;">
-					<div style="min-width: 60px;">
-						To 
-					</div>
-					<div
-						style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px"
-					>
+					<div style="min-width: 60px;">To</div>
+					<div style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px">
 						{receivingAccountAddress}
 					</div>
 				</div>
 				<div style="display: flex; align-items: center; margin: 22px 0;">
-					<div style="min-width: 60px;">
-						Chain
-					</div>
-					<div
-						style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px"
-					>
+					<div style="min-width: 60px;">Chain</div>
+					<div style="text-wrap: wrap; word-break: break-word; margin-right: 9px; font-size:14px">
 						{token.chainId}
 					</div>
 				</div>
