@@ -4,7 +4,7 @@ Welcome to the TokenScript Template repository.
 
 ## Summary
 
-The TokenScript framework is optimised for developing user friendly Tokenised experiences. 
+The TokenScript framework is optimised for developing user friendly Tokenised interfaces. 
 
 Utilising web technologies a TokenScript can be created to display information and enable interactions to be made using both on and off chain technologies inside a secure environment.
 
