@@ -27,7 +27,7 @@ ERC-721 TokenScript Template.
 Import the output `.tsml` file into a supported platform
 
 - [TokenScript Viewer](https://viewer.tokenscript.org/)
-- [TokenScript Launch Pad](https://smart-token-store.vercel.app/)
+- [TokenScript Launch Pad](https://launchpad.smartlayer.network/)
 - [Joy.id](https://joy.id/) 
 - [AlphaWallet](https://alphawallet.com/)
 
@@ -38,7 +38,7 @@ Email us at <sayhi@smarttokenlabs.com>
 ## Docs and Resources
 
 - [Smart Token Launch Pad Docs](https://launchpad-doc.vercel.app/)
-- [Smart Token Launch Pad](https://smart-token-store.vercel.app/)
+- [Smart Token Launch Pad](https://launchpad.smartlayer.network/)
 - [Smart Token Layer](https://www.smartlayer.network/)
 - [TokenScript](https://www.tokenscript.org/)
 

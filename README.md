@@ -16,7 +16,7 @@ Utilising web technologies a TokenScript can be created to display information a
 
 ## Docs and Resources
 
-- [Smart Token Launch Pad](https://smart-token-store.vercel.app/)
+- [Smart Token Launch Pad](https://launchpad.smartlayer.network/)
 - [Smart Token Launch Pad Docs](https://launchpad-doc.vercel.app/)
 - [Smart Token Layer](https://www.smartlayer.network/)
 - [TokenScript](https://www.tokenscript.org/)
@@ -26,7 +26,7 @@ Utilising web technologies a TokenScript can be created to display information a
 TokenScript enabled technologies:
 
 - [TokenScript Viewer](https://viewer.tokenscript.org/)
-- [TokenScript Launch Pad](https://smart-token-store.vercel.app/)
+- [TokenScript Launch Pad](https://launchpad.smartlayer.network/)
 - [Joy.id](https://joy.id/) 
 - [AlphaWallet](https://alphawallet.com/)
 
