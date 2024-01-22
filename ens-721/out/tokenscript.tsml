@@ -21390,7 +21390,7 @@ function create_if_block$2(ctx) {
       );
       t4 = space();
       div3 = element("div");
-      div3.innerHTML = `&lt;img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="${token.image_preview_url}" alt="${"image of " + token.description}"/&gt;`;
+      div3.innerHTML = `&lt;img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="${token.image_preview_url}" alt="${"image of " + token.name}"/&gt;`;
       t5 = space();
       div13 = element("div");
       div5 = element("div");
@@ -21766,7 +21766,6 @@ function instance$2($$self, $$props, $$invalidate) {
   }
   function init2() {
     setRenewalYears();
-    estimateGasPrice();
   }
   const click_handler = () =&gt; {
     updateYearsSelected(false);

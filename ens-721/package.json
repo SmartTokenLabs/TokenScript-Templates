@@ -8,6 +8,7 @@
 		"build:ts": "tokenscript build",
 		"sign": "tokenscript sign",
 		"emulate": "tokenscript emulate",
+		"start": "tokenscript emulate",
 		"emulate:local": "tokenscript emulate -e=http://localhost:3333/",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",

@@ -1,17 +1,17 @@
-# ENS-1155
+# ERC-721
 
-ENS ERC-1155 TokenScript Template. 
+ERC-721 TokenScript Template. 
 
 ## Features
 
-- **Information View:** Displays custom token information for an ENS name or Subname.
-- **Renew View:** Enables the ENS name expiry to be extended.
-- **Update View:** Allows for records to be created and updated for an ENS name or Subname.
+- **Information View:** Displays custom token information.
+- **Transfer View:** Allows for transfer of the token to another address.
 
 ## Development
 
 - Clone this repository
-- Change directory to `/ens-1155` and install dependencies `pnpm install`
+- Change directory to `/erc-721` and install dependencies `pnpm install`
+- Update the `./tokenScript.xml` ts contract `<ts:contract>` address to a smart contract address and chain id of your choice.
 - Start the project using `pnpm start`
 
 ## Build
@@ -37,9 +37,9 @@ Email us at <sayhi@smarttokenlabs.com>
 - [Smart Token Launch Pad](https://smart-token-store.vercel.app/)
 - [Smart Token Layer](https://www.smartlayer.network/)
 - [TokenScript](https://www.tokenscript.org/)
-- [ENS](https://app.ens.domains/)
-- [ENS docs](https://docs.ens.domains/)
 
 ## Support
 
 ## Contribution
+
+
