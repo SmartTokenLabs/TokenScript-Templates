@@ -8,25 +8,29 @@ ERC-6551 TokenBound TokenScript Template.
 
 ## Development
 
+### Start
+
+- Install [TokenScript CLI](https://www.npmjs.com/package/@tokenscript/cli)
 - Clone this repository
 - Change directory to `/erc-6551` and install dependencies `pnpm install`
 - Update the `./tokenScript.xml` ts contract `<ts:contract>` address to a smart contract address and chain id of your choice.
 - Start the project using `pnpm start`
 
-## Build
+### Build
 
 - Build the TokenScript project using `pnpm build`
 - See `./out/tokenscript.tsml`
 
-## Testing
+### Testing
 
 Import the output `.tsml` file into a supported platform
 
 - [TokenScript Viewer](https://viewer.tokenscript.org/)
+- [TokenScript Launch Pad](https://smart-token-store.vercel.app/)
 - [Joy.id](https://joy.id/) 
 - [AlphaWallet](https://alphawallet.com/)
 
-## Deployment
+### Deploy
 
 Email us at <sayhi@smarttokenlabs.com>
 
@@ -38,9 +42,5 @@ Email us at <sayhi@smarttokenlabs.com>
 - [TokenScript](https://www.tokenscript.org/)
 - [TokenBound.org](https://tokenbound.org/)
 - [TokenBound.org docs](https://docs.tokenbound.org)
-
-## Support
-
-## Contribution
 
 

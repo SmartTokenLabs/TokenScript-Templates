@@ -4,9 +4,15 @@ Welcome to the TokenScript Template repository.
 
 ## Summary
 
-The TokenScript framework is optimised to enable developers to build user friendly Tokenised experiences. 
+The TokenScript framework is optimised for developing user friendly Tokenised experiences. 
 
 Utilising web technologies a TokenScript can be created to display information and enable interactions to be made using both on and off chain technologies inside a secure environment.
+
+## Development
+
+### Prerequisites
+
+- Install [TokenScript CLI](https://www.npmjs.com/package/@tokenscript/cli)
 
 ## Docs and Resources
 
@@ -17,14 +23,11 @@ Utilising web technologies a TokenScript can be created to display information a
 
 ## Device Support
 
-The following technologies are TokenScript enabled:
+TokenScript enabled technologies:
 
 - [TokenScript Viewer](https://viewer.tokenscript.org/)
+- [TokenScript Launch Pad](https://smart-token-store.vercel.app/)
 - [Joy.id](https://joy.id/) 
 - [AlphaWallet](https://alphawallet.com/)
 
 Email us at <sayhi@smarttokenlabs.com> if you would like to add support for TokenScript to your Wallet or Web platform.
-
-## Support
-
-## Contribution
