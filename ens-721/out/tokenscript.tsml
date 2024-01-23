@@ -448,7 +448,7 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 &lt;&lt; i % 31;
 }
-function init$2(component, options, instance2, create_fragment2, not_equal, props, append_styles = null, dirty = [-1]) {
+function init$2(component, options, instance2, create_fragment2, not_equal, props, append_styles, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
@@ -1064,7 +1064,10 @@ function getAugmentedNamespace(n2) {
   if (typeof f == "function") {
     var a = function a2() {
       if (this instanceof a2) {
-        return Reflect.construct(f, arguments, this.constructor);
+        var args = [null];
+        args.push.apply(args, arguments);
+        var Ctor = Function.bind.apply(f, args);
+        return new Ctor();
       }
       return f.apply(this, arguments);
     };
@@ -21301,6 +21304,8 @@ function create_if_block$2(ctx) {
   let t3;
   let t4;
   let div3;
+  let img;
+  let img_src_value;
   let t5;
   let div13;
   let div5;
@@ -21390,7 +21395,7 @@ function create_if_block$2(ctx) {
       );
       t4 = space();
       div3 = element("div");
-      div3.innerHTML = `&lt;img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="${token.image_preview_url}" alt="${"image of " + token.description}"/&gt;`;
+      img = element("img");
       t5 = space();
       div13 = element("div");
       div5 = element("div");
@@ -21443,6 +21448,12 @@ function create_if_block$2(ctx) {
       set_style(div1, "justify-content", "center");
       set_style(div1, "align-items", "center");
       set_style(div2, "margin", "15px");
+      set_style(img, "width", "104px");
+      set_style(img, "margin-top", "4px");
+      set_style(img, "margin-right", "15px");
+      if (!src_url_equal(img.src, img_src_value = token.image_preview_url))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", "image of " + token.name);
       set_style(div4, "margin", "14px 0");
       set_style(div4, "display", "flex");
       set_style(div4, "justify-content", "space-between");
@@ -21521,6 +21532,7 @@ function create_if_block$2(ctx) {
       append(div0, t3);
       append(div4, t4);
       append(div4, div3);
+      append(div3, img);
       insert(target, t5, anchor);
       insert(target, div13, anchor);
       append(div13, div5);
@@ -21766,7 +21778,6 @@ function instance$2($$self, $$props, $$invalidate) {
   }
   function init2() {
     setRenewalYears();
-    estimateGasPrice();
   }
   const click_handler = () =&gt; {
     updateYearsSelected(false);
@@ -21808,6 +21819,8 @@ function create_if_block$1(ctx) {
   let t3;
   let t4;
   let div3;
+  let img;
+  let img_src_value;
   let t5;
   let div10;
   let div5;
@@ -21872,7 +21885,7 @@ function create_if_block$1(ctx) {
       );
       t4 = space();
       div3 = element("div");
-      div3.innerHTML = `&lt;img style="width: 104px; margin-top: 4px; margin-right: 15px;" src="${token.image_preview_url}" alt="${"image of " + token.description}"/&gt;`;
+      img = element("img");
       t5 = space();
       div10 = element("div");
       div5 = element("div");
@@ -21911,6 +21924,12 @@ function create_if_block$1(ctx) {
       set_style(div1, "justify-content", "center");
       set_style(div1, "align-items", "center");
       set_style(div2, "margin", "15px");
+      set_style(img, "width", "104px");
+      set_style(img, "margin-top", "4px");
+      set_style(img, "margin-right", "15px");
+      if (!src_url_equal(img.src, img_src_value = token.image_preview_url))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", "image of " + token.description);
       set_style(div4, "margin", "14px 0");
       set_style(div4, "display", "flex");
       set_style(div4, "justify-content", "space-between");
@@ -21972,6 +21991,7 @@ function create_if_block$1(ctx) {
       append(div0, t3);
       append(div4, t4);
       append(div4, div3);
+      append(div3, img);
       insert(target, t5, anchor);
       insert(target, div10, anchor);
       append(div10, div5);
@@ -22580,7 +22600,7 @@ function create_fragment(ctx) {
     /*page*/
     ctx[1]
   );
-  function switch_props(ctx2, dirty) {
+  function switch_props(ctx2) {
     return {};
   }
   if (switch_value) {

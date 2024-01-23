@@ -1,12 +1,10 @@
-# ENS-1155
+# ERC-6551
 
-ENS ERC-1155 TokenScript Template. 
+ERC-6551 TokenBound TokenScript Template. 
 
 ## Features
 
-- **Information View:** Displays custom token information for an ENS name or Subname.
-- **Renew View:** Enables the ENS name expiry to be extended.
-- **Update View:** Allows for records to be created and updated for an ENS name or Subname.
+- **Information View:** Displays custom token information for TokenBound and Non-TokenBound NFTs.
 
 ## Development
 
@@ -14,7 +12,8 @@ ENS ERC-1155 TokenScript Template.
 
 - Install [TokenScript CLI](https://www.npmjs.com/package/@tokenscript/cli)
 - Clone this repository
-- Change directory to `/ens-1155` and install dependencies `pnpm install`
+- Change directory to `/erc-6551` and install dependencies `pnpm install`
+- Update the `./tokenScript.xml` ts contract `<ts:contract>` address to a smart contract address and chain id of your choice.
 - Start the project using `pnpm start`
 
 ### Build
@@ -22,7 +21,7 @@ ENS ERC-1155 TokenScript Template.
 - Build the TokenScript project using `pnpm build`
 - See `./out/tokenscript.tsml`
 
-### Test
+### Testing
 
 Import the output `.tsml` file into a supported platform
 
@@ -41,9 +40,7 @@ Email us at <sayhi@smarttokenlabs.com>
 - [Smart Token Launch Pad](https://launchpad.smartlayer.network/)
 - [Smart Token Layer](https://www.smartlayer.network/)
 - [TokenScript](https://www.tokenscript.org/)
-- [ENS](https://app.ens.domains/)
-- [ENS docs](https://docs.ens.domains/)
+- [TokenBound.org](https://tokenbound.org/)
+- [TokenBound.org docs](https://docs.tokenbound.org)
 
-## Support
 
-## Contribution
