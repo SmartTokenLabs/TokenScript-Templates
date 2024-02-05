@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
+		  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns:ethereum="urn:ethereum:constantinople"
+		  name="RedBrick">
+	<ts:label>
+		<ts:plurals xml:lang="en">
+			<ts:string quantity="one">RedBrick Token</ts:string>
+			<ts:string quantity="other">RedBrick Tokens</ts:string>
+		</ts:plurals>
+	</ts:label>
+	<ts:meta>
+		<ts:description xml:lang="en">RedBrick Gaming Platform TokenScript</ts:description>
+		<ts:aboutUrl xml:lang="en">https://redbrick.land/</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://pbs.twimg.com/profile_images/1628711184710139904/ulZC2jn0_400x400.jpg</ts:iconUrl>
+	</ts:meta>
+	<ts:contract interface="erc721" name="Token">
+		<ts:address network="1">0x0d0167a823c6619d430b1a96ad85b888bcf97c37</ts:address>
+	</ts:contract>
+	<ts:origins>
+		<!-- Define the contract which holds the token that the user will use -->
+		<ts:ethereum contract="Token"/>
+	</ts:origins>
+
+	<ts:cards>
+		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
+			<ts:include type="html" src="./dist/index.html"/>
+			<ts:include type="css" src="./src/styles.css"/>
+		</ts:viewContent>
+
+		<ts:card type="token" name="Profile" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Profile</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="profile">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+		<ts:card type="token" name="Points" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Points</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="points">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		
+		<ts:card type="token" name="Items" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Items</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="items">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+		<ts:card type="token" name="Contents" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Contents</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="contents">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		
+		<ts:card type="token" name="Friends" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Friends</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="friends">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+	</ts:cards>
+
+</ts:token>
