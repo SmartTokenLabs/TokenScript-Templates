@@ -24,14 +24,16 @@
 				/>
 			</div>
 			<div class="profile-banner">
-				<div class="profile-banner-effect-mask">
-					<div class="profile-banner-effect" />
+				<div style="position: absolute">
+					<div class="profile-banner-effect-mask">
+						<div class="profile-banner-effect" />
+					</div>
+					<img
+						alt="profile"
+						class="profile-img"
+						src="https://store.redbrick.land/prod/avatar/preset/rpm/thumbnail/rpm_001.png"
+					/>
 				</div>
-				<img
-					alt="profile"
-					class="profile-img"
-					src="https://store.redbrick.land/prod/avatar/preset/rpm/thumbnail/rpm_001.png"
-				/>
 				<img
 					alt="banner"
 					style="width: 100%; display: block"
@@ -57,7 +59,6 @@
 					<img alt="points" src="https://redbrick.land/static/media/ic_point.9d588b08c5e1c8e145091827ca704b7c.svg">
 				</div>
 			</div>
-			<div class="content-panel no-bg"></div>
 		</div>
 	{/if}
 	<Loader show={loading} />

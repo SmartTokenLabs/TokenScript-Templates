@@ -12,6 +12,8 @@
 body {
   font-family: 'Pretendard', sans-serif;
   color: #0B0B0B;
+	background: black;
+  height: 684px;
 }
 
 h1 {
@@ -60,6 +62,7 @@ p.light {
 .page {
 	color: #fff;
 	background-color: #000;
+	padding-bottom: 5px;
 }
 
 .content-panel {
@@ -167,8 +170,27 @@ p.light {
 	width: 126px;
 	height: 126px;
 	position: absolute;
-	top: 59px;
+	bottom: -182px;
 	left: 14px;
+}
+
+.profile-img {
+	width: 112px;
+	height: 112px;
+	border-radius: 72px;
+	position: absolute;
+	bottom: -174px;
+	left: 21px;
+	background: white;
+}
+
+@media (max-width: 480px) {
+  .profile-banner-effect {
+    bottom: -150px;
+  }
+	.profile-img {
+		bottom: -142px;
+	}
 }
 
 .avatar-container {
@@ -186,16 +208,6 @@ p.light {
 	position: absolute;
 	text-align: right;
 	right: 20px;
-}
-
-.profile-img {
-	width: 112px;
-	height: 112px;
-	border-radius: 72px;
-	position: absolute;
-	bottom: -58px;
-	left: 21px;
-	background: white;
 }
 
 h1 {
