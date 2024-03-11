@@ -4,10 +4,8 @@ type ChainConfig = {
   explorer: string
 }
 
-type ChainId = number
-
 type ChainConfigMap = {
-  [key in ChainId]: ChainConfig
+  [key in number]: ChainConfig
 }
 
 export const chainConfig: ChainConfigMap = {
@@ -78,37 +76,4 @@ export const chainConfig: ChainConfigMap = {
   },
 }
 
-function rgbToHex(r: number, g: number, b: number) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b)
-}
 
-function componentToHex(c: number) {
-  const hex = c.toString(16)
-  return hex.length === 1 ? "0" + hex : hex
-}
-
-export const getPixelColor = (event: Event) => {
-  let cardBackground
-
-  if (event.target) {
-    const canvas = document.createElement("canvas")
-
-    const context = canvas.getContext("2d")
-
-    canvas.width = 50
-
-    canvas.height = 50
-
-    context?.drawImage(event.target as CanvasImageSource, 0, 0, 50, 50)
-
-    const imageData = context?.getImageData(0, 0, 1, 1).data
-
-    if (imageData) {
-      const hexColor = rgbToHex(imageData[0], imageData[1], imageData[2])
-
-      cardBackground = hexColor
-    }
-  }
-
-  return cardBackground
-}

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "tokenscript emulate",
+    "emulate": "tokenscript emulate",
     "build": "vite build && npm run build:ts",
     "build:ts": "tokenscript build",
     "sign": "tokenscript sign",

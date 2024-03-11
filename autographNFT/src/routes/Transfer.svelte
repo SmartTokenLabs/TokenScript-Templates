@@ -1,14 +1,11 @@
 <script lang="ts">
 	import Loader from '../components/Loader.svelte';
 	import context from '../lib/context';
-	import { getPixelColor } from './../utils/index';
 
 	let token: any;
 	let loading = true;
 	let collectionName: string;
 	let receivingAccountAddress: string;
-	let cardBackground: string | undefined;
-	let imageFailedToLoad = false;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -36,20 +33,11 @@
 		// @ts-ignore
 		receivingAccountAddress = event.target.value;
 		// @ts-ignore
-		// TODO:
 		web3.action.setProps({
 			sendingAccountAddress: token.ownerAddress,
 			receivingAccountAddress,
 			tokenId: token.tokenId
 		});
-	}
-
-	function setPixelColor(event: Event) {
-		cardBackground = getPixelColor(event);
-	}
-
-	function handleImageError() {
-		imageFailedToLoad = true;
 	}
 </script>
 
