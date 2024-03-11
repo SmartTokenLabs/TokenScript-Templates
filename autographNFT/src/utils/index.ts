@@ -16,12 +16,12 @@ export const chainConfig: ChainConfigMap = {
   },
   5: {
     name: "GOERLI",
-    rpc: "",
+    rpc: "https://rpc.ankr.com/eth_goerli",
     explorer: "https://goerli.etherscan.io/",
   },
   11155111: {
     name: "SEPOLIA",
-    rpc: "",
+    rpc: "https://endpoints.omniatech.io/v1/eth/sepolia/public",
     explorer: "https://sepolia.etherscan.io/",
   },
   137: {
