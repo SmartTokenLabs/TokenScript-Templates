@@ -93,7 +93,7 @@
 						</div>
 					{/each}
 				{/if}
-				{#if signatures}
+				{#if signatures.length}
 					<p style="font-size: 20px; margin-top: 40px;">Signatures</p>
 					<div>
 						{#each signatures as signature}
