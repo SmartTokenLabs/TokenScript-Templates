@@ -86,9 +86,9 @@
 					{#each token?.tokenInfo?.attributes as trait}
 						<div style="margin: 10px 0;">
 							<div
-								style="border: 2px solid #7e16da; font-size: 14px; height: 20px; width: fit-content; padding: 10px 18px 27px 18px; border-radius: 30px;"
+								style="border: 2px solid #7e16da; font-size: 14px; width: fit-content; padding: 10px 18px; border-radius: 30px;"
 							>
-								{trait.value}
+								{trait.trait_type}: {trait.value}
 							</div>
 						</div>
 					{/each}
