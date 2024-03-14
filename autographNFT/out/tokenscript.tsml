@@ -51,7 +51,11 @@ var lt=Object.defineProperty;var ot=(t,e,i)=&gt;e in t?lt(t,e,{enumerable:!0,con
 }
 
 body {
-	color: #0B0B0B;
+  font-family: 'Pretendard', sans-serif;
+  color: #0B0B0B;
+	background: black;
+  height: 684px;
+	margin: 0;
 }
 
 h1 {
