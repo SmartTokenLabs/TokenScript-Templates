@@ -10,7 +10,7 @@
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>
-		<ts:description xml:lang="en">erc-721 baseline tokenscript for any ERC721 token</ts:description>
+		<ts:description xml:lang="en">Tokenscript for any ERC-721 standard token</ts:description>
 		<ts:aboutUrl xml:lang="en">https://www.smartlayer.network/smartcat</ts:aboutUrl>
 		<ts:iconUrl xml:lang="en">https://smart-layer-d12f1ja6t-smart-token-labs.vercel.app/smartcat/opengraph-image-3urawq.png?708f218c0ad1b4d7</ts:iconUrl>
 	</ts:meta>
