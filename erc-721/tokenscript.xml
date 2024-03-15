@@ -15,13 +15,13 @@
 		<ts:iconUrl xml:lang="en">https://smart-layer-d12f1ja6t-smart-token-labs.vercel.app/smartcat/opengraph-image-3urawq.png?708f218c0ad1b4d7</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc721" name="Token">
-		<ts:address network="137">0xd5ca946ac1c1f24eb26dae9e1a53ba6a02bd97fe</ts:address>
+		<ts:address network="80001">0x3f1108368cba706990590d15ce7addee8224203b</ts:address>
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
 		<ts:ethereum contract="Token"/>
 	</ts:origins>
-
+	
 	<ts:cards>
 		<ts:viewContent name="common"
 			xmlns="http://www.w3.org/1999/xhtml">
@@ -55,6 +55,25 @@
 			</ts:transaction>
 
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="transfer">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		
+		<ts:card type="action" name="Burn" origins="Token">
+
+			<ts:label>
+				<ts:string xml:lang="en">Burn</ts:string>
+			</ts:label>
+
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="burn" as="uint">
+					<ts:data>
+						<ts:uint256 ref="tokenId"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="burn">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
