@@ -61,6 +61,25 @@
 			</ts:view>
 		</ts:card>
 
+		<ts:card type="action" name="Burn" origins="Token">
+
+			<ts:label>
+				<ts:string xml:lang="en">Burn</ts:string>
+			</ts:label>
+
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="burn" as="uint">
+					<ts:data>
+						<ts:uint256 ref="tokenId"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="burn">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
 	</ts:cards>
 
 	<ts:attribute name="sendingAccountAddress">
