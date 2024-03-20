@@ -1,6 +1,6 @@
 # Smart Layer Network TokenScript
 
-A tokenscript template created for SLN token. 
+Tokenscript template for SLN token. 
 
 ### Start 
 
