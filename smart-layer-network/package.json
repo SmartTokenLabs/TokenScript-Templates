@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tokenscript/card-sdk": "^1.0.4",
 		"ethers": "^6.11.1"
 	}
 }

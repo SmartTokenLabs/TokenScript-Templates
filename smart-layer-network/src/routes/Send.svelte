@@ -2,7 +2,8 @@
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
-	let token;
+	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
+	let token: ITokenContextData;
 	let tokenAmount: any;
 	let loading = true;
 	let receivingAccountAddress: string | undefined;
@@ -20,28 +21,23 @@
 		loading = false;
 	});
 
-	function setTransactionParams(event: Event) {
-		// @ts-ignore
-		receivingAccountAddress = event.target.value;
+	function setRecievingAddress(event: Event) {
+		const inputElement = event.target as HTMLInputElement;
+		receivingAccountAddress = inputElement.value;
 		updateWeb3Props();
 	}
 
 	async function setTokenAmount(event: Event) {
-		// @ts-ignore
-		receivingAmountViewValue = event.target.value;
-		// @ts-ignore
-		receivingAmount = ethers.parseEther(event.target.value);
+		const inputElement = event.target as HTMLInputElement;
+		receivingAmountViewValue = inputElement.value;
+		receivingAmount = ethers.parseEther(inputElement.value);
 		updateWeb3Props();
 	}
 
 	function updateWeb3Props() {
-		// @ts-ignore
 		web3.action.setProps({
-			// @ts-ignore
 			sendingAccountAddress: token.ownerAddress,
-			// @ts-ignore
 			receivingAccountAddress,
-			// @ts-ignore
 			receivingAmount
 		});
 	}
@@ -121,7 +117,7 @@
 					minlength="42"
 					maxlength="42"
 					on:change={(event) => {
-						setTransactionParams(event);
+						setRecievingAddress(event);
 					}}
 					placeholder=""
 					id="recieving-account"

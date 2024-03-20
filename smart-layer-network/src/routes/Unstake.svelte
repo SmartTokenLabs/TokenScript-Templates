@@ -2,16 +2,15 @@
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
-	let token;
+	import { getStakedData } from './../lib/utils';
+	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
+	let token: ITokenContextData;
 	let loading = true;
-	let stakingAmount = 0;
+	let stakingAmount: number | string = 0;
 	let tokenAmount: number | undefined;
-	let stakedData = {
-		amount: undefined,
-		withdrawn: undefined,
-		reward: undefined,
-		lastUpdated: undefined
-	};
+	const stakeAddress = '0xE42185196640a4A2dfC668C19872958Db7AdaAC9';
+	let stakeAmount: undefined | number;
+	let stakeReward: undefined | number;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -20,313 +19,25 @@
 		// @ts-ignore
 		tokenAmount = ethers.formatEther(token._count);
 
-		setStakedData();
+		const stakedData = await getStakedData(stakeAddress, token.ownerAddress);
+		stakeAmount = stakedData.stakeAmount;
+		stakeReward = stakedData.stakeReward;
 
 		// You can load other data before hiding the loader
 		loading = false;
 	});
 
 	function applyMax() {
-		// @ts-ignore
-		stakingAmount = ethers.formatEther(stakedData.amount);
-	}
-
-	async function setStakedData() {
-		// @ts-ignore
-		const provider = new ethers.JsonRpcProvider(rpcURL);
-		// let estimation;
-		const contract = new ethers.Contract(
-			// @ts-ignore
-			'0xE42185196640a4A2dfC668C19872958Db7AdaAC9',
-			[
-				{
-					inputs: [
-						{ internalType: 'address', name: '_stakingToken', type: 'address' },
-						{ internalType: 'uint128', name: '_minimal_stake', type: 'uint128' },
-						{ internalType: 'uint32', name: '_reward_time_unit', type: 'uint32' },
-						{ internalType: 'uint256', name: '_reward_rate', type: 'uint256' }
-					],
-					stateMutability: 'nonpayable',
-					type: 'constructor'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'target', type: 'address' }],
-					name: 'AddressEmptyCode',
-					type: 'error'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'AddressInsufficientBalance',
-					type: 'error'
-				},
-				{ inputs: [], name: 'CastOverflow', type: 'error' },
-				{ inputs: [], name: 'FailedInnerCall', type: 'error' },
-				{ inputs: [], name: 'InvalidAmount', type: 'error' },
-				{
-					inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
-					name: 'OwnableInvalidOwner',
-					type: 'error'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'OwnableUnauthorizedAccount',
-					type: 'error'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
-					name: 'SafeERC20FailedOperation',
-					type: 'error'
-				},
-				{
-					anonymous: false,
-					inputs: [
-						{ indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
-						{ indexed: true, internalType: 'address', name: 'newOwner', type: 'address' }
-					],
-					name: 'OwnershipTransferred',
-					type: 'event'
-				},
-				{
-					anonymous: false,
-					inputs: [{ indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' }],
-					name: 'RewardAdded',
-					type: 'event'
-				},
-				{
-					anonymous: false,
-					inputs: [
-						{ indexed: true, internalType: 'address', name: 'staker', type: 'address' },
-						{ indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' }
-					],
-					name: 'RewardClaimed',
-					type: 'event'
-				},
-				{
-					anonymous: false,
-					inputs: [{ indexed: false, internalType: 'string[]', name: '', type: 'string[]' }],
-					name: 'ScriptUpdate',
-					type: 'event'
-				},
-				{
-					anonymous: false,
-					inputs: [
-						{ indexed: true, internalType: 'address', name: 'staker', type: 'address' },
-						{ indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' }
-					],
-					name: 'Stake',
-					type: 'event'
-				},
-				{
-					anonymous: false,
-					inputs: [
-						{ indexed: true, internalType: 'address', name: 'staker', type: 'address' },
-						{ indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' }
-					],
-					name: 'Withdraw',
-					type: 'event'
-				},
-				{
-					inputs: [],
-					name: 'DECIMALS',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'MINIMAL_STAKE',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'REWARD_RATE',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'REWARD_RATE_DIVIDER',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'REWARD_TIME_UNIT',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'STAKING_TOKEN',
-					outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: '_getFullReward',
-					outputs: [{ internalType: 'uint128', name: '', type: 'uint128' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: '', type: 'address' }],
-					name: '_stake',
-					outputs: [
-						{ internalType: 'uint128', name: 'amount', type: 'uint128' },
-						{ internalType: 'uint128', name: 'withdrawn', type: 'uint128' },
-						{ internalType: 'uint128', name: 'reward', type: 'uint128' },
-						{ internalType: 'uint32', name: 'lastUpdated', type: 'uint32' }
-					],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-					name: 'addReward',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'balanceOf',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'currentRewardOf',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'owner',
-					outputs: [{ internalType: 'address', name: '', type: 'address' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'renounceOwnership',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'rewardOf',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'scriptURI',
-					outputs: [{ internalType: 'string[]', name: '', type: 'string[]' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'string[]', name: 'newScriptURI', type: 'string[]' }],
-					name: 'setScriptURI',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'uint128', name: 'amount', type: 'uint128' }],
-					name: 'stake',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
-					name: 'supportsInterface',
-					outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'totalRewardClaimed',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'totalRewards',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [],
-					name: 'totalStaked',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
-					name: 'transferOwnership',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				},
-				{
-					inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-					name: 'updatedAt',
-					outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-					stateMutability: 'view',
-					type: 'function'
-				},
-				{
-					inputs: [
-						{ internalType: 'uint128', name: 'amount', type: 'uint128' },
-						{ internalType: 'uint128', name: 'reward', type: 'uint128' }
-					],
-					name: 'withdraw',
-					outputs: [],
-					stateMutability: 'nonpayable',
-					type: 'function'
-				}
-			],
-			provider
-		);
-
-		try {
-			// @ts-ignore
-			const getStakedData = await contract._stake(token.ownerAddress);
-			const getStakedDataAsArr = getStakedData.toArray();
-			stakedData.amount = getStakedDataAsArr[0] ?? '-';
-			stakedData.withdrawn = getStakedDataAsArr[1] ?? '-';
-			stakedData.reward = getStakedDataAsArr[2] ?? '-';
-		} catch (error) {
-			console.log('could not retrieve staking contract data: ', error);
-		}
+		if (stakeAmount) stakingAmount = ethers.formatEther(stakeAmount);
 	}
 
 	function setTransactionParams(event: Event) {
-		// @ts-ignore
-		stakingAmount = event.target.value;
-
+		const inputElement = event.target as HTMLInputElement;
+		stakingAmount = inputElement.value;
 		if (stakingAmount) {
-			// @ts-ignore
 			web3.action.setProps({
-				// @ts-ignore
-				stakeAmount: ethers.parseEther(stakingAmount),
-				stakeReward: stakedData.reward
+				stakeAmount: ethers.parseEther(stakingAmount.toString()),
+				stakeReward: stakeReward
 			});
 		}
 	}
@@ -399,14 +110,14 @@
 				</div>
 				<div class="field-container">
 					<div class="field-value">
-						{stakedData.amount ? ethers.formatEther(stakedData?.amount) + ' SLN' : '-'}
+						{stakeAmount ? ethers.formatEther(stakeAmount) + ' SLN' : '-'}
 					</div>
 				</div>
 			</div>
 			<div class="field-section">
 				<div class="flex-between field-section-heading">
 					<div class="field-section-title">Unstake Amount</div>
-					{#if !stakedData.amount}
+					{#if !stakeAmount}
 						<button
 							on:click={(e) => {
 								applyMax();
@@ -437,7 +148,7 @@
 				<div class="field-container">
 					<div class="field-title">Reward</div>
 					<div class="field-value">
-						{stakedData.reward ? ethers.formatEther(stakedData.reward) : 0} SLN
+						{stakeReward ? ethers.formatEther(stakeReward) : 0} SLN
 					</div>
 				</div>
 			</div>
