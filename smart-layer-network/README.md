@@ -1,16 +1,6 @@
-# Svelte Project Template
+# Smart Layer Network TokenScript
 
-## Development
-
-### Exploring the project directory
-
-- `/tokenscript.xml` defines project's the views, actions and props in correlation with the Svelte application. Each view should be defined inside the `TokenScript.xml` and within the Svelte application.
-
-- `/App.svelte` is an entry point which new views can be added to the Svelte application. 
-
-- `/src/routes/` contains example views `Mint` and `Info` which can be built upon or used as a reference towards your project.
-
-- `/out/tokenscript.tsml` is the finalised project output. This is generated when you start or build this application. 
+A tokenscript template created for SLN token. 
 
 ### Start 
 
