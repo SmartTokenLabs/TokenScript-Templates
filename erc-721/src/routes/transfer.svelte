@@ -1,7 +1,6 @@
 <script lang="ts">
   import Loader from "../components/Loader.svelte"
   import context from "../lib/context"
-  import { getPixelColor } from "./../utils/index"
 
   let token: any
   let loading = true
@@ -44,10 +43,6 @@
     })
   }
 
-  function setPixelColor(event: Event) {
-    cardBackground = getPixelColor(event)
-  }
-
   function handleImageError() {
     imageFailedToLoad = true
   }
@@ -88,7 +83,6 @@
         {/if}
         {#if token.image_preview_url && imageFailedToLoad === false}
           <img
-            on:load|once={setPixelColor}
             crossorigin="anonymous"
             style="display: none; border-radius: 7px; width: 98px; margin-top: 5px; margin-right: 15px;"
             src={token.image_preview_url}
@@ -112,7 +106,6 @@
           style="
 						font-size: 19px;
 						font-weight: 500;
-						text-align: center;
 						margin: 38px 0 14px 0;
 						"
         >

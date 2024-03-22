@@ -32,6 +32,7 @@
     "vite-plugin-singlefile": "^0.13.5"
   },
   "dependencies": {
+    "@tokenscript/card-sdk": "^1.0.4",
     "ethers": "^6.8.1"
   },
   "type": "module"

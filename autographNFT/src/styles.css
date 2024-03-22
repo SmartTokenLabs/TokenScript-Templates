@@ -5,7 +5,11 @@
 }
 
 body {
-	color: #0B0B0B;
+  font-family: 'Pretendard', sans-serif;
+  color: #0B0B0B;
+	background: black;
+  height: 684px;
+	margin: 0;
 }
 
 h1 {

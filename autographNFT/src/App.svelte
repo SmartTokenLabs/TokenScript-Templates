@@ -3,13 +3,15 @@
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
 	import Transfer from './routes/Transfer.svelte';
+	import Burn from './routes/Burn.svelte';
 
 	let token;
 	let initialised = false;
 
 	const routingMap = {
 		'#info': Info,
-		'#transfer': Transfer
+		'#transfer': Transfer,
+		'#burn': Burn
 	};
 
 	let page;

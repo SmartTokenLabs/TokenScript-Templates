@@ -5,6 +5,7 @@
   import Info from "./routes/Info.svelte"
   import NotFound from "./routes/NotFound.svelte"
   import Transfer from "./routes/transfer.svelte"
+  import Burn from "./routes/burn.svelte"
   import { Token } from "./type"
 
   let token: Token
@@ -19,14 +20,13 @@
   const routingMap: RoutingMap = {
     "#info": Info as Page,
     "#transfer": Transfer as Page,
+    "#burn": Burn as Page,
   }
 
   let page: Page
 
   function routeChange() {
-    page =
-      routingMap[token.level == 0 ? "#adopt" : document.location.hash] ||
-      NotFound
+    page = routingMap[document.location.hash] || NotFound
   }
 
   // @ts-ignore  TODO:
