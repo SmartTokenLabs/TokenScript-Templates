@@ -114,7 +114,7 @@
 			</div>
 			<div class="field-section">
 				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Stake Amount</div>
+					<div class="field-section-title">Stake Amount (Min 10 SLN)</div>
 					<button
 						on:click={(e) => {
 							applyMax();
@@ -127,11 +127,17 @@
 						setTransactionParams(event);
 					}}
 					type="string"
+					minlength="2"
 					placeholder=""
 					id="stake-amount"
 					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
 					value={stakingAmount}
 				/>
+				{#if Number(stakingAmount) > 0 && Number(stakingAmount) < 10}
+					<div style="color: red; padding: 12px 0;">
+						Increase to staking minimum of 10 SLN or more.
+					</div>
+				{/if}
 			</div>
 			<div class="field-section">
 				<div class="flex-between field-section-heading">

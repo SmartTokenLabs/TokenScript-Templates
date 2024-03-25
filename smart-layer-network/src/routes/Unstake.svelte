@@ -37,7 +37,7 @@
 		if (stakingAmount) {
 			web3.action.setProps({
 				stakeAmount: ethers.parseEther(stakingAmount.toString()),
-				stakeReward: stakeReward
+				stakeReward: stakeReward?.toString()
 			});
 		}
 	}
