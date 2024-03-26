@@ -11,7 +11,7 @@
   let explorer: string
   let cardBackground: string | undefined
   let imageFailedToLoad = false
-  let nftStats: any
+  let nftStats: { floorPrice: number; isLiveData: boolean; chain: string }
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
