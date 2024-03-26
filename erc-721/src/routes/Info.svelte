@@ -11,6 +11,9 @@
   let explorer: string
   let cardBackground: string | undefined
   let imageFailedToLoad = false
+  let nftStats: any
+  let nftStatsViewData: string
+  let chainConfigDetail: any // = { name: '', rpc: '', explorer: '', tokenDiscoveryChainRef: '' };
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
@@ -21,6 +24,21 @@
     // You can load other data before hiding the loader
     loading = false
   })
+
+  function getChainConfigDetail() {
+    return chainConfig[Number(token.chainId)]
+  }
+
+  async function setNftPriceData() {
+    const nftStatsRequest = await fetch(
+      `https://api.token-discovery.tokenscript.org/get-token-stats?blockchain=evm&smartContract=${token.contractAddress}&chain=${chainConfigDetail.tokenDiscoveryChainRef}`
+    )
+    nftStats = await nftStatsRequest.json()
+
+    nftStatsViewData = nftStats?.floorPrice
+      ? `${nftStats.floorPrice}`
+      : "not found"
+  }
 
   function setExplorer() {
     explorer = chainConfig[Number(token.chainId)]?.explorer
@@ -93,6 +111,8 @@
     setCollectionName()
     setRoyalties()
     setExplorer()
+    chainConfigDetail = getChainConfigDetail()
+    setNftPriceData()
   }
 
   function handleImageError() {
@@ -260,6 +280,14 @@
                 {token.contractAddress}
               {/if}
             </p>
+          {/if}
+          {#if nftStatsViewData}
+            <p
+              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
+            >
+              Floor Price {nftStats?.isLiveData ? "" : "(24hr)"}
+            </p>
+            <p style="font-size: 14px; color: black;">{nftStatsViewData}</p>
           {/if}
           {#if token.tokenInfo.type}
             <p
