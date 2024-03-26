@@ -267,15 +267,14 @@
               {/if}
             </p>
           {/if}
-          {#if nftStats}
+          {#if nftStats?.floorPrice}
             <p
               style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
             >
               Floor Price {nftStats?.isLiveData ? "" : "(24hr)"}
             </p>
             <p style="font-size: 14px; color: black;">
-              {nftStats.floorPrice + " " + nftStats?.chain.toUpperCase() ??
-                "not found"}
+              {nftStats.floorPrice + " " + nftStats?.chain.toUpperCase()}
             </p>
           {/if}
           {#if token.tokenInfo.type}
