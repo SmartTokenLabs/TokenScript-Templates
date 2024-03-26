@@ -12,7 +12,6 @@
   let cardBackground: string | undefined
   let imageFailedToLoad = false
   let nftStats: any
-  let chainConfigDetail: any // = { name: '', rpc: '', explorer: '', tokenDiscoveryChainRef: '' };
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
@@ -23,10 +22,6 @@
     // You can load other data before hiding the loader
     loading = false
   })
-
-  function getChainConfigDetail() {
-    return chainConfig[Number(token.chainId)]
-  }
 
   async function setNftPriceData() {
     nftStats = await getNftPriceData(token.contractAddress, token.chainId)
@@ -103,7 +98,6 @@
     setCollectionName()
     setRoyalties()
     setExplorer()
-    chainConfigDetail = getChainConfigDetail()
     setNftPriceData()
   }
 
