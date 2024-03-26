@@ -1,0 +1,62 @@
+{
+	"$schema": "../tstemplate.schema.json",
+	"name": "Empty Svelte Project - recommended",
+	"description": "An empty Svelte project",
+	"templateFields": [
+		{
+			"name": "TokenScript name",
+			"token": "TOKENSCRIPT_NAME",
+			"prompt": "Enter a name for the TokenScript project",
+			"value": "smart token layer"
+		},
+		{
+			"name": "Token type",
+			"token": "TOKEN_TYPE",
+			"updatePrefix": "interface=\"",
+			"prompt": "Select the token type",
+			"options": [
+				"erc721",
+				"erc20",
+				"erc1155"
+			],
+			"value": "erc20"
+		},
+		{
+			"name": "Contract address",
+			"token": "CONTRACT_ADDRESS",
+			"prompt": "Enter the ethereum contract address for the TokenScript",
+			"value": "0xdb82c0d91e057e05600c8f8dc836beb41da6df14"
+		},
+		{
+			"name": "Contract chain",
+			"token": "CONTRACT_CHAIN",
+			"updatePrefix": "network=\"",
+			"prompt": "Enter the ethereum chainID for the TokenScript",
+			"value": "1"
+		},
+		{
+			"name": "Description",
+			"token": "DESCRIPTION",
+			"prompt": "Enter a short description for the TokenScript",
+			"value": "smart token layer official tokenscript"
+		},
+		{
+			"name": "About URL",
+			"token": "ABOUT_URL",
+			"prompt": "Enter a URL to a website about this TokenScript",
+			"value": "https://www.smartlayer.network/"
+		},
+		{
+			"name": "Icon URL",
+			"token": "ICON_URL",
+			"prompt": "Enter an icon URL for the TokenScript (base64 image URLs are supported)",
+			"value": "data:image/png;base64,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"
+		},
+		{
+			"name": "Trimmed Name",
+			"token": "TOKENSCRIPT_TRIM",
+			"prompt": "",
+			"value": "smart-token-layer"
+		}
+	]
+}
