@@ -2,7 +2,7 @@
   import { ethers } from "ethers"
   import Loader from "../components/Loader.svelte"
   import context from "../lib/context"
-  import { chainConfig } from "./../utils/index"
+  import { chainConfig, getNftPriceData } from "./../utils/index"
 
   let token: any
   let loading = true
@@ -12,7 +12,6 @@
   let cardBackground: string | undefined
   let imageFailedToLoad = false
   let nftStats: any
-  let nftStatsViewData: string
   let chainConfigDetail: any // = { name: '', rpc: '', explorer: '', tokenDiscoveryChainRef: '' };
 
   context.data.subscribe(async (value) => {
@@ -30,14 +29,7 @@
   }
 
   async function setNftPriceData() {
-    const nftStatsRequest = await fetch(
-      `https://api.token-discovery.tokenscript.org/get-token-stats?blockchain=evm&smartContract=${token.contractAddress}&chain=${chainConfigDetail.tokenDiscoveryChainRef}`
-    )
-    nftStats = await nftStatsRequest.json()
-
-    nftStatsViewData = nftStats?.floorPrice
-      ? `${nftStats.floorPrice}`
-      : "not found"
+    nftStats = await getNftPriceData(token.contractAddress, token.chainId)
   }
 
   function setExplorer() {
@@ -281,13 +273,16 @@
               {/if}
             </p>
           {/if}
-          {#if nftStatsViewData}
+          {#if nftStats}
             <p
               style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
             >
               Floor Price {nftStats?.isLiveData ? "" : "(24hr)"}
             </p>
-            <p style="font-size: 14px; color: black;">{nftStatsViewData}</p>
+            <p style="font-size: 14px; color: black;">
+              {nftStats.floorPrice + " " + nftStats?.chain.toUpperCase() ??
+                "not found"}
+            </p>
           {/if}
           {#if token.tokenInfo.type}
             <p

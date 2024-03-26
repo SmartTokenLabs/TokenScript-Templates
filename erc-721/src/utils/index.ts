@@ -5,8 +5,22 @@ type ChainConfig = {
   tokenDiscoveryChainRef: string
 }
 
+type ChainId = number
+
 type ChainConfigMap = {
-  [key in number]: ChainConfig
+  [key in ChainId]: ChainConfig
+}
+
+export const getNftPriceData = async (contractAddress: string, chainNumber: number) => {
+  const nftStatsRequest = await fetch(
+    `https://api.token-discovery.tokenscript.org/get-token-stats?blockchain=evm&smartContract=${contractAddress}&chain=${chainConfig[chainNumber].tokenDiscoveryChainRef}`
+  )
+  const nftStats = await nftStatsRequest.json()
+  return {
+    floorPrice: nftStats?.floorPrice,
+    isLiveData: nftStats?.isLiveData,
+    chain: nftStats?.tokenChain
+  }
 }
 
 export const chainConfig: ChainConfigMap = {
