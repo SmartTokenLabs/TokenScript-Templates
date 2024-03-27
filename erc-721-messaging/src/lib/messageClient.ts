@@ -5,7 +5,7 @@ export class MessageClient {
 	private static BASE_URL =
 		import.meta.env.VITE_MESSAGING_API_BASE_URL ??
 		'https://store-backend-stage.smartlayer.network/messaging';
-	// "http://127.0.0.1:3008/api/erc721messaging";
+	// "http://127.0.0.1:3006/messaging";
 	// "https://chat.tokenscript.org/api/erc721messaging";
 	// "https://stltesting.wallaceit.com.au/sc-chat/api";
 
@@ -15,11 +15,11 @@ export class MessageClient {
 
 	constructor(private tokenContext: Token) {}
 
-	public async postInviteFriend(friendId: number, signature: string) {
+	public async postInviteFriend(friendId: number|string) {
 		return await this.requestWithAuth(
 			`/invite-friend/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${this.tokenContext.tokenId}`,
 			'post',
-			{ friendId, signature }
+			{ friendId }
 		);
 	}
 
@@ -41,6 +41,13 @@ export class MessageClient {
 	public async getFriendInvites() {
 		return await this.requestWithAuth(
 			`/friend-invites/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${this.tokenContext.tokenId}`,
+			'get'
+		);
+	}
+
+	public async getOwnFriendInvites() {
+		return await this.requestWithAuth(
+			`/own-invites/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${this.tokenContext.tokenId}`,
 			'get'
 		);
 	}
@@ -85,6 +92,13 @@ export class MessageClient {
 	public async getBroadcastMessages() {
 		return await this.requestWithAuth(
 			`/get-broadcast-messages/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${this.tokenContext.tokenId}`,
+			'get'
+		);
+	}
+
+	public async getBroadcastMessageCount() {
+		return await this.requestWithAuth(
+			`/get-broadcast-unread-message-count/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${this.tokenContext.tokenId}`,
 			'get'
 		);
 	}

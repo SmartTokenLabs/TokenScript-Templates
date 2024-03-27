@@ -32,14 +32,25 @@
 			<ts:include type="css" src="./src/styles.css"/>
 		</ts:viewContent>
 
-		<ts:card type="token" name="messaging" origins="Token">
+		<ts:card type="token" name="friendship" origins="Token">
 			<ts:label>
-				<ts:string xml:lang="en">Chat with Friends</ts:string>
+				<ts:string xml:lang="en">Get Friends</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="messaging">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="friendship">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
+
+		<ts:card type="token" name="messages" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Chat with Friends</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="messages">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+		
 
 		<ts:card type="token" name="Info" origins="Token">
 			<ts:label>
@@ -56,6 +67,22 @@
 		<ts:type><ts:syntax>1.3.6.1.4.1.1466.115.121.1.7</ts:syntax></ts:type>
 		<ts:origins>
 			<ethereum:call function="owner" contract="Token" as="address">
+			</ethereum:call>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="contractName">
+		<ts:type><ts:syntax>1.3.6.1.4.1.1466.115.121.1.7</ts:syntax></ts:type>
+		<ts:origins>
+			<ethereum:call function="name" contract="Token" as="utf8">
+			</ethereum:call>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="contractURI">
+		<ts:type><ts:syntax>1.3.6.1.4.1.1466.115.121.1.7</ts:syntax></ts:type>
+		<ts:origins>
+			<ethereum:call function="contractURI" contract="Token" as="utf8">
 			</ethereum:call>
 		</ts:origins>
 	</ts:attribute>

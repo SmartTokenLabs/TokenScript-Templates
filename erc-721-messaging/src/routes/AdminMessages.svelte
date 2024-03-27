@@ -1,11 +1,7 @@
 <script lang="ts">
 	import context from '../lib/context';
-	import { showLoader } from '../lib/storage';
+	import { showLoader, notify } from '../lib/storage';
 	import { Token } from '../lib/types';
-	import OperationStatus from '../components/OperationStatus.svelte';
-
-	let resultStatus: boolean;
-	let resultMessage: string;
 
 	let newMessageText: string = '';
 	let loading = false;
@@ -29,12 +25,9 @@
 		try {
 			const client = await context.getMessageClient();
 			messages = await client.getBroadcastMessages();
-
-			resultMessage = 'Messages checked.';
-			resultStatus = true;
+			$notify = {status: true, message: 'Messages checked.'}
 		} catch (e) {
-			resultMessage = e.message;
-			resultStatus = false;
+			$notify = {status: false, message: e.message}
 		}
 		showLoader.set(false);
 	});
@@ -45,11 +38,9 @@
 			const client = await context.getMessageClient();
 			const result = await client.sendBroadcastMessage(newMessageText);
 			newMessageText = '';
-			resultMessage = 'Sessage sent';
-			resultStatus = true;
+			$notify = {status: true, message: 'Sessage sent'}
 		} catch (e) {
-			resultMessage = e.message;
-			resultStatus = false;
+			$notify = {status: false, message: e.message}
 		}
 		showLoader.set(false);
 	}
@@ -78,7 +69,6 @@
 		{/each}
 	</div>
 {/if}
-<OperationStatus result={resultStatus} message={resultMessage} />
 
 <style lang="scss">
 	#send-message {

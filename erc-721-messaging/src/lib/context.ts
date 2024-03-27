@@ -2,13 +2,11 @@ import { writable } from 'svelte/store';
 import { MessageClient } from './messageClient';
 import { Token } from './types';
 import { getContract } from './data';
+import { Contract } from 'ethers';
 
 let messageClient: MessageClient;
 
-const data = writable<{ token: Token | undefined; contract: any }>({
-	token: undefined,
-	contract: undefined
-});
+const data = writable<{ token: Token; contract: Contract }>();
 
 // for secure encrypting
 const messagingKey = writable<string>('');
@@ -24,12 +22,11 @@ async function setToken(token: Token) {
 	// Do some other stuff
 }
 
-async function getMessageClient() {
+async function getMessageClient():Promise<MessageClient> {
 	if (messageClient) return messageClient;
 
 	return new Promise((resolve) => {
 		data.subscribe((data) => {
-			// @ts-expect-error token will be set on new event
 			messageClient = new MessageClient(data.token);
 			resolve(messageClient);
 		});
