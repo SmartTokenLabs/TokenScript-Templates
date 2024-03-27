@@ -23,7 +23,15 @@
 
   async function init() {
     setCollectionName()
+    setTransactionParams()
     burnFnExists = await checkBurnFnExists()
+  }
+
+  function setTransactionParams() {
+    // @ts-ignore
+    web3.action.setProps({
+      tokenId: token.tokenId,
+    })
   }
 
   function setCollectionName() {
