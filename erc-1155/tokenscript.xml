@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ethereum="urn:ethereum:constantinople" name="erc-1155">
+	<ts:label>
+		<ts:plurals xml:lang="en">
+			<ts:string quantity="one">erc-1155 Token</ts:string>
+			<ts:string quantity="other">erc-1155 Tokens</ts:string>
+		</ts:plurals>
+	</ts:label>
+	<ts:meta>
+		<ts:description xml:lang="en">Tokenscript for any ERC-1155 standard token</ts:description>
+		<ts:aboutUrl xml:lang="en"></ts:aboutUrl>
+		<ts:iconUrl xml:lang="en"></ts:iconUrl>
+	</ts:meta>
+	<ts:contract interface="erc1155" name="Token">
+		<!-- <ts:address network="1">0x76be3b62873462d2142405439777e971754e8e77</ts:address> -->
+		<ts:address network="1">0xd07dc4262bcdbf85190c01c996b4c06a461d2430</ts:address>
+	</ts:contract>
+	<ts:origins>
+		<!-- Define the contract which holds the token that the user will use -->
+		<ts:ethereum contract="Token"/>
+	</ts:origins>
+	
+	<ts:cards>
+		<ts:viewContent name="common"
+			xmlns="http://www.w3.org/1999/xhtml">
+			<ts:include type="html" src="./dist/index.html"/>
+			<ts:include type="css" src="./src/styles.css"/>
+		</ts:viewContent>
+
+		<ts:card type="token" name="Info" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Info</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+		<ts:card type="action" name="Transfer" origins="Token">
+
+			<ts:label>
+				<ts:string xml:lang="en">Transfer</ts:string>
+			</ts:label>
+
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="safeTransferFrom" as="uint">
+					<ts:data>
+						<ts:address ref="sendingAccountAddress"/>
+						<ts:address ref="receivingAccountAddress"/>
+						<ts:uint256 ref="tokenId"/>
+						<ts:uint256 ref="numberOfTokens"/>
+						<ts:bytes>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes>
+					</ts:data> 
+				</ethereum:transaction>
+			</ts:transaction>
+
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="transfer">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		
+		<ts:card type="action" name="Burn" origins="Token">
+
+			<ts:label>
+				<ts:string xml:lang="en">Burn</ts:string>
+			</ts:label>
+
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="burn" as="uint">
+					<ts:data>
+						<ts:address ref="sendingAccountAddress"/>
+						<ts:uint256 ref="tokenId"/>
+						<ts:uint256 ref="numberOfTokens"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="burn">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+	</ts:cards>
+
+	<ts:attribute name="sendingAccountAddress">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">sending account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="receivingAccountAddress">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">receiving account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="tokenId">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
+		</ts:type>
+		<ts:origins>
+			<ethereum:call function="tokenId" contract="Token" as="uint">
+				<ts:data>
+					<ts:uint256 ref="tokenId"/>
+				</ts:data>
+			</ethereum:call>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="numberOfTokens">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">number of tokens to send or burn based upon the view this prop is used</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+
+</ts:token>
