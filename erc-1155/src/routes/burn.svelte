@@ -9,6 +9,7 @@
   let collectionName: string
   let cardBackground: string | undefined
   let imageFailedToLoad = false
+  let numberOfTokensToBurn: number
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
@@ -33,12 +34,19 @@
     }
   }
 
+  function setNumberOfTokensToBurn(event: Event) {
+    // @ts-ignore
+    numberOfTokensToBurn = event.target.value
+    web3.action.setProps({
+      numberOfTokens: numberOfTokensToBurn,
+    })
+  }
+
   function setTransactionParams() {
     // @ts-ignore
     web3.action.setProps({
       sendingAccountAddress: token.ownerAddress,
       tokenId: token.tokenId,
-      numberOfTokens: 1,
     })
   }
 
@@ -126,7 +134,7 @@
         style="display: flex; justify-content: space-between; margin: 10px 0;"
       >
         <p style="font-size: 14px;font-weight: 400;color: #707070;">
-          Your Token
+          Your Token(s)
         </p>
       </div>
 
@@ -142,8 +150,25 @@
         <p
           style="font-size: 14px;padding: 0;margin: 7px 0;font-weight: 400; word-wrap: break-word;"
         >
-          #{token.tokenId}
+          {token.name} #{token.tokenId}
         </p>
+      </div>
+
+      <div
+        style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
+      >
+        <p style="margin: 7px 0;font-weight: 400;font-size: 14px;">
+          Amount ({token.tokenInfo?.data?.balance} maximum)
+        </p>
+        <input
+          on:change={(event) => {
+            setNumberOfTokensToBurn(event)
+          }}
+          placeholder=""
+          id="recieving-account"
+          style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
+          type="text"
+        />
       </div>
 
       <div
@@ -162,7 +187,7 @@
 
         <p style="color: #888;font-weight: 400;font-size: 14px;">Burn</p>
         <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          1 x {token.name}
+          {numberOfTokensToBurn} x {token.name} #{token.tokenId}
         </p>
 
         <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
