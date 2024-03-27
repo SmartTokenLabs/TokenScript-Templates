@@ -7,7 +7,7 @@
   let loading = true
   let collectionName: string
   let receivingAccountAddress: string
-  let numberOfTokensToSend: number = 1
+  let numberOfTokensToSend: number
   let cardBackground: string | undefined
   let imageFailedToLoad = false
 
