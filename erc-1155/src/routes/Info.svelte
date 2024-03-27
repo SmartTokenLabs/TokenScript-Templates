@@ -2,7 +2,7 @@
   import { ethers } from "ethers"
   import Loader from "../components/Loader.svelte"
   import context from "../lib/context"
-  import { chainConfig } from "./../utils/index"
+  import { chainConfig, getNftPriceData } from "./../utils/index"
 
   let token: any
   let loading = true
@@ -11,6 +11,7 @@
   let explorer: string
   let cardBackground: string | undefined
   let imageFailedToLoad = false
+  let nftStats: { floorPrice: number; isLiveData: boolean; chain: string }
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
@@ -21,6 +22,10 @@
     // You can load other data before hiding the loader
     loading = false
   })
+
+  async function setNftPriceData() {
+    nftStats = await getNftPriceData(token.contractAddress, token.chainId)
+  }
 
   function setExplorer() {
     explorer = chainConfig[Number(token.chainId)]?.explorer
@@ -93,6 +98,7 @@
     setCollectionName()
     setRoyalties()
     setExplorer()
+    setNftPriceData()
   }
 
   function handleImageError() {
@@ -261,6 +267,16 @@
               {/if}
             </p>
           {/if}
+          {#if nftStats?.floorPrice}
+            <p
+              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
+            >
+              Floor Price {nftStats?.isLiveData ? "" : "(24hr)"}
+            </p>
+            <p style="font-size: 14px; color: black;">
+              {nftStats.floorPrice + " " + nftStats?.chain.toUpperCase()}
+            </p>
+          {/if}
           {#if token.tokenInfo.type}
             <p
               style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
@@ -268,26 +284,6 @@
               Token Standard
             </p>
             <p style="font-size: 14px; color: black;">{token.tokenInfo.type}</p>
-          {/if}
-          {#if token.tokenInfo?.data?.balance}
-            <p
-              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
-            >
-              Token Balance
-            </p>
-            <p style="font-size: 14px; color: black;">
-              {token.tokenInfo.data.balance}
-            </p>
-          {/if}
-          {#if token.tokenId}
-            <p
-              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
-            >
-              Id
-            </p>
-            <p style="font-size: 14px; color: black; word-wrap: break-word;">
-              {token.tokenId}
-            </p>
           {/if}
           {#if token.chainId}
             <p
