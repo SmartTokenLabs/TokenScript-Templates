@@ -5,7 +5,6 @@
 	let token: any;
 	let loading = true;
 	let collectionName: string;
-	let receivingAccountAddress: string;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -27,15 +26,12 @@
 
 	function init() {
 		setCollectionName();
+		setTransactionParams();
 	}
 
-	function setTransactionParams(event: Event) {
-		// @ts-ignore
-		receivingAccountAddress = event.target.value;
+	function setTransactionParams() {
 		// @ts-ignore
 		web3.action.setProps({
-			sendingAccountAddress: token.ownerAddress,
-			receivingAccountAddress,
 			tokenId: token.tokenId
 		});
 	}
