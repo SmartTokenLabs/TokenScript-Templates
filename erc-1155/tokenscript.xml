@@ -48,16 +48,11 @@
 			<ts:transaction>
 				<ethereum:transaction contract="Token" function="safeTransferFrom" as="uint">
 					<ts:data>
-						<ts:address>0x647935C1bfA643D27AFe0F32A5357975b56B771d</ts:address>
-						<ts:address>0x78AE661C4932e19311b3a75De59CB1613083e482</ts:address>
-						<ts:uint256>10169</ts:uint256>
-						<ts:uint256>1</ts:uint256>
-						<ts:bytes32>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes32>
-						<!-- <ts:address ref="sendingAccountAddress"/>
+						<ts:address ref="sendingAccountAddress"/>
 						<ts:address ref="receivingAccountAddress"/>
 						<ts:uint256 ref="tokenId"/>
 						<ts:uint256 ref="numberOfTokens"/>
-						<ts:bytes32>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes32> -->
+						<ts:bytes>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes>
 					</ts:data> 
 				</ethereum:transaction>
 			</ts:transaction>
