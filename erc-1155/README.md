@@ -1,6 +1,6 @@
-# ERC-721
+# ERC-1155
 
-ERC-721 TokenScript Template. 
+ERC-1155 TokenScript Template. 
 
 ## Features
 
@@ -13,7 +13,7 @@ ERC-721 TokenScript Template.
 
 - Install [TokenScript CLI](https://www.npmjs.com/package/@tokenscript/cli)
 - Clone this repository
-- Change directory to `/erc-721` and install dependencies `pnpm install`
+- Change directory to `/erc-1155` and install dependencies `pnpm install`
 - Update the `./tokenScript.xml` ts contract `<ts:contract>` address to a smart contract address and chain id of your choice.
 - Start the project using `pnpm start`
 
