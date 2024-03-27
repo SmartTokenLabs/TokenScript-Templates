@@ -213,6 +213,16 @@
           >
             Details
           </p>
+          {#if token.tokenInfo?.data?.balance}
+            <p
+              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
+            >
+              Owned
+            </p>
+            <p style="font-size: 14px; color:black; word-wrap: break-word;">
+              {token.tokenInfo?.data?.balance}
+            </p>
+          {/if}
           {#if token.description}
             <p
               style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"

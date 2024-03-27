@@ -9,7 +9,6 @@
   let collectionName: string
   let cardBackground: string | undefined
   let imageFailedToLoad = false
-  let burnFnExists = false
 
   context.data.subscribe(async (value) => {
     if (!value.token) return
@@ -23,7 +22,7 @@
 
   async function init() {
     setCollectionName()
-    burnFnExists = await checkBurnFnExists()
+    setTransactionParams()
   }
 
   function setCollectionName() {
@@ -34,46 +33,13 @@
     }
   }
 
-  async function checkBurnFnExists() {
-    const abi = [
-      {
-        inputs: [
-          {
-            internalType: "address",
-            name: "account",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "id",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "value",
-            type: "uint256",
-          },
-        ],
-        name: "burn",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-    ]
-
-    const provider = new ethers.JsonRpcProvider(rpcURL)
+  function setTransactionParams() {
     // @ts-ignore
-    const erc721 = new ethers.Contract(token.contractAddress, abi, provider)
-    let estimation
-
-    try {
-      // @ts-ignore
-      estimation = await erc721.getFunction("burn").estimateGas(token.tokenId)
-      return true
-    } catch (error) {
-      console.log("no burn fn found")
-      return false
-    }
+    web3.action.setProps({
+      sendingAccountAddress: token.ownerAddress,
+      tokenId: token.tokenId,
+      numberOfTokens: 1,
+    })
   }
 
   function handleImageError() {
@@ -131,105 +97,80 @@
       </div>
     </div>
 
-    {#if burnFnExists}
-      <div
-        style="margin-bottom: 18px;background-color: #ff3434; color: black; border-radius: 20px;font-weight: 300;padding: 18px;"
-      >
-        <p style="margin: 7px 0;font-weight: 500;font-size: 14px;">WARNING:</p>
+    <div
+      style="margin-bottom: 18px;background-color: #ff3434; color: black; border-radius: 20px;font-weight: 300;padding: 18px;"
+    >
+      <p style="margin: 7px 0;font-weight: 500;font-size: 14px;">WARNING:</p>
 
-        <p style="font-weight: 400;font-size: 14px;">
-          This is a destructive action which cannot be reversed. Continuing will
-          remove this token from your wallet and the collection.
+      <p style="font-weight: 400;font-size: 14px;">
+        This is a destructive action which cannot be reversed. Continuing will
+        remove this token from your wallet and the collection.
+      </p>
+    </div>
+    <div
+      style="background-color: white; border-radius: 7px; width: 100%; display: flex; justify-content: space-between; flex-direction: column; padding: 0 18px;"
+    >
+      <div style="width: 100%;">
+        <p
+          style="
+						font-size: 19px;
+						font-weight: 500;
+						margin: 38px 0 14px 0;
+						"
+        >
+          Burn
         </p>
       </div>
+
       <div
-        style="background-color: white; border-radius: 7px; width: 100%; display: flex; justify-content: space-between; flex-direction: column; padding: 0 18px;"
+        style="display: flex; justify-content: space-between; margin: 10px 0;"
       >
-        <div style="width: 100%;">
-          <p
-            style="
-						font-size: 19px;
-						font-weight: 500;
-						margin: 38px 0 14px 0;
-						"
-          >
-            Burn
-          </p>
-        </div>
-
-        <div
-          style="display: flex; justify-content: space-between; margin: 10px 0;"
-        >
-          <p style="font-size: 14px;font-weight: 400;color: #707070;">
-            Your Token
-          </p>
-        </div>
-
-        <div style="margin: 14px 0;">
-          {#if token.image_preview_url && !imageFailedToLoad}
-            <img
-              style="border-radius: 7px;width: 68px; margin-right: 15px;"
-              src={token.image_preview_url}
-              alt={token.name}
-            />
-          {/if}
-
-          <p
-            style="font-size: 14px;padding: 0;margin: 7px 0;font-weight: 400; word-wrap: break-word;"
-          >
-            #{token.tokenId}
-          </p>
-        </div>
-
-        <div
-          style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
-        >
-          <p
-            style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
-          >
-            Transaction Details
-          </p>
-
-          <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
-          <p style="color: black; word-wrap: break-word;font-size: 14px;">
-            {token.chainId}
-          </p>
-
-          <p style="color: #888;font-weight: 400;font-size: 14px;">Burn</p>
-          <p style="color: black;word-wrap: break-word;font-size: 14px;">
-            {token.name}
-          </p>
-
-          <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
-          <p style="color: black;word-wrap: break-word;font-size: 14px;">
-            {token.ownerAddress}
-          </p>
-        </div>
+        <p style="font-size: 14px;font-weight: 400;color: #707070;">
+          Your Token
+        </p>
       </div>
-    {/if}
-    {#if !burnFnExists}
+
+      <div style="margin: 14px 0;">
+        {#if token.image_preview_url && !imageFailedToLoad}
+          <img
+            style="border-radius: 7px;width: 68px; margin-right: 15px;"
+            src={token.image_preview_url}
+            alt={token.name}
+          />
+        {/if}
+
+        <p
+          style="font-size: 14px;padding: 0;margin: 7px 0;font-weight: 400; word-wrap: break-word;"
+        >
+          #{token.tokenId}
+        </p>
+      </div>
+
       <div
-        style="background-color: white; border-radius: 7px; width: 100%; display: flex; justify-content: space-between; flex-direction: column; padding: 0 18px;"
+        style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
       >
-        <div style="width: 100%;">
-          <p
-            style="
-						font-size: 19px;
-						font-weight: 500;
-						margin: 38px 0 14px 0;
-						"
-          >
-            Burn
-          </p>
-        </div>
+        <p
+          style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
+        >
+          Transaction Details
+        </p>
 
-        <div style="margin: 10px 0;">
-          <p style="font-size: 14px;font-weight: 400;color: #707070;">
-            Function not available to this token collection.
-          </p>
-        </div>
+        <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
+        <p style="color: black; word-wrap: break-word;font-size: 14px;">
+          {token.chainId}
+        </p>
+
+        <p style="color: #888;font-weight: 400;font-size: 14px;">Burn</p>
+        <p style="color: black;word-wrap: break-word;font-size: 14px;">
+          1 x {token.name}
+        </p>
+
+        <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
+        <p style="color: black;word-wrap: break-word;font-size: 14px;">
+          {token.ownerAddress}
+        </p>
       </div>
-    {/if}
+    </div>
     <Loader show={loading} />
   </div>
 {:else}
