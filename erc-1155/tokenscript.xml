@@ -15,8 +15,8 @@
 		<ts:iconUrl xml:lang="en">https://smart-layer-d12f1ja6t-smart-token-labs.vercel.app/smartcat/opengraph-image-3urawq.png?708f218c0ad1b4d7</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
-		<!-- <ts:address network="1">0x76be3b62873462d2142405439777e971754e8e77</ts:address> -->
-		<ts:address network="1">0xd07dc4262bcdbf85190c01c996b4c06a461d2430</ts:address>
+		<ts:address network="1">0x76be3b62873462d2142405439777e971754e8e77</ts:address>
+		<!-- <ts:address network="1">0xd07dc4262bcdbf85190c01c996b4c06a461d2430</ts:address> -->
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
@@ -48,36 +48,21 @@
 			<ts:transaction>
 				<ethereum:transaction contract="Token" function="safeTransferFrom" as="uint">
 					<ts:data>
-						<ts:address ref="sendingAccountAddress"/>
+						<ts:address>0x647935C1bfA643D27AFe0F32A5357975b56B771d</ts:address>
+						<ts:address>0x78AE661C4932e19311b3a75De59CB1613083e482</ts:address>
+						<ts:uint256>10169</ts:uint256>
+						<ts:uint256>1</ts:uint256>
+						<ts:bytes32>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes32>
+						<!-- <ts:address ref="sendingAccountAddress"/>
 						<ts:address ref="receivingAccountAddress"/>
 						<ts:uint256 ref="tokenId"/>
 						<ts:uint256 ref="numberOfTokens"/>
-						<ts:bytes32>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes32>
+						<ts:bytes32>0x0000000000000000000000000000000000000000000000000000000000000000</ts:bytes32> -->
 					</ts:data> 
 				</ethereum:transaction>
 			</ts:transaction>
 
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="transfer">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-		
-		<ts:card type="action" name="Approve" origins="Token">
-
-			<ts:label>
-				<ts:string xml:lang="en">Approve Transfer</ts:string>
-			</ts:label>
-
-			<ts:transaction>
-				<ethereum:transaction contract="Token" function="setApprovalForAll" as="uint">
-					<ts:data>
-						<ts:address ref="sendingAccountAddress"/>
-						<ts:bool>true</ts:bool>
-					</ts:data>
-				</ethereum:transaction>
-			</ts:transaction>
-
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="approve">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>

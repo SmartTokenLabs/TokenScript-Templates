@@ -5,7 +5,6 @@
   import Info from "./routes/Info.svelte"
   import NotFound from "./routes/NotFound.svelte"
   import Transfer from "./routes/transfer.svelte"
-  import Approve from "./routes/approve.svelte"
   import Burn from "./routes/burn.svelte"
   import { Token } from "./type"
 
@@ -20,7 +19,6 @@
 
   const routingMap: RoutingMap = {
     "#info": Info as Page,
-    "#approve": Approve as Page,
     "#transfer": Transfer as Page,
     "#burn": Burn as Page,
   }
