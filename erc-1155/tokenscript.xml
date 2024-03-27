@@ -11,8 +11,8 @@
 	</ts:label>
 	<ts:meta>
 		<ts:description xml:lang="en">Tokenscript for any ERC-1155 standard token</ts:description>
-		<ts:aboutUrl xml:lang="en">https://www.smartlayer.network/smartcat</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">https://smart-layer-d12f1ja6t-smart-token-labs.vercel.app/smartcat/opengraph-image-3urawq.png?708f218c0ad1b4d7</ts:iconUrl>
+		<ts:aboutUrl xml:lang="en"></ts:aboutUrl>
+		<ts:iconUrl xml:lang="en"></ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
 		<!-- <ts:address network="1">0x76be3b62873462d2142405439777e971754e8e77</ts:address> -->
