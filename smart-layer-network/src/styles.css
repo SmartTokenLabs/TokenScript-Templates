@@ -93,3 +93,7 @@ p.light {
 .field-value {
 	color: #BDFF02
 } 
+
+.max-button {
+	min-width: 28px;
+}

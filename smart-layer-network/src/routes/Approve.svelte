@@ -127,19 +127,26 @@
 					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
 					value={stakingAmount}
 				/>
+				{#if token._count && Number(stakingAmount) > Number(ethers.formatEther(token._count))}
+					<div style="color: red; padding: 12px 0;">
+						Please enter a value less than or equal to your account balance.
+					</div>
+				{/if}
 			</div>
 			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Summary</div>
-				</div>
-				<div class="field-container">
-					<div class="field-title">Approve Staking of up to</div>
-					<div class="field-value">{stakingAmount} SLN</div>
-				</div>
-				<div class="field-container">
-					<div class="field-title">Reward Rate</div>
-					<div class="field-value">0.001 SLN per hour per 1 SLN</div>
-				</div>
+				{#if stakingAmount > 0 && !(token._count && Number(stakingAmount) > Number(ethers.formatEther(token._count)))}
+					<div class="flex-between field-section-heading">
+						<div class="field-section-title">Summary</div>
+					</div>
+					<div class="field-container">
+						<div class="field-title">Approve Staking of up to</div>
+						<div class="field-value">{stakingAmount} SLN</div>
+					</div>
+					<div class="field-container">
+						<div class="field-title">Reward Rate</div>
+						<div class="field-value">0.001 SLN per hour per 1 SLN</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 	{/if}
