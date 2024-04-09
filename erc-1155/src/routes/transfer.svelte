@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { id } from "ethers"
   import Loader from "../components/Loader.svelte"
   import context from "../lib/context"
-
+  import { ethers } from "ethers"
   let token: any
   let loading = true
   let collectionName: string
@@ -163,6 +162,11 @@
           style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
           type="text"
         />
+        {#if receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
+          <div style="font-size: 14px; color: red; padding: 12px 0;">
+            Please enter a valid account address.
+          </div>
+        {/if}
 
         <p style="margin: 7px 0;font-weight: 400;font-size: 14px;">
           Amount ({token.tokenInfo?.data?.balance
@@ -178,44 +182,52 @@
           style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
           type="number"
         />
+        {#if token.tokenInfo?.data?.balance && token.tokenInfo?.data?.balance < numberOfTokensToSend}
+          <div style="font-size: 14px; color: red; padding: 12px 0;">
+            Please enter a number of tokens equal to or less than the owned
+            balance.
+          </div>
+        {/if}
       </div>
 
-      <div
-        style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
-      >
-        <p
-          style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
+      {#if numberOfTokensToSend && receivingAccountAddress}
+        <div
+          style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
         >
-          Transaction Details
-        </p>
+          <p
+            style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
+          >
+            Transaction Details
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
-        <p style="color: black; word-wrap: break-word;font-size: 14px;">
-          {token.chainId}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
+          <p style="color: black; word-wrap: break-word;font-size: 14px;">
+            {token.chainId}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">Send</p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {token.name}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">Send</p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {token.name}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">
-          Number of tokens
-        </p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {numberOfTokensToSend}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">
+            Number of tokens
+          </p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {numberOfTokensToSend}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {token.ownerAddress}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {token.ownerAddress}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">To</p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {receivingAccountAddress}
-        </p>
-      </div>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">To</p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {receivingAccountAddress}
+          </p>
+        </div>
+      {/if}
     </div>
     <Loader show={loading} />
   </div>

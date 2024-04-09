@@ -213,6 +213,16 @@
           >
             Details
           </p>
+          {#if token.tokenId}
+            <p
+              style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"
+            >
+              Id
+            </p>
+            <p style="font-size: 14px; color:black; word-wrap: break-word;">
+              {token.tokenId}
+            </p>
+          {/if}
           {#if token.tokenInfo?.data?.balance}
             <p
               style="font-size: 14px; color: rgb(136, 136, 136); font-weight: 400;"

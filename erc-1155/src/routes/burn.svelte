@@ -169,32 +169,41 @@
           style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
           type="text"
         />
+
+        {#if token.tokenInfo?.data?.balance && numberOfTokensToBurn > token.tokenInfo?.data?.balance}
+          <div style="font-size: 14px; color: red; padding: 12px 0;">
+            Please enter a number of tokens equal to or less than the owned
+            balance.
+          </div>
+        {/if}
       </div>
 
-      <div
-        style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
-      >
-        <p
-          style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
+      {#if numberOfTokensToBurn}
+        <div
+          style="margin-bottom: 18px;background-color: #F5F5F5;border-radius: 20px;font-weight: 300;padding: 18px;"
         >
-          Transaction Details
-        </p>
+          <p
+            style="margin: 7px 0;font-weight: 500;font-size: 14px;color: #707070;"
+          >
+            Transaction Details
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
-        <p style="color: black; word-wrap: break-word;font-size: 14px;">
-          {token.chainId}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">Chain Id</p>
+          <p style="color: black; word-wrap: break-word;font-size: 14px;">
+            {token.chainId}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">Burn</p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {numberOfTokensToBurn} x {token.name} #{token.tokenId}
-        </p>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">Burn</p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {numberOfTokensToBurn} x {token.name} #{token.tokenId}
+          </p>
 
-        <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
-        <p style="color: black;word-wrap: break-word;font-size: 14px;">
-          {token.ownerAddress}
-        </p>
-      </div>
+          <p style="color: #888;font-weight: 400;font-size: 14px;">From</p>
+          <p style="color: black;word-wrap: break-word;font-size: 14px;">
+            {token.ownerAddress}
+          </p>
+        </div>
+      {/if}
     </div>
     <Loader show={loading} />
   </div>

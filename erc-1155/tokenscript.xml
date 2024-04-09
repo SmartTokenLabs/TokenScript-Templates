@@ -15,8 +15,8 @@
 		<ts:iconUrl xml:lang="en"></ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc1155" name="Token">
-		<!-- <ts:address network="1">0x76be3b62873462d2142405439777e971754e8e77</ts:address> -->
-		<ts:address network="1">0xd07dc4262bcdbf85190c01c996b4c06a461d2430</ts:address>
+		<ts:address network="11155111">0xed3bfb330508e9e3ea2da45eca131e603e91622c</ts:address>
+		<!-- <ts:address network="1">0xd07dc4262bcdbf85190c01c996b4c06a461d2430</ts:address> -->
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
