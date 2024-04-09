@@ -121,7 +121,7 @@
 					on:change={(event) => {
 						setTransactionParams(event);
 					}}
-					type="string"
+					type="number"
 					placeholder=""
 					id="stake-amount"
 					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"

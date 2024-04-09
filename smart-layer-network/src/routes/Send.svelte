@@ -10,7 +10,6 @@
 	let receivingAccountAddress: string | undefined;
 	let receivingAmountViewValue: any;
 	let receivingAmount: any;
-	const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -90,7 +89,7 @@
 					type="text"
 				/>
 
-				{#if receivingAccountAddress && !ethAddressRegex.test(receivingAccountAddress)}
+				{#if receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
 					<div style="color: red; padding: 12px 0;">Please enter a valid account address.</div>
 				{/if}
 
@@ -104,7 +103,7 @@
 					placeholder=""
 					id="sending-account"
 					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
-					type="text"
+					type="number"
 				/>
 
 				{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
@@ -115,7 +114,7 @@
 			</div>
 
 			<div class="field-section">
-				{#if receivingAmountViewValue && Number(receivingAmountViewValue) <= Number(tokenAmount)}
+				{#if receivingAccountAddress && receivingAmountViewValue && Number(receivingAmountViewValue) <= Number(tokenAmount)}
 					<div class="flex-between field-section-heading">
 						<div class="field-section-title">Summary</div>
 					</div>
