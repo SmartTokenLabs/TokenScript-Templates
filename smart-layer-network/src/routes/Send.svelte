@@ -5,7 +5,7 @@
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	let token: ITokenContextData;
-	let tokenAmount: any;
+	let tokenAmount: number | string = 0;
 	let loading = true;
 	let receivingAccountAddress: string | undefined;
 	let receivingAmountViewValue: any;
@@ -16,7 +16,9 @@
 		token = value.token;
 
 		// @ts-ignore
-		tokenAmount = ethers.formatEther(token._count);
+		if (token._count && Number(ethers.formatEther(token._count)) > 0.000000000000000001) {
+			tokenAmount = ethers.formatEther(token._count);
+		}
 
 		// You can load other data before hiding the loader
 		loading = false;

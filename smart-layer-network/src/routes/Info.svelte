@@ -2,8 +2,7 @@
 	import SlnLogo from '../components/SlnLogo.svelte';
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
-	import { ethers } from 'ethers';
-	import { getStakedData } from './../lib/utils';
+	import { ethers, BigNumberish } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	let token: ITokenContextData;
 	let tokenStats: any;
@@ -12,16 +11,13 @@
 	let tokenStatsPriceUsd: number | string = '-';
 	let userTokenAccountValueEth: number | string = '-';
 	let userTokenAccountValueUsd: number | string = '-';
-	let stakeAmount: undefined | number;
-	const stakeAddress = '0xE42185196640a4A2dfC668C19872958Db7AdaAC9';
+	let tokenBalance: number | string | undefined;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
 
 		setTokenPriceData();
-		const stakedData = await getStakedData(stakeAddress, token.ownerAddress);
-		stakeAmount = stakedData.stakeAmount;
 
 		// You can load other data before hiding the loader
 		loading = false;
@@ -35,10 +31,15 @@
 		if (tokenStats.value && tokenStats.usdPrice) {
 			tokenStatsPriceEth = tokenStats.value ?? 'not found';
 			tokenStatsPriceUsd = tokenStats?.usdPrice?.toLocaleString('en-US') ?? 'not found';
-			// @ts-ignore
-			userTokenAccountValueEth = tokenStats.value * ethers.formatEther(token._count);
-			userTokenAccountValueUsd = // @ts-ignore
-				(tokenStats.usdPrice * ethers.formatEther(token._count)).toLocaleString('en-US');
+
+			if (token._count && Number(ethers.formatEther(token._count)) > 0.000000000000000001) {
+				// @ts-ignore
+				tokenBalance = ethers.formatEther(token._count);
+				// @ts-ignore
+				userTokenAccountValueEth = tokenStats.value * ethers.formatEther(token._count);
+				userTokenAccountValueUsd = // @ts-ignore
+					(tokenStats.usdPrice * ethers.formatEther(token._count)).toLocaleString('en-US');
+			}
 		}
 	}
 </script>
@@ -71,13 +72,7 @@
 				<div class="field-container">
 					<div class="field-title">Balance</div>
 					<div class="field-value">
-						{token._count ? ethers.formatEther(token._count) + '  SLN' : '-'}
-					</div>
-				</div>
-				<div class="field-container">
-					<div class="field-title">Staked Balance</div>
-					<div class="field-value">
-						{stakeAmount ? ethers.formatEther(stakeAmount) + ' SLN' : '-'}
+						{tokenBalance ? tokenBalance + '  SLN' : '-'}
 					</div>
 				</div>
 				<div class="field-container">

@@ -17,12 +17,8 @@
 		<ts:iconUrl xml:lang="en">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAz1BMVEUAGv////8yaP8AAP8AE/8uZv8AD/8AC/8sZf8iYP8pY//6+/8cXv/19//5+v/Kzv/r7f+9wf/x8//c3/9PWv+Smf/Y2/9VX/+pr//X4P8VW/+Bnv/l6P9sdf82RP9ncP95gv+3vP+Ynv9BTv99hf9DdP/Bz/88b//I1P+ts/+hp/81Q/9sdP8jM/9ia/+0uf+fpf9GUf+it/+0xf9WgP8TJv+Yr/9ni/+nuv8uPP+MlP9ze/+Np/9zlf+Fi//i6v9ghv8AU/9sj/+Hov9aZP+gGBwCAAAHlElEQVR4nO2deV+bTBCAkwwBA+QwalRM6xmvVuuR2HrG2n7/z/RuojZhYcICe0Deef704MfCwrMzO7tUKgRBEARBEARBEARBEARBEARBEARBEARB/F9xwPQZqMWGxyNwTJ+FQuBru1rtbYJl+kQUAXBenbJaWcqu6sBRq/rJg7V0bbRgvVedo/8FbNPnJBUY7Vc52l+X6DYCbPDtm7AFS9JGG3b7cQ2sVpt7S2EO+NaOb9+EJTAHOFt4+5bAHA7sNRc3kLFR3oEcbwiMzm5JzQEXqyLtm9D+VsLb6MCDJ9rAagnNYcNlJ0X7GF65zAGHCwyBsbZeGnMkGgJjdVSKrurAY7IhMB6K/zhasLmWuX2M/veCmwMufuRp34RCxxwObLSSm5BIYc2R3hAYrWJmqzIZAqOAMUdmQ2AUzBwshujKbSAb5GwU53G04DqXITAKE3PAxb6K9k1g5jD/ODpwIMMQGFu24a4qzxAYZrNV1nQeQjVr5swBFcmGwNi/MNJVhbJMkmgZMIcF60oMgaHdHAoNgdE+1Pg4AmykyTLJYkvXlJx6Q2B0tcQcegyBoSFbpc0QGIrNoSKGSEvrQF1X1W0IDGXmSDEPoRolMYcFG9qGMAJsVWR3VeuiSO1jeOuye6pzWIhn8JP+pfzXjV2A9+gnbCSu5H0KoyvTTXvnhzInWnBhcDzzyZrSIbgFl0htjC66e6rDKLAfVGaekjjXkSiOqVHTha7sogWHQlUksuls6ovzbTjSHiI2FRkCQ7s51BkCw4J7jeZYuzaRM9VnDvWGwAAnVd1TVrRloGLbmL8yIQnT808WXCs1R+fS/ByiDY/KzNF8KELJgsoXTvPRfAtVhxvGy/k0pE/1q34OB440hP2esULwSBn3zbGsRvWeQhFa/7uRrgqVcPr0dOD7r2MZ7es++43abehH7XvtbQQrvNBn/BbUazXXf8rdbb07363Vav5gO/RjLaHvDH6hT+upMTkrBn/xU3M88OvTI634OyHPdl80up9f6HN70ng/qwn+MMcgZ/zqr/w7klu/Cf1SbQpqvn1W2BDbQ3/WvsnFD54zDnKaT4E7f6Ra4+Q09Adayvn4CbbuTrBS43DdmyzZqlvWxznqwVt4wKR88akFm5whai5/VpMT8wepzdEbBjFHYleLM8eu0q7Kp9mYIeLOatrGn6nM0X1uRLrCx5H4l1dvpKyN4HCGeA3q8Wc1vfjBH+Gu6t0EcV3hk2CoxRy8IZrv3lqAsDmO0a7wwUqwE3r4lZTzOV8jhlh8VhOEzNH/6S/oCh+4Nc4c67JvIz9Devc74QZ+XHz/OWGQ03rykQeQO9Lv5/A/Sp8htSrnoazT9qvAlZ9cfP9uUbbq1m0IHcYfhs24P5LfTSOlQsdRfcVRb+DmOB0mPICfl4kb3fQUxcU2l69o8UMQrI1IzMFiCLEOyr1nWgpzGw6Ep9Y6b2LnyMwRKXTwEt/FH9enwblC8aIhvqgGd36YiDmOB2IPYOOEixSVL/ziI3vvlyt0K5i25/5v/Cb2nloJ7kI3X0/6lM/ONHfEutvMHN4fbIgWJjL005Y+BZuLn0TNEdxMzHFbF+ygA84QOrdf4M0RioEXwGKObVFD1H6FRKp7OVskjyH8ZnQzGcJE9pvfdGYsaA6h6+DzhjCTMo1Ei4L9L7F9EUMY21QikhP+JTaQW8xKI2yIvtFFeg58CQ9yYrI2KW9g8BrOY70YXWhpwT1fN8xn3lLCG4K9Q40UKXwA1nk1iqg5YuAN8c6ZqdkndPI3Ob8RD2+I2QGNTAWzcBHPUIxFEhMcEUPM0/+r/W2TVIRxOkj3Vo0Ygmf1m9bHkcWJiYXtqczhcoaI40pfWY0FmyK1CXH5fuQGBkLp486jnq6aojZheyj0Vo0aAqOnY/YJKmmKEgXMwQyR4oDKzZG6PGg2dxoPPw+aiNoy00zFweOf+OxGnZ/LFqGvrsQGRtnK9DBzJBoCQ1HdAsBL5qVPseZw3afMB7xSkNBANyEVImoOQUNgdPbkr13LWZ7HxRzihkBoyp+ZyV3hNWcOfq4sNd6BCvnDKGeVHos5pl0VjSGEWb1XY0UWTuTsWh1mjjo/Z50ahbqQsNnA6SBv0VRT8bYD4OTcUsjLudr2TH3i2+iSbj3bf5hblt/VllfUUxvM4yncTCEKjM50N3BfkSEwLKnbJCaj0hAYNnzRtgZRtSEwQO1mdDMMbksXTeoroG0yrZ972+Bk9BkCg5lD4Z4geg2BkTvmwNFtCIz8MUc8BjdMjGDDrvRBjilDYEjfpO6seF+EkhpzaN1CUBgWc0haTFqYDYQjSDLHQXE2gY4Cdu6YY9XkmlERcsYcBdyMPUIec3gvxTIEBos5spnDUPVaFjKZo9Aftohgwd+UMYeuSXp5OLCXpqsW6DMB4gAIm6PwhsAQNEeRYoi02HCZaI5WSQyBgXygc4bRDYTksNAcp0X4gEVu8GxVZ2k+mYuY46A8Q5hkYsxRsI8B5YczR5kNgWHD93/zHM2SGwKDxRzvDTwz/XkcdUzNUcrPqgpjwWXpYoi0OEv5ABIEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRBEWfgP3QWwVUGqzgQAAAAASUVORK5CYII=</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<!-- <ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address> -->
-		<ts:address network="11155111">0x0404ab3994ED48C300cE219546f757AD34484Dc7</ts:address>
-	</ts:contract>
-	<ts:contract interface="erc20" name="Stake">
-		<!-- <ts:address network="1">TBC</ts:address> -->
-		<ts:address network="11155111">0xE42185196640a4A2dfC668C19872958Db7AdaAC9</ts:address>
+		<ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
+		<!-- <ts:address network="11155111">0x0404ab3994ED48C300cE219546f757AD34484Dc7</ts:address> -->
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
@@ -59,57 +55,6 @@
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
-
-		<ts:card type="action" name="Approve" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Approve Staking Amount</ts:string> 
-			</ts:label>
-			<ts:transaction>
-				<ethereum:transaction contract="Token" function="approve" as="uint">
-					<ts:data>
-						<ts:address ref="stakeAddress"/>
-						<ts:uint256 ref="stakeAmount"/>
-					</ts:data>
-				</ethereum:transaction>
-			</ts:transaction>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="approve">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-
-		<ts:card type="action" name="Stake" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Stake</ts:string>
-			</ts:label>
-			<ts:transaction>
-				<ethereum:transaction contract="Stake" function="stake" as="uint">
-					<ts:data>
-						<ts:uint128 ref="stakeAmount"/>
-					</ts:data>
-				</ethereum:transaction>
-			</ts:transaction>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="stake">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-		
-		<ts:card type="action" name="Unstake" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Unstake</ts:string>
-			</ts:label>
-			<ts:transaction>
-				<ethereum:transaction contract="Stake" function="withdraw" as="uint">
-					<ts:data>
-						<ts:uint128 ref="stakeAmount"/>
-						<ts:uint128 ref="stakeReward"/>
-					</ts:data>
-				</ethereum:transaction>
-			</ts:transaction>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="unstake">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-
 	</ts:cards>
 
 	<ts:attribute name="sendingAccountAddress">
@@ -118,18 +63,6 @@
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">sending account address</ts:string>
-		</ts:label>
-		<ts:origins>
-			<ts:user-entry as="address"/>
-		</ts:origins>
-	</ts:attribute>
-
-	<ts:attribute name="stakeAddress">
-		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
-		</ts:type>
-		<ts:label>
-			<ts:string xml:lang="en">staking account address</ts:string>
 		</ts:label>
 		<ts:origins>
 			<ts:user-entry as="address"/>
@@ -160,28 +93,4 @@
 		</ts:origins>
 	</ts:attribute>
 	
-	<ts:attribute name="stakeAmount">
-		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
-		</ts:type>
-		<ts:label>
-			<ts:string xml:lang="en">staking amount</ts:string>
-		</ts:label>
-		<ts:origins>
-			<ts:user-entry as="uint"/> 
-		</ts:origins>
-	</ts:attribute>
-	
-	<ts:attribute name="stakeReward">
-		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
-		</ts:type>
-		<ts:label>
-			<ts:string xml:lang="en">staking reward</ts:string>
-		</ts:label>
-		<ts:origins>
-			<ts:user-entry as="uint"/> 
-		</ts:origins>
-	</ts:attribute>
-
 </ts:token>
