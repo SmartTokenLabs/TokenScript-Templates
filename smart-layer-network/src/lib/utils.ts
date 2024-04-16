@@ -1,58 +1,16 @@
 import { ethers } from 'ethers';
-import { slnContractABI, stakeContractABI } from './../abi/sln';
+import { slnContractABI } from './../abi/sln';
 
-export async function getStakedData(stakeAddress: string, ownerAddress: string) {
-  // @ts-ignore
-  const provider = new ethers.JsonRpcProvider(rpcURL);
-  // let estimation;
-  const contract = new ethers.Contract(
-    stakeAddress,
-    stakeContractABI,
-    provider
-  );
-
-  try {
-    // @ts-ignore
-    const stakedData = await contract._stake(ownerAddress);
-    const stakedDataAsArr = stakedData.toArray();
-    return {
-      stakeAmount: stakedDataAsArr[0],
-      stakeWithdrawn: stakedDataAsArr[1],
-      stakeReward: stakedDataAsArr[2],
-      stakeLastUpdated: stakedDataAsArr[3]
-    };
-  } catch (error) {
-    console.log('could not retrieve staking contract data: ', error);
-    return {
-      stakeAmount: undefined,
-      stakeWithdrawn: undefined,
-      stakeReward: undefined,
-      stakeLastUpdated: undefined
-    };
-  }
+export function formatWithByDecimalPlaces(num: number, decimalPlaces = 2) {
+  return num.toFixed(decimalPlaces);
 }
 
-export async function getApprovedStakeAllowance(tokenAddress: string, spenderAddress: string, ownerAddress: string) {
-  // @ts-ignore
-  const provider = new ethers.JsonRpcProvider(rpcURL);
-  const contract = new ethers.Contract(
-    tokenAddress,
-    slnContractABI,
-    provider
-  );
-
-  try {
-    // @ts-ignore
-    const stakeAllowance = await contract.allowance(ownerAddress, spenderAddress);
-    return {
-      ether: Number(ethers.formatEther(stakeAllowance)),
-      wei: Number(stakeAllowance)
-    };
-  } catch (error) {
-    console.log('could not retrieve stake allowance: ', error);
-    return {
-      ether: 0,
-      wei: 0
-    };
+function previewAddr(inputString: string) {
+  if (inputString.length < 10) {
+    return inputString; // If the input string is less than 10 characters, return it as is
+  } else {
+    const firstChars = inputString.substring(0, 5); // Extract the first 5 characters
+    const lastChars = inputString.substring(inputString.length - 5); // Extract the last 5 characters
+    return `${firstChars}...${lastChars}`; // Concatenate and return the formatted string
   }
 }

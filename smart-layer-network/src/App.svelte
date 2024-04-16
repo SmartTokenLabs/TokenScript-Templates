@@ -1,15 +1,19 @@
 <script lang="ts">
 	import context from './lib/context';
+	import Bridge from './routes/Bridge.svelte';
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
 	import Send from './routes/Send.svelte';
+	import Swap from './routes/Swap.svelte';
 
 	let token;
 	let initialised = false;
 
 	const routingMap = {
 		'#info': Info,
-		'#send': Send
+		'#send': Send,
+		'#bridge': Bridge,
+		'#swap': Swap
 	};
 
 	let page;

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@tokenscript/card-sdk": "^1.2.0",
+    "@tokenscript/cli": "^1.1.13"
+  }
+}

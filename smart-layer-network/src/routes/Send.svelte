@@ -1,15 +1,19 @@
 <script lang="ts">
-	import SlnLogo from '../components/SlnLogo.svelte';
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
+	import { formatWithByDecimalPlaces } from '../lib/utils';
+
 	let token: ITokenContextData;
 	let tokenAmount: number | string = 0;
 	let loading = true;
 	let receivingAccountAddress: string | undefined;
 	let receivingAmountViewValue: any;
 	let receivingAmount: any;
+	let timeout: any;
+	let subView: 'SEND' | 'SUMMARY' = 'SEND';
+	let formIsInValid = true;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -28,6 +32,8 @@
 		const inputElement = event.target as HTMLInputElement;
 		receivingAccountAddress = inputElement.value;
 		updateWeb3Props();
+
+		inputElement.checkValidity();
 	}
 
 	async function setTokenAmount(event: Event) {
@@ -43,100 +49,167 @@
 			receivingAccountAddress,
 			receivingAmount
 		});
+		validateForm();
+	}
+
+	function validateForm() {
+		let sendingAmountInput = document.getElementById('sending-amount') as HTMLInputElement;
+		let sendingAccountInput = document.getElementById('sending-account') as HTMLTextAreaElement;
+		if (sendingAmountInput && sendingAccountInput) {
+			formIsInValid = !(sendingAmountInput.checkValidity() && sendingAccountInput.checkValidity());
+		}
 	}
 </script>
 
 <div>
 	{#if token}
-		<div id="token-container" style="background: black;color: white;">
-			<div class="flex-center" style="margin: 40px 0;">
-				<SlnLogo />
-			</div>
-			<div class="flex-center">
-				<div>
-					<img
-						alt="sln"
-						src="https://www.tokenscript.org/images/tokenscript-large-cube.png"
-						style="width: 118px"
+		{#if subView === 'SEND'}
+			<div id="token-container" style="color: white;">
+				<div class="field-section">
+					<div class="field-section-title neue-plak" style="font-size: 24px;">Send $SLN</div>
+				</div>
+				<div class="field-section">
+					<div class="field-title">Amount</div>
+					<div class="icon-input">
+						<input
+							class="neue-plak large"
+							on:input={(event) => {
+								if (timeout) clearTimeout(timeout);
+								timeout = setTimeout(() => {
+									setTokenAmount(event);
+								}, 300);
+							}}
+							bind:value={receivingAmountViewValue}
+							placeholder="0.00"
+							id="sending-amount"
+							type="number"
+							max={formatWithByDecimalPlaces(Number(tokenAmount), 2)}
+							min="0.01"
+							step="any"
+						/>
+						<span style="display: flex;">
+							<div
+								style="align-items: center; height: 24px; width: 24px; border-radius: 24px; background: #001AFF; padding: 1.5px 0 0 1.5px; margin-right: 9px;"
+							>
+								<svg
+									width="22"
+									height="22"
+									viewBox="0 0 22 22"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<mask
+										id="mask0_2284_13390"
+										style="mask-type:luminance"
+										maskUnits="userSpaceOnUse"
+										x="0"
+										y="0"
+										width="22"
+										height="22"
+									>
+										<path d="M22 0H0V22H22V0Z" fill="white" />
+									</mask>
+									<g mask="url(#mask0_2284_13390)">
+										<path
+											d="M18.9655 13.8866L10.9581 9.21564L2.95068 13.8866L10.9581 18.5576L18.9655 13.8866Z"
+											fill="#FFFEFE"
+										/>
+										<path
+											d="M3.75232 10.7L10.9582 6.49658L18.164 10.7L10.9582 14.9034L3.75232 10.7Z"
+											fill="#101015"
+											stroke="#FFFEFE"
+											stroke-width="0.807784"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M18.9655 7.08383L10.9581 2.41284L2.95068 7.08383L10.9581 11.7548L18.9655 7.08383Z"
+											fill="#FFFEFE"
+										/>
+									</g>
+								</svg>
+							</div>
+							<div style="font-size: 20px;">$SLN</div>
+						</span>
+					</div>
+					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
+						<div class="input-error">Please enter a value equal to or less than your balance.</div>
+					{/if}
+					<p style="font-size: 16px; margin: 24px 0 48px 0">
+						Your Balance <span style="text-decoration: underline;"
+							>{tokenAmount
+								? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $SLN'
+								: '0.00'}</span
+						>
+					</p>
+					<div class="field-title">Recipient address</div>
+
+					<textarea
+						rows="2"
+						cols="1"
+						class="neue-plak"
+						on:input={(event) => {
+							if (timeout) clearTimeout(timeout);
+							timeout = setTimeout(() => {
+								setRecievingAddress(event);
+							}, 300);
+						}}
+						bind:value={receivingAccountAddress}
+						placeholder="0x123"
+						id="sending-account"
+						minlength="42"
+						maxlength="42"
 					/>
-					<p style="text-align: center;">Send Tokens</p>
+
+					{#if receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
+						<div class="input-error">Please enter a valid account address.</div>
+					{/if}
+				</div>
+			</div>
+			<div class="field-section" style="width: 100%; position: fixed; bottom: 0;">
+				<button
+					disabled={formIsInValid}
+					class="gradient-button"
+					on:click={(e) => (subView = 'SUMMARY')}>Review</button
+				>
+			</div>
+		{/if}
+		{#if subView === 'SUMMARY'}
+			<div class="field-section" style="display: flex; align-items: center; padding-bottom: 0;">
+				<button class="cursor-button" on:click={(e) => (subView = 'SEND')}>{'<'}</button>
+				<div
+					class="field-section-title neue-plak"
+					style="font-size: 18px; margin-left: 9px; margin-top: 4px"
+				>
+					Summary
 				</div>
 			</div>
 			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Token Balance</div>
+				<div class="field-container">
+					<div class="field-title">From</div>
+					<div class="field-value-alt">{token.ownerAddress}</div>
 				</div>
 				<div class="field-container">
-					<div class="field-value">{tokenAmount + ' SLN' ?? '-'}</div>
+					<div class="field-title">To</div>
+					<div class="field-value-alt">{receivingAccountAddress ?? '-'}</div>
+				</div>
+				<div class="field-container">
+					<div class="field-title">Amount</div>
+					<div class="field-value-alt">
+						{receivingAmountViewValue ? receivingAmountViewValue + ' $SLN' : '-'}
+					</div>
 				</div>
 			</div>
-			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Send Address</div>
-					<img
-						class="field-icon"
-						alt="wallet"
-						src="https://www.smartlayer.network/_next/static/media/wallet.74ee044d.svg"
-					/>
-				</div>
-				<input
-					minlength="42"
-					maxlength="42"
-					on:change={(event) => {
-						setRecievingAddress(event);
-					}}
-					placeholder=""
-					id="recieving-account"
-					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
-					type="text"
-				/>
-
-				{#if receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
-					<div style="color: red; padding: 12px 0;">Please enter a valid account address.</div>
-				{/if}
-
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Send Amount</div>
-				</div>
-				<input
-					on:change={(event) => {
-						setTokenAmount(event);
-					}}
-					placeholder=""
-					id="sending-account"
-					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
-					type="number"
-				/>
-
-				{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
-					<div style="color: red; padding: 12px 0;">
-						Please enter a value equal to or less than your balance.
-					</div>
-				{/if}
+			<div class="field-section" style="width: 100%; position: fixed; bottom: 0;">
+				<!-- svelte-ignore missing-declaration -->
+				<button
+					style="opacity: 0;"
+					class="delay-show-1s gradient-button"
+					on:click={(e) =>
+						// @ts-ignore
+						tokenscript.action.executeTransaction()}>Send</button
+				>
 			</div>
-
-			<div class="field-section">
-				{#if receivingAccountAddress && receivingAmountViewValue && Number(receivingAmountViewValue) <= Number(tokenAmount)}
-					<div class="flex-between field-section-heading">
-						<div class="field-section-title">Summary</div>
-					</div>
-					<div class="field-container">
-						<div class="field-title">From</div>
-						<div class="field-value">{token.ownerAddress}</div>
-					</div>
-					<div class="field-container">
-						<div class="field-title">Amount</div>
-						<div class="field-value">
-							{receivingAmountViewValue ? receivingAmountViewValue + ' SLN' : '-'}
-						</div>
-					</div>
-					<div class="field-container">
-						<div class="field-title">To</div>
-						<div class="field-value">{receivingAccountAddress ?? '-'}</div>
-					</div>
-				{/if}
-			</div>
-		</div>
+		{/if}
 	{/if}
 	<Loader show={loading} />
 </div>
