@@ -49,6 +49,12 @@
 			subTitle: 'Scroll',
 			logo: 'Scroll',
 			url: 'https://scroll.io/bridge'
+		},
+		{
+			title: 'zkSync',
+			subTitle: 'zkSync',
+			logo: 'ZkSync',
+			url: 'https://portal.zksync.io/bridge/'
 		}
 	];
 

@@ -5,6 +5,7 @@
 	import NotFound from './routes/NotFound.svelte';
 	import Send from './routes/Send.svelte';
 	import Swap from './routes/Swap.svelte';
+	import './tailwind.css';
 
 	let token;
 	let initialised = false;

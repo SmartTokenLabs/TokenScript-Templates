@@ -7,15 +7,27 @@
 	import Optimism from '../components/Optimism.svelte';
 	import PortalBridge from '../components/PortalBridge.svelte';
 	import BitTrue from '../components/BitTrue.svelte';
-	import CoinOn from '../components/CoinOn.svelte';
+	import CoinOne from './CoinOne.svelte';
 	import OKX from '../components/OKX.svelte';
 	import CryptoCOM from '../components/CryptoCOM.svelte';
 	import DragonSwap from '../components/DragonSwap.svelte';
 	import UniSwap from '../components/UniSwap.svelte';
+	import GateIO from '../components/GateIO.svelte';
+	import Kucoin from '../components/Kucoin.svelte';
+	import ZkSync from './ZkSync.svelte';
 
 	export let web3LogoRef: string;
 </script>
 
+{#if web3LogoRef === 'GateIO'}
+	<GateIO />
+{/if}
+{#if web3LogoRef === 'ZkSync'}
+	<ZkSync />
+{/if}
+{#if web3LogoRef === 'Kucoin'}
+	<Kucoin />
+{/if}
 {#if web3LogoRef === 'BitTrue'}
 	<BitTrue />
 {/if}
@@ -25,8 +37,8 @@
 {#if web3LogoRef === 'UniSwap'}
 	<UniSwap />
 {/if}
-{#if web3LogoRef === 'CoinOn'}
-	<CoinOn />
+{#if web3LogoRef === 'CoinOne'}
+	<CoinOne />
 {/if}
 {#if web3LogoRef === 'OKX'}
 	<OKX />
