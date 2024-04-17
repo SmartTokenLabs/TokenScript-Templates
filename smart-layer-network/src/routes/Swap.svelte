@@ -2,6 +2,7 @@
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import Web3Logo from '../components/Web3Logo.svelte';
+	import Badge from '../components/Badge.svelte';
 
 	let loading = true;
 	let timeout: any;
@@ -9,46 +10,19 @@
 
 	const bridges = [
 		{
-			title: 'Arbitrum',
-			subTitle: 'Arbitrum One',
-			logo: 'Arbitrum',
-			url: 'https://bridge.arbitrum.io/'
+			title: 'DragonSwap',
+			logo: 'DragonSwap',
+			url: 'https://dgswap.io/swap?inputCurrency=0x5C13E303a62Fc5DEdf5B52D66873f2E59fEdADC2&outputCurrency=0x06A210EAE2b07f9dC22cDb10c2C77cA99b3d8968&chain=klaytn'
 		},
 		{
-			title: 'Base',
-			subTitle: 'Base',
-			logo: 'Base',
-			url: 'https://bridge.base.org/'
+			title: 'OKX',
+			logo: 'OKX',
+			url: 'https://www.okx.com/web3/dex-swap#inputChain=1&inputCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&outputChain=1&outputCurrency=0xDb82c0d91E057E05600C8F8dc836bEb41da6df14'
 		},
 		{
-			title: 'Linea',
-			subTitle: 'Linea',
-			logo: 'Linea',
-			url: 'https://bridge.linea.build/'
-		},
-		{
-			title: 'Optimism',
-			subTitle: 'Optimism',
-			logo: 'Optimism',
-			url: 'https://app.optimism.io/bridge/deposit'
-		},
-		{
-			title: 'Polygon',
-			subTitle: 'Matic',
-			logo: 'Polygon',
-			url: 'https://portal.polygon.technology/bridge'
-		},
-		{
-			title: 'PortalBridge',
-			subTitle: 'PortalBridge',
-			logo: 'PortalBridge',
-			url: 'https://portalbridge.com/'
-		},
-		{
-			title: 'Scroll',
-			subTitle: 'Scroll',
-			logo: 'Scroll',
-			url: 'https://scroll.io/bridge'
+			title: 'UniSwap',
+			logo: 'UniSwap',
+			url: 'https://app.uniswap.org/swap?chain=mainnet&exactField=output&outputCurrency=0xDb82c0d91E057E05600C8F8dc836bEb41da6df14&inputCurrency=0xdAC17F958D2ee523a2206206994597C13D831ec7'
 		}
 	];
 
@@ -61,11 +35,8 @@
 	function filterBridges(query: string) {
 		const lowercaseQuery = query.toLowerCase();
 		filteredBridges = bridges.filter((bridge) => {
-			const { title, subTitle } = bridge;
-			return (
-				title.toLowerCase().includes(lowercaseQuery) ||
-				subTitle.toLowerCase().includes(lowercaseQuery)
-			);
+			const { title } = bridge;
+			return title.toLowerCase().includes(lowercaseQuery);
 		});
 	}
 </script>
@@ -113,7 +84,7 @@
 						}, 300);
 					}}
 					bind:value={searchString}
-					placeholder="Bridge or Network name"
+					placeholder="Swap name"
 					id="search"
 					type="text"
 				/>
@@ -150,9 +121,11 @@
 					<div style="display: flex; align-items: center" class="">
 						<div style="padding-top: 9px">
 							<Web3Logo web3LogoRef={bridge.logo} />
-							<div style="margin-top: 9px;">
+							<div class="flex-center" style="margin-top: 9px;">
 								<div class="field-title" style="font-size: 24px; color: white;">{bridge.title}</div>
-								<div class="field-title" style="font-size: 18px;">{bridge.subTitle}</div>
+								<div style="margin-left: 12px;">
+									<Badge />
+								</div>
 							</div>
 						</div>
 					</div>
