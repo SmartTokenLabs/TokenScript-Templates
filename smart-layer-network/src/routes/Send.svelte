@@ -56,7 +56,12 @@
 		let sendingAmountInput = document.getElementById('sending-amount') as HTMLInputElement;
 		let sendingAccountInput = document.getElementById('sending-account') as HTMLTextAreaElement;
 		if (sendingAmountInput && sendingAccountInput) {
-			formIsInValid = !(sendingAmountInput.checkValidity() && sendingAccountInput.checkValidity());
+			formIsInValid = !(
+				sendingAmountInput.checkValidity() &&
+				sendingAccountInput.checkValidity() &&
+				ethers.isAddress(receivingAccountAddress) &&
+				receivingAmountViewValue > 0
+			);
 		}
 	}
 </script>

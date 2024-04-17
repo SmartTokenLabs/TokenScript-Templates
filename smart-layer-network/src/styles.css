@@ -7,67 +7,7 @@
 html, body {
 	color: white;
 	margin: 0;
-	background-color: #181B28;
-}
-
-input.large {
-	background: #1E233C;
-	border: 1px #353B5C solid;
-	border-radius: 8px;
-	height: 65px;
-	font-size: 24px;
-	font-weight: 400;
-	color: white;
-	padding: 12px 14px;
-	width: 100%;
-	margin: 5px 0;
-}
-input.medium {
-	background: #1E233C;
-    border: 1px #353B5C solid;
-    border-radius: 8px;
-    height: 56px;
-    font-size: 18px;
-    font-weight: 400;
-    color: white;
-    padding: 12px 14px;
-    width: 100%;
-    margin: 5px 0;
-    transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
-}
-input, textarea {
-    background: #1E233C;
-    border: 1px #353B5C solid;
-    border-radius: 8px;
-    height: 51px;
-    font-size: 16px;
-    font-weight: 400;
-    color: white;
-    padding: 12px 14px;
-    width: 100%;
-    margin: 5px 0;
-    transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
-}
-
-.swap-card {
-	text-decoration: none;
-	cursor: pointer;
-  background: #1E233C;
-	border: 1px #353B5C solid;
-	border-radius: 8px;
-	height: 156px;
-	font-size: 24px;
-	font-weight: 400;
-	color: white;
-	padding: 0 54px 0 24px;
-	width: 100%;
-	margin: 5px 0;
-	transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
-	margin-bottom: 18px;
-}
-
-.swap-card:hover {
-	border-color: #ddd !important;
+	background-color: #171822;
 }
 
 textarea {
@@ -104,12 +44,6 @@ input:autofill, input:-webkit-autofill {
 	background: #1E233C !important;
 	border: 1px #353B5C solid !important;
 	color: white !important;
-}
-
-#token-wrapper {
-	background: no-repeat linear-gradient(180deg, #181B28, #2B2F44);
-	background-size: 100% 20%;
-	background-position: bottom;
 }
 
 div, p {
@@ -231,7 +165,7 @@ button {
 }
 
 .search-input button:last-child {
-	width: 75px;
+	width: 40px;
 	border: none;
 	background: none;
 	position: absolute;
@@ -304,6 +238,65 @@ button {
 .field-section-alt {
 	padding: 21px 14px 21px 21px;
 	background: #1E233C;
+}
+
+input.large {
+	background: #1E233C;
+	border: 1px #353B5C solid;
+	border-radius: 8px;
+	height: 65px;
+	font-size: 24px;
+	font-weight: 400;
+	color: white;
+	padding: 12px 14px;
+	width: 100%;
+	margin: 5px 0;
+}
+input.medium {
+	background: #1E233C;
+    border: 1px #353B5C solid;
+    border-radius: 8px;
+    height: 56px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    padding: 12px 14px;
+    width: 100%;
+    margin: 5px 0;
+    transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
+}
+input, textarea {
+    background: #1E233C;
+    border: 1px #353B5C solid;
+    border-radius: 8px;
+    height: 51px;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    padding: 12px 14px;
+    width: 100%;
+    margin: 5px 0;
+    transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
+}
+.swap-card {
+	text-decoration: none;
+	cursor: pointer;
+  background: #1E233C;
+	border: 1px #353B5C solid;
+	border-radius: 8px;
+	height: 156px;
+	font-size: 24px;
+	font-weight: 400;
+	color: white;
+	padding: 0 54px 0 24px;
+	width: 100%;
+	margin: 5px 0;
+	transition: border-color 0.25s ease-in-out; /* Add transition for border-color */
+	margin-bottom: 18px;
+}
+
+.swap-card:hover {
+	border-color: #ddd !important;
 }
 
 .card-header-background {

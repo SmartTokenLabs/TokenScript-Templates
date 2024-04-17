@@ -1,4 +1,4 @@
-<div class="flex-between" style="align-items: center;">
+<div class="flex items-center">
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<rect width="24" height="24" rx="2.64" fill="#001AFF" />
 		<path d="M20.16 15.2474L12 10.4874L3.84003 15.2474L12 20.0074L20.16 15.2474Z" fill="white" />
