@@ -71,7 +71,7 @@
 						</div>
 					</div>
 					<div class="text-center">
-						<div class="text-sm text-gray-400">Stake</div>
+						<div class="text-sm text-gray-400">Staking</div>
 						<div class="text-lg font-semibold field-value">Coming Soon</div>
 					</div>
 					<div class="text-center">

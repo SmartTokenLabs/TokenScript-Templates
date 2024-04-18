@@ -42,10 +42,10 @@
 			url: 'https://portal.polygon.technology/bridge'
 		},
 		{
-			title: 'PortalBridge',
+			title: 'Klaytn',
 			subTitle: 'PortalBridge',
 			logo: 'PortalBridge',
-			url: 'https://portalbridge.com/'
+			url: 'https://portalbridge.com/advanced-tools/#/transfer?sourceChain=ethereum&targetChain=klaytn'
 		},
 		{
 			title: 'Scroll',
@@ -82,11 +82,11 @@
 <div>
 	<div id="token-container" class="text-white">
 		<div class="field-section">
-			<div class="field-section-title neue-plak text-3xl">Bridge $SLN</div>
+			<div class="field-section-title neue-plak text-3xl" style="font-size: 24px;">Bridge $SLN</div>
 		</div>
 		<div class="field-section">
 			<div class="search-input flex items-center" style="margin-bottom: 12px">
-				<div class="ml-4 mt-1">
+				<div class="ml-4">
 					<MagnifyingGlass />
 				</div>
 				<input

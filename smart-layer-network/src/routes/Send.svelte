@@ -77,8 +77,9 @@
 
 	async function setTokenAmount(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
-		receivingAmountViewValue = inputElement.value;
-		receivingAmount = ethers.parseEther(inputElement.value);
+		const inputElValue = inputElement.value.replace(/[+-]/g, '');
+		receivingAmountViewValue = inputElValue;
+		receivingAmount = ethers.parseEther(inputElValue);
 		updateWeb3Props();
 	}
 
@@ -121,6 +122,14 @@
 			});
 		}
 	});
+
+	function formatNumber(val: string) {
+		if (Number.isInteger(parseFloat(val))) {
+			return parseFloat(val).toFixed(2);
+		} else {
+			return val;
+		}
+	}
 </script>
 
 <div>
@@ -143,6 +152,7 @@
 					</div>
 					<div class="icon-input">
 						<input
+							style="padding-right: 110px;"
 							class="neue-plak large"
 							on:input={(event) => {
 								if (timeout) clearTimeout(timeout);
@@ -167,6 +177,9 @@
 							<div style="font-size: 20px;">$SLN</div>
 						</span>
 					</div>
+					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
+						<div class="input-error">Not enough funds.</div>
+					{/if}
 					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
 						<div class="input-error">Not enough funds.</div>
 					{/if}
@@ -254,7 +267,7 @@
 				<div class="field-container">
 					<div class="field-title">Amount</div>
 					<div class="field-value-alt">
-						{receivingAmountViewValue ? receivingAmountViewValue + ' $SLN' : '-'}
+						{receivingAmountViewValue ? formatNumber(receivingAmountViewValue) + ' $SLN' : '-'}
 					</div>
 				</div>
 			</div>
