@@ -12,7 +12,6 @@ html, body {
 
 textarea {
 	padding: 14px;
-	height: 74px !important;
 	resize: none;
 }
 
@@ -201,7 +200,7 @@ button {
 .input-error {
 	font-size: 14px;
 	color: red; 
-	padding: 12px 0;
+	padding-left: 1px;
 }
 
 .max-button {

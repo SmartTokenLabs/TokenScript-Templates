@@ -3,7 +3,7 @@
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
-	import { formatWithByDecimalPlaces } from '../lib/utils';
+	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
 	import SlnLogo3 from '../components/SLNLogo3.svelte';
 
 	let token: ITokenContextData;
@@ -15,6 +15,9 @@
 	let timeout: any;
 	let subView: 'SEND' | 'SUMMARY' = 'SEND';
 	let formIsInValid = true;
+	let receivingAccountAddressViewValue: string | undefined;
+	let ensNameNotFound: boolean | undefined;
+	let ensNameAvatarImage: any;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -25,15 +28,50 @@
 			tokenAmount = ethers.formatEther(token._count);
 		}
 
-		// You can load other data before hiding the loader
 		loading = false;
 	});
 
-	function setRecievingAddress(event: Event) {
-		const inputElement = event.target as HTMLInputElement;
-		receivingAccountAddress = inputElement.value;
-		updateWeb3Props();
+	async function getENSAvatar(ensName: string) {
+		try {
+			const ensNameAvatarImageReq: any = await fetchENSImage(ensName);
+			ensNameAvatarImage = URL.createObjectURL(ensNameAvatarImageReq);
+			ensNameNotFound = false;
+		} catch (e) {
+			ensNameAvatarImage = undefined;
+			ensNameNotFound = true;
+		}
+	}
 
+	async function getAddressFromENS(ensName: string) {
+		const provider = ethers.getDefaultProvider();
+		try {
+			const address = await provider.resolveName(ensName);
+			if (address) {
+				receivingAccountAddress = address;
+			}
+			ensNameNotFound = false;
+		} catch (error) {
+			receivingAccountAddress = undefined;
+			ensNameNotFound = true;
+		}
+	}
+
+	async function setRecievingAddress(event: Event) {
+		const inputElement = event.target as HTMLInputElement;
+
+		if (inputElement.value.endsWith('.eth')) {
+			loading = true;
+			await getAddressFromENS(inputElement.value);
+			await getENSAvatar(inputElement.value);
+			loading = false;
+		} else {
+			receivingAccountAddress = inputElement.value;
+		}
+
+		receivingAccountAddressViewValue = inputElement.value;
+
+		updateWeb3Props();
+		autoResizeTextarea(inputElement);
 		inputElement.checkValidity();
 	}
 
@@ -41,6 +79,12 @@
 		const inputElement = event.target as HTMLInputElement;
 		receivingAmountViewValue = inputElement.value;
 		receivingAmount = ethers.parseEther(inputElement.value);
+		updateWeb3Props();
+	}
+
+	async function setTokenAmountMax() {
+		receivingAmountViewValue = tokenAmount;
+		receivingAmount = ethers.parseEther(tokenAmount.toString());
 		updateWeb3Props();
 	}
 
@@ -55,16 +99,28 @@
 
 	function validateForm() {
 		let sendingAmountInput = document.getElementById('sending-amount') as HTMLInputElement;
-		let sendingAccountInput = document.getElementById('sending-account') as HTMLTextAreaElement;
-		if (sendingAmountInput && sendingAccountInput) {
+		if (sendingAmountInput) {
 			formIsInValid = !(
 				sendingAmountInput.checkValidity() &&
-				sendingAccountInput.checkValidity() &&
 				ethers.isAddress(receivingAccountAddress) &&
 				receivingAmountViewValue > 0
 			);
 		}
 	}
+
+	function autoResizeTextarea(textarea: any) {
+		textarea.style.height = '1px';
+		textarea.style.height = 5 + textarea.scrollHeight + 'px';
+	}
+
+	setTimeout(() => {
+		const textarea = document.getElementById('sending-account');
+		if (textarea) {
+			textarea.addEventListener('input', function () {
+				autoResizeTextarea(this);
+			});
+		}
+	});
 </script>
 
 <div>
@@ -75,7 +131,16 @@
 					<div class="field-section-title neue-plak" style="font-size: 24px;">Send $SLN</div>
 				</div>
 				<div class="field-section">
-					<div class="field-title">Amount</div>
+					<div class="flex justify-between">
+						<div class="field-title">Amount</div>
+						<button
+							class="field-value-alt"
+							style="text-decoration: underline;"
+							on:click={(e) => {
+								setTokenAmountMax();
+							}}>Max</button
+						>
+					</div>
 					<div class="icon-input">
 						<input
 							class="neue-plak large"
@@ -83,7 +148,7 @@
 								if (timeout) clearTimeout(timeout);
 								timeout = setTimeout(() => {
 									setTokenAmount(event);
-								}, 300);
+								}, 600);
 							}}
 							bind:value={receivingAmountViewValue}
 							placeholder="0.00"
@@ -103,36 +168,45 @@
 						</span>
 					</div>
 					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
-						<div class="input-error">Please enter a value equal to or less than your balance.</div>
+						<div class="input-error">Not enough funds.</div>
 					{/if}
-					<p style="font-size: 16px; margin: 24px 0 48px 0">
-						Your Balance <span style="text-decoration: underline;"
-							>{tokenAmount
-								? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $SLN'
-								: '0.00'}</span
-						>
+					<p style="font-size: 16px; margin: 12px 0 48px 0">
+						Your Balance {tokenAmount
+							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $SLN'
+							: '0.00'}
 					</p>
 					<div class="field-title">Recipient address</div>
 
 					<textarea
-						rows="2"
 						cols="1"
 						class="neue-plak"
 						on:input={(event) => {
 							if (timeout) clearTimeout(timeout);
 							timeout = setTimeout(() => {
 								setRecievingAddress(event);
-							}, 300);
+							}, 600);
 						}}
-						bind:value={receivingAccountAddress}
-						placeholder="0x123"
+						bind:value={receivingAccountAddressViewValue}
+						placeholder="Wallet address or ENS name"
 						id="sending-account"
-						minlength="42"
-						maxlength="42"
+						maxlength="200"
 					/>
-
-					{#if receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
-						<div class="input-error">Please enter a valid account address.</div>
+					{#if loading === false && ensNameNotFound === false && receivingAccountAddressViewValue !== receivingAccountAddress}
+						<div style="color: #3DBD00" class="field-title text-md flex items-center">
+							<img
+								style="margin-right: 10px; width: 20px; height: 20px"
+								class="mr-4 rounded-full"
+								alt="ens avatar"
+								src={ensNameAvatarImage}
+							/>
+							<div style="font-size: 14px;">{previewAddr(receivingAccountAddress || '')}</div>
+						</div>
+					{/if}
+					{#if loading === false && receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
+						<div class="input-error">Invalid Address.</div>
+					{/if}
+					{#if ensNameNotFound}
+						<div class="input-error">Invalid Address.</div>
 					{/if}
 				</div>
 			</div>
@@ -161,7 +235,21 @@
 				</div>
 				<div class="field-container">
 					<div class="field-title">To</div>
-					<div class="field-value-alt">{receivingAccountAddress ?? '-'}</div>
+					{#if receivingAccountAddressViewValue !== receivingAccountAddress}
+						<div class="field-value-alt flex">
+							<img
+								style="margin-right: 10px; width: 20px; height: 20px"
+								class="mr-4 rounded-full"
+								alt="ens avatar"
+								src={ensNameAvatarImage}
+							/>{receivingAccountAddressViewValue} ({previewAddr(receivingAccountAddress || '')})
+						</div>
+					{/if}
+					{#if receivingAccountAddressViewValue === receivingAccountAddress}
+						<div class="field-value-alt">
+							{receivingAccountAddressViewValue}
+						</div>
+					{/if}
 				</div>
 				<div class="field-container">
 					<div class="field-title">Amount</div>

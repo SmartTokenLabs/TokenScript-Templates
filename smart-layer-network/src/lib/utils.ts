@@ -1,16 +1,26 @@
-import { ethers } from 'ethers';
-import { slnContractABI } from './../abi/sln';
-
 export function formatWithByDecimalPlaces(num: number, decimalPlaces = 2) {
   return num.toFixed(decimalPlaces);
 }
 
-function previewAddr(inputString: string) {
+export function previewAddr(inputString: string) {
   if (inputString.length < 10) {
-    return inputString; // If the input string is less than 10 characters, return it as is
+    return inputString;
   } else {
-    const firstChars = inputString.substring(0, 5); // Extract the first 5 characters
-    const lastChars = inputString.substring(inputString.length - 5); // Extract the last 5 characters
-    return `${firstChars}...${lastChars}`; // Concatenate and return the formatted string
+    const firstChars = inputString.substring(0, 6);
+    const lastChars = inputString.substring(inputString.length - 4);
+    return `${firstChars}...${lastChars}`;
+  }
+}
+
+export async function fetchENSImage(ensName: string) {
+  try {
+    const response = await fetch(`https://metadata.ens.domains/mainnet/avatar/${ensName}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch ENS image');
+    }
+    return response.blob();
+  } catch (error) {
+    console.error('Error fetching ENS image:', error);
+    return undefined;
   }
 }

@@ -74,8 +74,8 @@
 		<div class="field-section">
 			<div class="field-section-title neue-plak" style="font-size: 24px;">Buy $SLN</div>
 		</div>
-		<div class="field-section pb-0">
-			<div class="search-input flex items-center">
+		<div class="field-section">
+			<div class="search-input flex items-center" style="margin-bottom: 12px">
 				<div class="ml-4 mt-1">
 					<MagnifyingGlass />
 				</div>
@@ -106,8 +106,6 @@
 					</button>
 				{/if}
 			</div>
-		</div>
-		<div class="field-section">
 			{#each filteredSwaps as swap}
 				<a
 					style="background: #1E233C; margin-bottom: 18px"

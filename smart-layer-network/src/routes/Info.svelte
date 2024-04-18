@@ -66,13 +66,13 @@
 				<div class="grid grid-cols-2 gap-4 my-12">
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Balance</div>
-						<div class="text-lg font-semibold">
+						<div class="text-lg font-semibold field-value">
 							{tokenBalance ? formatWithByDecimalPlaces(Number(tokenBalance), 2) + '  $SLN' : '-'}
 						</div>
 					</div>
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Stake</div>
-						<div class="text-lg font-semibold">Coming Soon</div>
+						<div class="text-lg font-semibold field-value">Coming Soon</div>
 					</div>
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Value ETH</div>
@@ -98,7 +98,7 @@
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Ethereum</div>
 					<div class="text-lg font-semibold">
-						{tokenStatsPriceEth ? tokenStatsPriceEth + ' ETH' : '-'}
+						{tokenStatsPriceEth ? tokenStatsPriceEth.toString().substring(0, 6) + ' ETH' : '-'}
 					</div>
 				</div>
 				<div class="mt-4">
@@ -135,7 +135,9 @@
 						<div class="w-6 h-6">
 							<EthLogo />
 						</div>
-						<div class="ml-2">Ethereum Mainnet</div>
+						<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
+							Ethereum Mainnet
+						</div>
 					</div>
 				</div>
 				<div class="mt-4">
