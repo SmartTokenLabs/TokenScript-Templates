@@ -107,6 +107,7 @@
 					<button
 						class="w-4 h-4 border-0 bg-transparent absolute right-4"
 						on:click={(event) => {
+							event.stopPropagation();
 							searchString = '';
 							filterBridges(searchString);
 						}}

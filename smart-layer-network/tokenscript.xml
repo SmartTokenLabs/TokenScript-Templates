@@ -40,6 +40,22 @@
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
+		<ts:card type="token" name="Buy" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Buy</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Bridge" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Bridge</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
 		<ts:card type="action" name="Send" buttonClass="secondary" origins="Token">
 			<ts:label>
 				<ts:string xml:lang="en">Send</ts:string>
@@ -56,23 +72,8 @@
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
-		<ts:card type="token" name="Bridge" buttonClass="secondary" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Bridge</ts:string>
-			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-		<ts:card type="token" name="Buy" buttonClass="secondary" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Buy</ts:string>
-			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
 	</ts:cards>
+
 
 	<ts:attribute name="sendingAccountAddress">
 		<ts:type>

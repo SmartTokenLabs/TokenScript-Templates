@@ -119,7 +119,7 @@
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Name</div>
-					<div class="text-lg font-semibold">Smart Token Layer Network</div>
+					<div class="text-lg font-semibold">Smart Layer Network</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Symbol</div>
