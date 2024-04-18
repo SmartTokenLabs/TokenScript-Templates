@@ -4,7 +4,7 @@
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
 	import Send from './routes/Send.svelte';
-	import Swap from './routes/Swap.svelte';
+	import Buy from './routes/Buy.svelte';
 	import './tailwind.css';
 
 	let token;
@@ -14,7 +14,7 @@
 		'#info': Info,
 		'#send': Send,
 		'#bridge': Bridge,
-		'#swap': Swap
+		'#buy': Buy
 	};
 
 	let page;

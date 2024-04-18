@@ -5,12 +5,13 @@
 	import Badge from '../components/Badge.svelte';
 	import CardArrow from '../components/CardArrow.svelte';
 	import MagnifyingGlass from '../components/MagnifyingGlass.svelte';
+	import Close from '../components/Close.svelte';
 
 	let loading = true;
 	let timeout: any;
 	let searchString: string;
 
-	const bridges = [
+	const swaps = [
 		{
 			title: 'BitTrue',
 			logo: 'BitTrue',
@@ -53,16 +54,16 @@
 		}
 	];
 
-	let filteredBridges = bridges;
+	let filteredSwaps = swaps;
 
 	context.data.subscribe(async (value) => {
 		loading = false;
 	});
 
-	function filterBridges(query: string) {
+	function filterSwaps(query: string) {
 		const lowercaseQuery = query.toLowerCase();
-		filteredBridges = bridges.filter((bridge) => {
-			const { title } = bridge;
+		filteredSwaps = swaps.filter((swap) => {
+			const { title } = swap;
 			return title.toLowerCase().includes(lowercaseQuery);
 		});
 	}
@@ -71,70 +72,60 @@
 <div>
 	<div id="token-container" style="color: white;">
 		<div class="field-section">
-			<div class="field-section-title neue-plak" style="font-size: 24px;">Swap $SLN</div>
+			<div class="field-section-title neue-plak" style="font-size: 24px;">Buy $SLN</div>
 		</div>
-		<div class="field-section" style="padding-bottom: 0;">
-			<div class="search-input">
-				<div style="margin-left: 18px; margin-top: 4px;">
+		<div class="field-section pb-0">
+			<div class="search-input flex items-center">
+				<div class="ml-4 mt-1">
 					<MagnifyingGlass />
 				</div>
 				<input
-					class="medium"
 					on:input={(event) => {
 						if (timeout) clearTimeout(timeout);
 						timeout = setTimeout(() => {
 							// @ts-ignore
 							searchString = event.target.value;
-							filterBridges(searchString);
+							filterSwaps(searchString);
 						}, 300);
 					}}
 					bind:value={searchString}
-					placeholder="Swap name"
+					placeholder="Exchange name"
 					id="search"
 					type="text"
 				/>
 				{#if searchString}
 					<button
+						class="w-4 h-4 border-0 bg-transparent absolute right-4"
 						on:click={(event) => {
 							searchString = '';
-							filterBridges(searchString);
+							filterSwaps(searchString);
 						}}
 					>
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 14 14"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-								fill="#969696"
-							/>
-							<path
-								d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-								fill="#858585"
-							/>
-						</svg>
+						<Close />
 					</button>
 				{/if}
 			</div>
 		</div>
 		<div class="field-section">
-			{#each filteredBridges as bridge}
-				<a class="swap-card flex-between" href={bridge.url} target="_blank">
+			{#each filteredSwaps as swap}
+				<a
+					style="background: #1E233C; margin-bottom: 18px"
+					class="swap-card flex items-center justify-between border border-gray-700 rounded-lg p-6 text-white cursor-pointer transition duration-300 hover:border-gray-400 hover:text-gray-400"
+					href={swap.url}
+					target="_blank"
+				>
 					<div style="display: flex; align-items: center" class="">
 						<div style="padding-top: 9px">
-							<Web3Logo web3LogoRef={bridge.logo} />
-							<div class="flex-center" style="margin-top: 9px;">
-								<div class="field-title" style="font-size: 24px; color: white;">{bridge.title}</div>
-								<div style="margin-left: 12px; margin-bottom: 5px;">
+							<Web3Logo web3LogoRef={swap.logo} />
+							<div class="flex justify-center items-center" style="margin-top: 9px;">
+								<div class="field-title" style="font-size: 24px; color: white;">{swap.title}</div>
+								<div style="margin-left: 12px; margin-bottom: 14px;">
 									<Badge />
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="flex-center">
+					<div class="flex justify-center items-center">
 						<CardArrow />
 					</div>
 				</a>

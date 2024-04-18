@@ -4,6 +4,7 @@
 	import Web3Logo from '../components/Web3Logo.svelte';
 	import CardArrow from '../components/CardArrow.svelte';
 	import MagnifyingGlass from '../components/MagnifyingGlass.svelte';
+	import Close from '../components/Close.svelte';
 
 	let loading = true;
 	let timeout: any;
@@ -79,17 +80,16 @@
 </script>
 
 <div>
-	<div id="token-container" style="color: white;">
+	<div id="token-container" class="text-white">
 		<div class="field-section">
-			<div class="field-section-title neue-plak" style="font-size: 24px;">Bridge $SLN</div>
+			<div class="field-section-title neue-plak text-3xl">Bridge $SLN</div>
 		</div>
-		<div class="field-section" style="padding-bottom: 0;">
-			<div class="search-input">
-				<div style="margin-left: 18px; margin-top: 4px;">
+		<div class="field-section pb-0">
+			<div class="search-input flex items-center">
+				<div class="ml-4 mt-1">
 					<MagnifyingGlass />
 				</div>
 				<input
-					class="medium"
 					on:input={(event) => {
 						if (timeout) clearTimeout(timeout);
 						timeout = setTimeout(() => {
@@ -105,44 +105,35 @@
 				/>
 				{#if searchString}
 					<button
+						class="w-4 h-4 border-0 bg-transparent absolute right-4"
 						on:click={(event) => {
 							searchString = '';
 							filterBridges(searchString);
 						}}
 					>
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 14 14"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-								fill="#969696"
-							/>
-							<path
-								d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
-								fill="#858585"
-							/>
-						</svg>
+						<Close />
 					</button>
 				{/if}
 			</div>
 		</div>
 		<div class="field-section">
 			{#each filteredBridges as bridge}
-				<a class="swap-card flex-between" href={bridge.url} target="_blank">
-					<div style="display: flex; align-items: center" class="">
+				<a
+					style="background: #1E233C; margin-bottom: 18px"
+					class="swap-card flex items-center justify-between border border-gray-700 rounded-lg p-6 text-white cursor-pointer transition duration-300 hover:border-gray-400 hover:text-gray-400"
+					href={bridge.url}
+					target="_blank"
+				>
+					<div class="flex items-center">
 						<div style="padding-top: 9px">
 							<Web3Logo web3LogoRef={bridge.logo} />
 							<div style="margin-top: 9px;">
-								<div class="field-title" style="font-size: 24px; color: white;">{bridge.title}</div>
-								<div class="field-title" style="font-size: 18px;">{bridge.subTitle}</div>
+								<div class="field-title text-white text-3xl">{bridge.title}</div>
+								<div class="field-title text-white text-xl">{bridge.subTitle}</div>
 							</div>
 						</div>
 					</div>
-					<div class="flex-center">
+					<div class="flex justify-center items-center">
 						<CardArrow />
 					</div>
 				</a>

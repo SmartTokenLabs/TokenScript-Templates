@@ -14,32 +14,8 @@
 	<ts:meta>
 		<ts:description xml:lang="en">Smart Token Layer Official Tokenscript</ts:description>
 		<ts:aboutUrl xml:lang="en">https://www.smartlayer.network/</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABOElEQVQ4jc2TO2sUURSGn4BjYFCyYqihp
-UjSRB9UQgIpiopCAoUQgYiSSKBBQgIYKEiBBoJIokhRI0JKJkhRiVpQaEmVakCphYsSrQaGIoRVLs7x3
-c/LBff5me7MzJ8/uznMzPvHCCFYnG0DzAJFGJ3A/0CpwF/DVAM8D/gCfAMcAYkAdgH/AO4AVwBjgK/A
-O/AW8DWwFdAV2Al4CXwCeQJdAbqBToFTgO2Aj4CHwH4Ac8DpAjPAFjAV8CLgLnAKcA8wDPgJ3Ac8C/w
-DXAO+AK8ApgOXAT4BzgJuAicDngEjAMgB/wK/AN4BvgF/AL8B3wKPAOYAugD3AJsAg4BfwBjAF3A/4A
-t4BvgKvAK+A/wG/AdcA9wCKAL+AfQCvAIsAuADtAAsBjgCcAdwBzwKzAM4A3wD3AKsA6wCpAOsAnwCe
-ALgAdwGHAO8AnwLrAa8B/gHVAT4C7gC1AE0B7gEdAJ8ApwCtALQAqACwAIsA0wA2gHqATwB5gEvAbkB
-8gCwAP8BNQGNAW4BZgFpAXUBaQFrAWwBbgG3AV0BXgFfAWwBbgG/AdkA2QDgAMkA3gD3ALwA3gD8AJoB
-9QF9AVIB1gGDAJwA4gCsAJoBzgC7AOcA9wCcAF0A7AC9ALsAlwBvAD0A7wBvAF0B/wCvAK8AwQCIAD4A
-uAC3ANwA5gD9AHMA4wDfAKcA5wD/AJMAzwCXAP4AqgCuAKgA1wC2AIcAbQC3AIgAzgDhAO0AnwC0AP4A
-oQCPAD4A3QDnAJMA5QCuAJwAqQCnAKMAwACqAN0A8wC8AN8A7QDJAIwAggCtAN4A3QD5AJcAxgCeAJoB
-pAGnAcMA/wC3AKcAzQCbAFcA6QCNALgA+gDnAJoA2gCzAIsAwgB3APoA1QCbAO8AqQCkAJwAtgDTADQA
-uQDWAF8A1QDrAKkA4QDdAJkA6wCqAKYAtwBtAGIAZABpAJoA9QCvAJgAvwC7AK8AzgC4AIoAswBtAGgA
-bQBxAG0AbQBpAGoAcgBpAGoAbQBrAHEAcABsAG4AcwBzAG4AdABtAHcAdwBzAG4AbgBwAHMAdwB3AHAAb
-wBuAHMAcABvAHMAdwByAHQAdwBtAGwAaQBvAGwAaQBrAGsAagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQ
-BsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwAaQBrAGsAawBqAGoAagBrAHEAbwBwAG4AdwB
-zAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwAaQBrAGsAagBqAGoAagBrAHEAbwBw
-AG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwAaQBrAGsAagBqAGoAagBrA
-HEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwAaQBrAGsAagBqAG
-oAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwAaQBrAGs
-AagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAaQBpAGwA
-aQBrAGsAagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdwBwAGwAa
-QBpAGwAaQBrAGsAagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwByAHQAdw
-BwAGwAaQBpAGwAaQBrAGsAagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwBwAG4AdwB
-yAHQAdwBwAGwAaQBpAGwAaQBrAGsAagBqAGoAagBrAHEAbwBwAG4AdwBzAGwAaQBsAGkAawBtAHcAbwB
-wAG4AdwByAHQAdwBwAGwAaQBp==</ts:iconUrl>
+		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/sln-tokenscript-cover.png</ts:iconUrl>
+		<!-- <ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/sln-tokenscript-cover.png</ts:imageUrl> -->
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
@@ -56,7 +32,7 @@ wAG4AdwByAHQAdwBwAGwAaQBp==</ts:iconUrl>
 			<ts:include type="css" src="./src/styles.css"/>
 		</ts:viewContent>
 
-		<ts:card type="token" name="Info" origins="Token">
+		<ts:card type="token" name="Info" buttonClass="primary" origins="Token">
 			<ts:label>
 				<ts:string xml:lang="en">Info</ts:string>
 			</ts:label>
@@ -64,23 +40,7 @@ wAG4AdwByAHQAdwBwAGwAaQBp==</ts:iconUrl>
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
-		<ts:card type="token" name="Bridge" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Bridge</ts:string>
-			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-		<ts:card type="token" name="Swap" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Swap</ts:string>
-			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="swap">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-		<ts:card type="action" name="Send" origins="Token">
+		<ts:card type="action" name="Send" buttonClass="secondary" origins="Token">
 			<ts:label>
 				<ts:string xml:lang="en">Send</ts:string>
 			</ts:label>
@@ -93,6 +53,22 @@ wAG4AdwByAHQAdwBwAGwAaQBp==</ts:iconUrl>
 				</ethereum:transaction>
 			</ts:transaction>
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="send" uiButton="false">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Bridge" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Bridge</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Buy" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Buy</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>

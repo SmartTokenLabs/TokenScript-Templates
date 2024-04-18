@@ -4,6 +4,7 @@
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	import { formatWithByDecimalPlaces } from '../lib/utils';
+	import SlnLogo3 from '../components/SLNLogo3.svelte';
 
 	let token: ITokenContextData;
 	let tokenAmount: number | string = 0;
@@ -69,7 +70,7 @@
 <div>
 	{#if token}
 		{#if subView === 'SEND'}
-			<div id="token-container" style="color: white;">
+			<div id="token-container" class="text-white">
 				<div class="field-section">
 					<div class="field-section-title neue-plak" style="font-size: 24px;">Send $SLN</div>
 				</div>
@@ -92,46 +93,11 @@
 							min="0.01"
 							step="any"
 						/>
-						<span style="display: flex;">
+						<span class="flex">
 							<div
-								style="align-items: center; height: 24px; width: 24px; border-radius: 24px; background: #001AFF; padding: 1.5px 0 0 1.5px; margin-right: 9px;"
+								style="align-items: center; height: 24px; width: 24px; border-radius: 24px; background: #001AFF; padding: 1.5px 0 0 1.5px; margin-right: 9px; margin-top:2px"
 							>
-								<svg
-									width="22"
-									height="22"
-									viewBox="0 0 22 22"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<mask
-										id="mask0_2284_13390"
-										style="mask-type:luminance"
-										maskUnits="userSpaceOnUse"
-										x="0"
-										y="0"
-										width="22"
-										height="22"
-									>
-										<path d="M22 0H0V22H22V0Z" fill="white" />
-									</mask>
-									<g mask="url(#mask0_2284_13390)">
-										<path
-											d="M18.9655 13.8866L10.9581 9.21564L2.95068 13.8866L10.9581 18.5576L18.9655 13.8866Z"
-											fill="#FFFEFE"
-										/>
-										<path
-											d="M3.75232 10.7L10.9582 6.49658L18.164 10.7L10.9582 14.9034L3.75232 10.7Z"
-											fill="#101015"
-											stroke="#FFFEFE"
-											stroke-width="0.807784"
-											stroke-linecap="round"
-										/>
-										<path
-											d="M18.9655 7.08383L10.9581 2.41284L2.95068 7.08383L10.9581 11.7548L18.9655 7.08383Z"
-											fill="#FFFEFE"
-										/>
-									</g>
-								</svg>
+								<SlnLogo3 />
 							</div>
 							<div style="font-size: 20px;">$SLN</div>
 						</span>
