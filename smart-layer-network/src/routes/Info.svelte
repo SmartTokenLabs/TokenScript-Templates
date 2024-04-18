@@ -42,8 +42,8 @@
 			if (token._count) {
 				// @ts-ignore
 				userTokenAccountValueEth = tokenStats.value * ethers.formatEther(token._count);
-				userTokenAccountValueUsd = // @ts-ignore
-					(tokenStats.usdPrice * ethers.formatEther(token._count)).toLocaleString('en-US');
+				userTokenAccountValueUsd =
+					Number(tokenStats.usdPrice) * Number(ethers.formatEther(token._count)); // @ts-ignore
 			}
 		}
 	}
@@ -104,7 +104,9 @@
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">USD</div>
 					<div class="text-lg font-semibold">
-						{tokenStatsPriceUsd ? '$' + tokenStatsPriceUsd : '-'}
+						{tokenStatsPriceUsd
+							? '$' + formatWithByDecimalPlaces(Number(tokenStatsPriceUsd), 2)
+							: '-'}
 					</div>
 				</div>
 			</div>
