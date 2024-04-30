@@ -2,7 +2,6 @@
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import Web3Logo from '../components/Web3Logo.svelte';
-	import Badge from '../components/Badge.svelte';
 	import CardArrow from '../components/CardArrow.svelte';
 	import MagnifyingGlass from '../components/MagnifyingGlass.svelte';
 	import Close from '../components/Close.svelte';
