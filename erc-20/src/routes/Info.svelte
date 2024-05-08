@@ -1,9 +1,8 @@
 <script lang="ts">
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
-	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
-	import { formatWithByDecimalPlaces, chainConfig } from '../lib/utils';
+	import { formatWithByDecimalPlaces, chainConfig, formatTokenBalance } from '../lib/utils';
 	let token: ITokenContextData;
 	let tokenStats: any;
 	let loading = true;
@@ -16,12 +15,8 @@
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
-
+		tokenBalance = formatTokenBalance(token?._count, token?.decimals);
 		await setTokenPriceData();
-
-		// @ts-ignore
-		tokenBalance = token._count ? ethers.formatEther(token._count) : 0;
-
 		loading = false;
 	});
 
@@ -36,9 +31,8 @@
 
 			if (token._count) {
 				// @ts-ignore
-				userTokenAccountValueEth = tokenStats.value * ethers.formatEther(token._count);
-				userTokenAccountValueUsd =
-					Number(tokenStats.usdPrice) * Number(ethers.formatEther(token._count)); // @ts-ignore
+				userTokenAccountValueEth = Number(tokenStats.value) * Number(tokenBalance);
+				userTokenAccountValueUsd = Number(tokenStats.usdPrice) * Number(tokenBalance); // @ts-ignore
 			}
 		}
 	}
