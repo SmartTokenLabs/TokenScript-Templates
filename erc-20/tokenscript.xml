@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
+		  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns:ethereum="urn:ethereum:constantinople"
+		  name="smart-token-layer">
+	<ts:label>
+		<ts:plurals xml:lang="en">
+			<ts:string quantity="one">Smart Layer Network</ts:string>
+			<ts:string quantity="other">Smart Layer Network</ts:string>
+		</ts:plurals>
+	</ts:label>
+	<ts:meta>
+		<ts:description xml:lang="en">ERC20 template</ts:description>
+		<ts:aboutUrl xml:lang="en">https://chain.link/</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:iconUrl>
+	</ts:meta>
+	<ts:contract interface="erc20" name="Token">
+		<ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address>
+	</ts:contract>
+	<ts:origins>
+		<!-- Define the contract which holds the token that the user will use -->
+		<ts:ethereum contract="Token"/>
+	</ts:origins>
+
+	<ts:cards>
+		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
+			<ts:include type="html" src="./dist/index.html"/>
+			<ts:include type="css" src="./src/styles.css"/>
+		</ts:viewContent>
+
+		<ts:card type="token" name="Info" buttonClass="primary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Info</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Buy" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Buy</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Bridge" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Bridge</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="action" name="Send" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Send</ts:string>
+			</ts:label>
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="transfer" as="uint">
+					<ts:data>
+						<ts:address ref="receivingAccountAddress"/>
+						<ts:uint256 ref="receivingAmount"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="send" uiButton="false">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+	</ts:cards>
+
+
+	<ts:attribute name="sendingAccountAddress">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">sending account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+	
+	<ts:attribute name="receivingAccountAddress">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">receiving account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="receivingAmount">
+		<ts:type>
+			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">receiving amount</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+	
+</ts:token>
