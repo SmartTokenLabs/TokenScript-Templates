@@ -105,11 +105,11 @@
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Name</div>
-					<div class="text-lg font-semibold">{token.name}</div>
+					<div class="text-lg font-semibold">{token.name ?? '-'}</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Symbol</div>
-					<div class="text-lg font-semibold">{token.symbol}</div>
+					<div class="text-lg font-semibold">{token.symbol ?? '-'}</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Type</div>
