@@ -31,8 +31,8 @@ declare module '$env/static/private' {
 	export const NODE: string;
 	export const INIT_CWD: string;
 	export const NVM_CD_FLAGS: string;
-	export const TERM: string;
 	export const SHELL: string;
+	export const TERM: string;
 	export const npm_config_metrics_registry: string;
 	export const TMPDIR: string;
 	export const npm_config_global_prefix: string;
@@ -43,8 +43,8 @@ declare module '$env/static/private' {
 	export const npm_config_noproxy: string;
 	export const npm_config_local_prefix: string;
 	export const PNPM_HOME: string;
-	export const USER: string;
 	export const NVM_DIR: string;
+	export const USER: string;
 	export const npm_config_globalconfig: string;
 	export const npm_package_peer: string;
 	export const SSH_AUTH_SOCK: string;
@@ -57,8 +57,8 @@ declare module '$env/static/private' {
 	export const LaunchInstanceID: string;
 	export const npm_config_userconfig: string;
 	export const npm_config_init_module: string;
-	export const __CFBundleIdentifier: string;
 	export const NVM_NODEJS_ORG_MIRROR: string;
+	export const __CFBundleIdentifier: string;
 	export const npm_command: string;
 	export const PWD: string;
 	export const npm_lifecycle_event: string;
@@ -72,8 +72,8 @@ declare module '$env/static/private' {
 	export const npm_package_version: string;
 	export const XPC_SERVICE_NAME: string;
 	export const npm_package_resolved: string;
-	export const HOME: string;
 	export const SHLVL: string;
+	export const HOME: string;
 	export const npm_package_dev_optional: string;
 	export const npm_config_cache: string;
 	export const LOGNAME: string;
@@ -118,8 +118,8 @@ declare module '$env/dynamic/private' {
 		NODE: string;
 		INIT_CWD: string;
 		NVM_CD_FLAGS: string;
-		TERM: string;
 		SHELL: string;
+		TERM: string;
 		npm_config_metrics_registry: string;
 		TMPDIR: string;
 		npm_config_global_prefix: string;
@@ -130,8 +130,8 @@ declare module '$env/dynamic/private' {
 		npm_config_noproxy: string;
 		npm_config_local_prefix: string;
 		PNPM_HOME: string;
-		USER: string;
 		NVM_DIR: string;
+		USER: string;
 		npm_config_globalconfig: string;
 		npm_package_peer: string;
 		SSH_AUTH_SOCK: string;
@@ -144,8 +144,8 @@ declare module '$env/dynamic/private' {
 		LaunchInstanceID: string;
 		npm_config_userconfig: string;
 		npm_config_init_module: string;
-		__CFBundleIdentifier: string;
 		NVM_NODEJS_ORG_MIRROR: string;
+		__CFBundleIdentifier: string;
 		npm_command: string;
 		PWD: string;
 		npm_lifecycle_event: string;
@@ -159,8 +159,8 @@ declare module '$env/dynamic/private' {
 		npm_package_version: string;
 		XPC_SERVICE_NAME: string;
 		npm_package_resolved: string;
-		HOME: string;
 		SHLVL: string;
+		HOME: string;
 		npm_package_dev_optional: string;
 		npm_config_cache: string;
 		LOGNAME: string;

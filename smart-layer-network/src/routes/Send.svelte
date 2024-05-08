@@ -3,34 +3,89 @@
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
+	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
+	import SlnLogo3 from '../components/SLNLogo3.svelte';
+
 	let token: ITokenContextData;
-	let tokenAmount: any;
+	let tokenAmount: number | string = 0;
 	let loading = true;
 	let receivingAccountAddress: string | undefined;
 	let receivingAmountViewValue: any;
 	let receivingAmount: any;
+	let timeout: any;
+	let subView: 'SEND' | 'SUMMARY' = 'SEND';
+	let formIsInValid = true;
+	let receivingAccountAddressViewValue: string | undefined;
+	let ensNameNotFound: boolean | undefined;
+	let ensNameAvatarImage: any;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
 
 		// @ts-ignore
-		tokenAmount = ethers.formatEther(token._count);
+		if (token._count && Number(ethers.formatEther(token._count)) > 0.000000000000000001) {
+			tokenAmount = ethers.formatEther(token._count);
+		}
 
-		// You can load other data before hiding the loader
 		loading = false;
 	});
 
-	function setRecievingAddress(event: Event) {
+	async function getENSAvatar(ensName: string) {
+		try {
+			const ensNameAvatarImageReq: any = await fetchENSImage(ensName);
+			ensNameAvatarImage = URL.createObjectURL(ensNameAvatarImageReq);
+			ensNameNotFound = false;
+		} catch (e) {
+			ensNameAvatarImage = undefined;
+			ensNameNotFound = true;
+		}
+	}
+
+	async function getAddressFromENS(ensName: string) {
+		const provider = ethers.getDefaultProvider();
+		try {
+			const address = await provider.resolveName(ensName);
+			if (address) {
+				receivingAccountAddress = address;
+			}
+			ensNameNotFound = false;
+		} catch (error) {
+			receivingAccountAddress = undefined;
+			ensNameNotFound = true;
+		}
+	}
+
+	async function setRecievingAddress(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
-		receivingAccountAddress = inputElement.value;
+
+		if (inputElement.value.endsWith('.eth')) {
+			loading = true;
+			await getAddressFromENS(inputElement.value);
+			await getENSAvatar(inputElement.value);
+			loading = false;
+		} else {
+			receivingAccountAddress = inputElement.value;
+		}
+
+		receivingAccountAddressViewValue = inputElement.value;
+
 		updateWeb3Props();
+		autoResizeTextarea(inputElement);
+		inputElement.checkValidity();
 	}
 
 	async function setTokenAmount(event: Event) {
 		const inputElement = event.target as HTMLInputElement;
-		receivingAmountViewValue = inputElement.value;
-		receivingAmount = ethers.parseEther(inputElement.value);
+		const inputElValue = inputElement.value.replace(/[+-]/g, '');
+		receivingAmountViewValue = inputElValue;
+		receivingAmount = ethers.parseEther(inputElValue);
+		updateWeb3Props();
+	}
+
+	async function setTokenAmountMax() {
+		receivingAmountViewValue = tokenAmount;
+		receivingAmount = ethers.parseEther(tokenAmount.toString());
 		updateWeb3Props();
 	}
 
@@ -40,123 +95,193 @@
 			receivingAccountAddress,
 			receivingAmount
 		});
+		validateForm();
+	}
+
+	function validateForm() {
+		let sendingAmountInput = document.getElementById('sending-amount') as HTMLInputElement;
+		if (sendingAmountInput) {
+			formIsInValid = !(
+				sendingAmountInput.checkValidity() &&
+				ethers.isAddress(receivingAccountAddress) &&
+				receivingAmountViewValue > 0
+			);
+		}
+	}
+
+	function autoResizeTextarea(textarea: any) {
+		textarea.style.height = '1px';
+		textarea.style.height = 5 + textarea.scrollHeight + 'px';
+	}
+
+	setTimeout(() => {
+		const textarea = document.getElementById('sending-account');
+		if (textarea) {
+			textarea.addEventListener('input', function () {
+				autoResizeTextarea(this);
+			});
+		}
+	});
+
+	function formatNumber(val: string) {
+		if (Number.isInteger(parseFloat(val))) {
+			return parseFloat(val).toFixed(2);
+		} else {
+			return val;
+		}
 	}
 </script>
 
 <div>
 	{#if token}
-		<div id="token-container" style="background: black;color: white;">
-			<div class="flex-center" style="margin: 40px 0;">
-				<svg
-					width="245"
-					height="44"
-					viewBox="0 0 245 44"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-8 w-44 lg:w-40 xl:h-11 xl:w-64"
-					style="
-    width: 245px;
-"
-					><g clip-path="url(#clip0_6281_10392)"
-						><path
-							d="M68.2851 34.3515C66.2812 34.3515 64.6005 34.0606 63.243 33.4789C61.9071 32.8756 60.8836 32.0999 60.1726 31.1518C59.4831 30.1822 59.1168 29.1695 59.0737 28.1137C59.0737 27.9197 59.1383 27.7581 59.2676 27.6289C59.3969 27.4996 59.5585 27.4349 59.7524 27.4349H62.629C62.9091 27.4349 63.1138 27.4996 63.243 27.6289C63.3939 27.7366 63.5232 27.8766 63.6309 28.049C63.7602 28.4584 64.008 28.8678 64.3743 29.2772C64.7406 29.665 65.2361 29.9883 65.861 30.2468C66.5074 30.5054 67.3154 30.6347 68.2851 30.6347C69.8364 30.6347 70.9892 30.3761 71.7434 29.859C72.519 29.3418 72.9069 28.6416 72.9069 27.7581C72.9069 27.1333 72.7022 26.6377 72.2928 26.2714C71.8834 25.8835 71.2478 25.5388 70.3859 25.2371C69.5456 24.9139 68.4251 24.5799 67.0246 24.2352C65.4085 23.8473 64.0511 23.3841 62.9522 22.8454C61.8748 22.2852 61.056 21.5849 60.4958 20.7446C59.9571 19.9042 59.6878 18.8377 59.6878 17.5448C59.6878 16.2951 60.0218 15.1854 60.6897 14.2158C61.3792 13.2462 62.3488 12.4813 63.5986 11.9211C64.8698 11.3608 66.3781 11.0807 68.1234 11.0807C69.524 11.0807 70.763 11.2747 71.8403 11.6625C72.9177 12.0288 73.8119 12.5244 74.5229 13.1492C75.234 13.7526 75.7726 14.4097 76.1389 15.1208C76.5268 15.8103 76.7315 16.489 76.753 17.157C76.753 17.3294 76.6884 17.491 76.5591 17.6418C76.4514 17.7711 76.2898 17.8357 76.0743 17.8357H73.0685C72.8961 17.8357 72.7237 17.7926 72.5514 17.7064C72.379 17.6203 72.2389 17.4587 72.1312 17.2216C72.0019 16.5537 71.5817 15.9827 70.8707 15.5086C70.1596 15.0346 69.2439 14.7976 68.1234 14.7976C66.9599 14.7976 66.0226 15.0131 65.3116 15.444C64.6005 15.8749 64.245 16.5429 64.245 17.4479C64.245 18.0512 64.4174 18.5576 64.7621 18.9669C65.1284 19.3548 65.6994 19.6995 66.4751 20.0012C67.2723 20.3029 68.3174 20.6261 69.6102 20.9708C71.4417 21.3802 72.9392 21.8542 74.1028 22.3929C75.2663 22.9316 76.1174 23.6211 76.6561 24.4614C77.1947 25.2802 77.4641 26.3253 77.4641 27.5965C77.4641 29.0186 77.0762 30.236 76.3005 31.2488C75.5464 32.2399 74.4798 33.0048 73.1008 33.5435C71.7218 34.0822 70.1165 34.3515 68.2851 34.3515ZM79.7783 34.0283C79.5628 34.0283 79.3797 33.9529 79.2288 33.8021C79.078 33.6512 79.0026 33.4681 79.0026 33.2526V17.9973C79.0026 17.7819 79.078 17.5987 79.2288 17.4479C79.3797 17.2971 79.5628 17.2216 79.7783 17.2216H82.2993C82.5148 17.2216 82.6979 17.2971 82.8487 17.4479C82.9996 17.5987 83.075 17.7819 83.075 17.9973V19.0962C83.5275 18.4929 84.1308 17.9866 84.8849 17.5772C85.6606 17.1462 86.5764 16.92 87.6322 16.8984C90.0885 16.8553 91.8015 17.8142 92.7711 19.775C93.2667 18.9131 93.9778 18.2236 94.9043 17.7064C95.8524 17.1678 96.8974 16.8984 98.0394 16.8984C99.1598 16.8984 100.173 17.157 101.078 17.6741C102.004 18.1913 102.726 18.9777 103.243 20.0335C103.782 21.0678 104.051 22.3821 104.051 23.9766V33.2526C104.051 33.4681 103.976 33.6512 103.825 33.8021C103.674 33.9529 103.491 34.0283 103.275 34.0283H100.625C100.41 34.0283 100.226 33.9529 100.076 33.8021C99.9248 33.6512 99.8493 33.4681 99.8493 33.2526V24.2352C99.8493 23.2656 99.7093 22.5007 99.4292 21.9404C99.1491 21.3587 98.772 20.9493 98.298 20.7123C97.8239 20.4752 97.296 20.3567 96.7143 20.3567C96.2402 20.3567 95.7662 20.4752 95.2922 20.7123C94.8181 20.9493 94.4303 21.3587 94.1286 21.9404C93.827 22.5007 93.6761 23.2656 93.6761 24.2352V33.2526C93.6761 33.4681 93.6007 33.6512 93.4499 33.8021C93.299 33.9529 93.1159 34.0283 92.9004 34.0283H90.2501C90.0131 34.0283 89.8192 33.9529 89.6684 33.8021C89.5391 33.6512 89.4745 33.4681 89.4745 33.2526V24.2352C89.4745 23.2656 89.3236 22.5007 89.022 21.9404C88.7203 21.3587 88.3325 20.9493 87.8584 20.7123C87.3844 20.4752 86.878 20.3567 86.3394 20.3567C85.8438 20.3567 85.359 20.486 84.8849 20.7446C84.4109 20.9816 84.0231 21.3802 83.7214 21.9404C83.4197 22.5007 83.2689 23.2656 83.2689 24.2352V33.2526C83.2689 33.4681 83.1935 33.6512 83.0427 33.8021C82.8918 33.9529 82.7087 34.0283 82.4932 34.0283H79.7783ZM111.27 34.3515C110.149 34.3515 109.136 34.1361 108.231 33.7051C107.327 33.2526 106.605 32.6601 106.066 31.9275C105.549 31.1733 105.29 30.333 105.29 29.4065C105.29 27.8982 105.894 26.7023 107.1 25.8189C108.328 24.9139 109.944 24.3106 111.948 24.009L116.376 23.3625V22.6838C116.376 21.7788 116.15 21.0786 115.698 20.583C115.245 20.0874 114.469 19.8396 113.37 19.8396C112.595 19.8396 111.959 20.0012 111.464 20.3244C110.989 20.6261 110.634 21.0355 110.397 21.5526C110.225 21.8327 109.977 21.9728 109.654 21.9728H107.1C106.863 21.9728 106.68 21.9081 106.551 21.7788C106.443 21.6496 106.389 21.4772 106.389 21.2617C106.411 20.917 106.551 20.4968 106.809 20.0012C107.068 19.5056 107.477 19.0316 108.038 18.5791C108.598 18.1051 109.32 17.7064 110.203 17.3832C111.086 17.06 112.153 16.8984 113.403 16.8984C114.76 16.8984 115.902 17.0708 116.829 17.4156C117.777 17.7388 118.531 18.1805 119.091 18.7407C119.651 19.3009 120.061 19.9581 120.319 20.7123C120.578 21.4664 120.707 22.2636 120.707 23.104V33.2526C120.707 33.4681 120.632 33.6512 120.481 33.8021C120.33 33.9529 120.147 34.0283 119.932 34.0283H117.314C117.077 34.0283 116.883 33.9529 116.732 33.8021C116.602 33.6512 116.538 33.4681 116.538 33.2526V31.9921C116.258 32.4015 115.881 32.7894 115.407 33.1557C114.933 33.5004 114.351 33.7913 113.661 34.0283C112.993 34.2438 112.196 34.3515 111.27 34.3515ZM112.369 31.2811C113.123 31.2811 113.801 31.1195 114.405 30.7963C115.03 30.4731 115.514 29.9775 115.859 29.3095C116.225 28.62 116.409 27.7581 116.409 26.7239V26.0451L113.177 26.5623C111.905 26.7562 110.957 27.0686 110.332 27.4996C109.707 27.9305 109.395 28.4584 109.395 29.0833C109.395 29.5573 109.535 29.9667 109.815 30.3115C110.117 30.6347 110.494 30.8825 110.946 31.0548C111.399 31.2057 111.873 31.2811 112.369 31.2811ZM123.852 34.0283C123.636 34.0283 123.453 33.9529 123.302 33.8021C123.151 33.6512 123.076 33.4681 123.076 33.2526V18.0296C123.076 17.7926 123.151 17.5987 123.302 17.4479C123.453 17.2971 123.636 17.2216 123.852 17.2216H126.47C126.685 17.2216 126.868 17.2971 127.019 17.4479C127.191 17.5987 127.278 17.7926 127.278 18.0296V19.3548C127.773 18.6653 128.409 18.1374 129.185 17.7711C129.982 17.4048 130.898 17.2216 131.932 17.2216H133.257C133.494 17.2216 133.677 17.2971 133.806 17.4479C133.957 17.5987 134.033 17.7819 134.033 17.9973V20.3244C134.033 20.5399 133.957 20.723 133.806 20.8739C133.677 21.0247 133.494 21.1001 133.257 21.1001H130.736C129.702 21.1001 128.894 21.391 128.312 21.9728C127.752 22.5545 127.472 23.3518 127.472 24.3645V33.2526C127.472 33.4681 127.396 33.6512 127.245 33.8021C127.094 33.9529 126.901 34.0283 126.664 34.0283H123.852ZM142.371 34.0283C141.078 34.0283 139.99 33.8021 139.107 33.3496C138.223 32.8971 137.566 32.2291 137.135 31.3457C136.704 30.4407 136.489 29.3203 136.489 27.9844V20.6476H133.935C133.72 20.6476 133.537 20.5722 133.386 20.4214C133.235 20.2705 133.16 20.0874 133.16 19.8719V17.9973C133.16 17.7819 133.235 17.5987 133.386 17.4479C133.537 17.2971 133.72 17.2216 133.935 17.2216H136.489V11.8564C136.489 11.641 136.553 11.4578 136.683 11.307C136.833 11.1561 137.027 11.0807 137.264 11.0807H139.882C140.098 11.0807 140.281 11.1561 140.432 11.307C140.583 11.4578 140.658 11.641 140.658 11.8564V17.2216H144.698C144.914 17.2216 145.097 17.2971 145.248 17.4479C145.398 17.5987 145.474 17.7819 145.474 17.9973V19.8719C145.474 20.0874 145.398 20.2705 145.248 20.4214C145.097 20.5722 144.914 20.6476 144.698 20.6476H140.658V27.6612C140.658 28.5446 140.809 29.2341 141.111 29.7297C141.434 30.2253 141.983 30.4731 142.759 30.4731H144.989C145.204 30.4731 145.388 30.5485 145.538 30.6993C145.689 30.8501 145.765 31.0333 145.765 31.2488V33.2526C145.765 33.4681 145.689 33.6512 145.538 33.8021C145.388 33.9529 145.204 34.0283 144.989 34.0283H142.371ZM153.626 34.0283C153.41 34.0283 153.227 33.9529 153.076 33.8021C152.926 33.6512 152.85 33.4681 152.85 33.2526V12.1796C152.85 11.9642 152.926 11.781 153.076 11.6302C153.227 11.4794 153.41 11.4039 153.626 11.4039H156.632C156.847 11.4039 157.03 11.4794 157.181 11.6302C157.332 11.781 157.407 11.9642 157.407 12.1796V30.1822H167.653C167.89 30.1822 168.084 30.2576 168.235 30.4084C168.386 30.5592 168.461 30.7532 168.461 30.9902V33.2526C168.461 33.4681 168.386 33.6512 168.235 33.8021C168.084 33.9529 167.89 34.0283 167.653 34.0283H153.626ZM174.314 34.3515C173.193 34.3515 172.18 34.1361 171.275 33.7051C170.371 33.2526 169.649 32.6601 169.11 31.9275C168.593 31.1733 168.334 30.333 168.334 29.4065C168.334 27.8982 168.938 26.7023 170.144 25.8189C171.372 24.9139 172.988 24.3106 174.992 24.009L179.42 23.3625V22.6838C179.42 21.7788 179.194 21.0786 178.742 20.583C178.289 20.0874 177.513 19.8396 176.414 19.8396C175.639 19.8396 175.003 20.0012 174.508 20.3244C174.034 20.6261 173.678 21.0355 173.441 21.5526C173.269 21.8327 173.021 21.9728 172.698 21.9728H170.144C169.907 21.9728 169.724 21.9081 169.595 21.7788C169.487 21.6496 169.433 21.4772 169.433 21.2617C169.455 20.917 169.595 20.4968 169.853 20.0012C170.112 19.5056 170.521 19.0316 171.082 18.5791C171.642 18.1051 172.364 17.7064 173.247 17.3832C174.13 17.06 175.197 16.8984 176.447 16.8984C177.804 16.8984 178.946 17.0708 179.873 17.4156C180.821 17.7388 181.575 18.1805 182.135 18.7407C182.695 19.3009 183.105 19.9581 183.363 20.7123C183.622 21.4664 183.751 22.2636 183.751 23.104V33.2526C183.751 33.4681 183.676 33.6512 183.525 33.8021C183.374 33.9529 183.191 34.0283 182.976 34.0283H180.358C180.121 34.0283 179.927 33.9529 179.776 33.8021C179.647 33.6512 179.582 33.4681 179.582 33.2526V31.9921C179.302 32.4015 178.925 32.7894 178.451 33.1557C177.977 33.5004 177.395 33.7913 176.705 34.0283C176.037 34.2438 175.24 34.3515 174.314 34.3515ZM175.413 31.2811C176.167 31.2811 176.845 31.1195 177.449 30.7963C178.074 30.4731 178.558 29.9775 178.903 29.3095C179.269 28.62 179.453 27.7581 179.453 26.7239V26.0451L176.221 26.5623C174.949 26.7562 174.001 27.0686 173.376 27.4996C172.751 27.9305 172.439 28.4584 172.439 29.0833C172.439 29.5573 172.579 29.9667 172.859 30.3115C173.161 30.6347 173.538 30.8825 173.99 31.0548C174.443 31.2057 174.917 31.2811 175.413 31.2811ZM188.716 40.1692C188.544 40.1692 188.393 40.1046 188.264 39.9753C188.134 39.846 188.07 39.6952 188.07 39.5228C188.07 39.4366 188.07 39.3504 188.07 39.2642C188.091 39.1996 188.134 39.1134 188.199 39.0057L190.72 33.0264L184.515 18.3852C184.428 18.1697 184.385 18.0189 184.385 17.9327C184.407 17.7388 184.482 17.5772 184.611 17.4479C184.741 17.2971 184.902 17.2216 185.096 17.2216H187.714C187.973 17.2216 188.167 17.2863 188.296 17.4156C188.425 17.5448 188.522 17.6849 188.587 17.8357L192.886 28.4045L197.313 17.8357C197.378 17.6634 197.475 17.5233 197.604 17.4156C197.734 17.2863 197.928 17.2216 198.186 17.2216H200.772C200.944 17.2216 201.095 17.2863 201.224 17.4156C201.375 17.5448 201.45 17.6957 201.45 17.868C201.45 17.9973 201.407 18.1697 201.321 18.3852L192.175 39.5551C192.088 39.7275 191.981 39.8676 191.851 39.9753C191.722 40.1046 191.528 40.1692 191.27 40.1692H188.716ZM209.1 34.3515C206.708 34.3515 204.812 33.662 203.411 32.283C202.011 30.904 201.256 28.9432 201.149 26.4007C201.127 26.1852 201.116 25.9159 201.116 25.5927C201.116 25.2479 201.127 24.9786 201.149 24.7846C201.235 23.1686 201.601 21.7681 202.248 20.583C202.916 19.3979 203.831 18.4929 204.995 17.868C206.158 17.2216 207.527 16.8984 209.1 16.8984C210.845 16.8984 212.31 17.2647 213.495 17.9973C214.68 18.7084 215.574 19.7103 216.178 21.0031C216.781 22.2744 217.083 23.7504 217.083 25.4311V26.1098C217.083 26.3253 217.007 26.5084 216.857 26.6592C216.706 26.8101 216.512 26.8855 216.275 26.8855H205.544C205.544 26.8855 205.544 26.9178 205.544 26.9824C205.544 27.0471 205.544 27.1009 205.544 27.144C205.566 27.8982 205.706 28.5985 205.965 29.2449C206.245 29.8697 206.643 30.3761 207.16 30.7639C207.699 31.1518 208.335 31.3457 209.067 31.3457C209.671 31.3457 210.177 31.2595 210.586 31.0872C210.996 30.8932 211.33 30.6778 211.588 30.4407C211.847 30.2037 212.03 30.0098 212.138 29.859C212.332 29.6004 212.482 29.4496 212.59 29.4065C212.72 29.3418 212.903 29.3095 213.14 29.3095H215.919C216.135 29.3095 216.307 29.3742 216.436 29.5034C216.587 29.6327 216.652 29.7943 216.63 29.9883C216.609 30.333 216.426 30.7532 216.081 31.2488C215.758 31.7443 215.284 32.2291 214.659 32.7032C214.034 33.1772 213.247 33.5758 212.299 33.899C211.373 34.2007 210.306 34.3515 209.1 34.3515ZM205.544 24.1706H212.687V24.0736C212.687 23.2333 212.547 22.5007 212.267 21.8758C211.987 21.2509 211.578 20.7553 211.039 20.389C210.5 20.0228 209.854 19.8396 209.1 19.8396C208.345 19.8396 207.699 20.0228 207.16 20.389C206.622 20.7553 206.212 21.2509 205.932 21.8758C205.674 22.5007 205.544 23.2333 205.544 24.0736V24.1706ZM219.512 34.0283C219.296 34.0283 219.113 33.9529 218.962 33.8021C218.811 33.6512 218.736 33.4681 218.736 33.2526V18.0296C218.736 17.7926 218.811 17.5987 218.962 17.4479C219.113 17.2971 219.296 17.2216 219.512 17.2216H222.13C222.345 17.2216 222.528 17.2971 222.679 17.4479C222.851 17.5987 222.938 17.7926 222.938 18.0296V19.3548C223.433 18.6653 224.069 18.1374 224.845 17.7711C225.642 17.4048 226.557 17.2216 227.592 17.2216H228.917C229.154 17.2216 229.337 17.2971 229.466 17.4479C229.617 17.5987 229.693 17.7819 229.693 17.9973V20.3244C229.693 20.5399 229.617 20.723 229.466 20.8739C229.337 21.0247 229.154 21.1001 228.917 21.1001H226.396C225.362 21.1001 224.554 21.391 223.972 21.9728C223.412 22.5545 223.132 23.3518 223.132 24.3645V33.2526C223.132 33.4681 223.056 33.6512 222.905 33.8021C222.754 33.9529 222.561 34.0283 222.324 34.0283H219.512Z"
-							fill="white"
-						/><rect y="0.90332" width="42.1929" height="42.1929" rx="4.64122" fill="#001AFF" /><path
-							d="M35.4422 27.7091L21.0966 19.3408L6.75098 27.7091L21.0966 36.0773L35.4422 27.7091Z"
-							fill="white"
-						/><path
-							d="M8.40862 22.0001L21.0966 14.5988L33.7845 22.0001L21.0966 29.4014L8.40862 22.0001Z"
-							fill="#3268FF"
-							stroke="white"
-							stroke-width="1.67048"
-							stroke-linecap="round"
-						/><path
-							d="M35.4422 15.5216L21.0966 7.15332L6.75098 15.5216L21.0966 23.8898L35.4422 15.5216Z"
-							fill="white"
-						/></g
-					><defs
-						><clipPath id="clip0_6281_10392"
-							><rect
-								width="244.645"
-								height="42.1929"
-								fill="white"
-								transform="translate(0 0.90332)"
-							/></clipPath
-						></defs
-					></svg
+		{#if subView === 'SEND'}
+			<div id="token-container" class="text-white">
+				<div class="field-section">
+					<div class="field-section-title neue-plak" style="font-size: 24px;">Send $SLN</div>
+				</div>
+				<div class="field-section">
+					<div class="flex justify-between">
+						<div class="field-title">Amount</div>
+						<button
+							class="field-value-alt"
+							style="text-decoration: underline;"
+							on:click={(e) => {
+								setTokenAmountMax();
+							}}>Max</button
+						>
+					</div>
+					<div class="icon-input">
+						<input
+							style="padding-right: 110px;"
+							class="neue-plak large"
+							on:input={(event) => {
+								if (timeout) clearTimeout(timeout);
+								timeout = setTimeout(() => {
+									setTokenAmount(event);
+								}, 600);
+							}}
+							bind:value={receivingAmountViewValue}
+							placeholder="0.00"
+							id="sending-amount"
+							type="number"
+							max={formatWithByDecimalPlaces(Number(tokenAmount), 2)}
+							min="0.01"
+							step="any"
+						/>
+						<span class="flex">
+							<div
+								style="align-items: center; height: 24px; width: 24px; border-radius: 24px; background: #001AFF; padding: 1.5px 0 0 1.5px; margin-right: 9px; margin-top:2px"
+							>
+								<SlnLogo3 />
+							</div>
+							<div style="font-size: 20px;">$SLN</div>
+						</span>
+					</div>
+					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
+						<div class="input-error">Not enough funds.</div>
+					{/if}
+					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
+						<div class="input-error">Not enough funds.</div>
+					{/if}
+					<p style="font-size: 16px; margin: 12px 0 48px 0">
+						Your Balance {tokenAmount
+							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $SLN'
+							: '0.00'}
+					</p>
+					<div class="field-title">Recipient address</div>
+
+					<textarea
+						cols="1"
+						class="neue-plak"
+						on:input={(event) => {
+							if (timeout) clearTimeout(timeout);
+							timeout = setTimeout(() => {
+								setRecievingAddress(event);
+							}, 600);
+						}}
+						bind:value={receivingAccountAddressViewValue}
+						placeholder="Wallet address or ENS name"
+						id="sending-account"
+						maxlength="200"
+					/>
+					{#if loading === false && ensNameNotFound === false && receivingAccountAddressViewValue !== receivingAccountAddress}
+						<div style="color: #3DBD00" class="field-title text-md flex items-center">
+							<img
+								style="margin-right: 10px; width: 20px; height: 20px"
+								class="mr-4 rounded-full"
+								alt="ens avatar"
+								src={ensNameAvatarImage}
+							/>
+							<div style="font-size: 14px;">{previewAddr(receivingAccountAddress || '')}</div>
+						</div>
+					{/if}
+					{#if loading === false && receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
+						<div class="input-error">Invalid Address.</div>
+					{/if}
+					{#if ensNameNotFound}
+						<div class="input-error">Invalid Address.</div>
+					{/if}
+				</div>
+			</div>
+			<div class="field-section" style="width: 100%; position: fixed; bottom: 0;">
+				<button
+					disabled={formIsInValid}
+					class="gradient-button"
+					on:click={(e) => (subView = 'SUMMARY')}>Review</button
 				>
 			</div>
-			<div class="flex-center">
-				<div>
-					<img
-						alt="sln"
-						src="https://www.tokenscript.org/images/tokenscript-large-cube.png"
-						style="width: 118px"
-					/>
-					<p style="text-align: center;">Send Tokens</p>
+		{/if}
+		{#if subView === 'SUMMARY'}
+			<div class="field-section" style="display: flex; align-items: center; padding-bottom: 0;">
+				<button class="cursor-button" on:click={(e) => (subView = 'SEND')}>{'<'}</button>
+				<div
+					class="field-section-title neue-plak"
+					style="font-size: 18px; margin-left: 9px; margin-top: 4px"
+				>
+					Summary
 				</div>
 			</div>
 			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Token Balance</div>
-				</div>
-				<div class="field-container">
-					<div class="field-value">{tokenAmount + ' SLN' ?? '-'}</div>
-				</div>
-			</div>
-			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Send Address</div>
-					<img
-						class="field-icon"
-						alt="wallet"
-						src="https://www.smartlayer.network/_next/static/media/wallet.74ee044d.svg"
-					/>
-				</div>
-				<input
-					minlength="42"
-					maxlength="42"
-					on:change={(event) => {
-						setRecievingAddress(event);
-					}}
-					placeholder=""
-					id="recieving-account"
-					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
-					type="text"
-				/>
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Send Amount</div>
-				</div>
-				<input
-					on:change={(event) => {
-						setTokenAmount(event);
-					}}
-					placeholder=""
-					id="sending-account"
-					style="padding: 12px 14px;width: 100%;border-radius: 4px;border: 1px solid #B6B6BF;border-radius: 14px;margin: 5px 0;"
-					type="text"
-				/>
-			</div>
-			<div class="field-section">
-				<div class="flex-between field-section-heading">
-					<div class="field-section-title">Summary</div>
-				</div>
 				<div class="field-container">
 					<div class="field-title">From</div>
-					<div class="field-value">{token.ownerAddress}</div>
-				</div>
-				<div class="field-container">
-					<div class="field-title">Amount</div>
-					<div class="field-value">
-						{receivingAmountViewValue ? receivingAmountViewValue + ' SLN' : '-'}
-					</div>
+					<div class="field-value-alt">{token.ownerAddress}</div>
 				</div>
 				<div class="field-container">
 					<div class="field-title">To</div>
-					<div class="field-value">{receivingAccountAddress ?? '-'}</div>
+					{#if receivingAccountAddressViewValue !== receivingAccountAddress}
+						<div class="field-value-alt flex">
+							<img
+								style="margin-right: 10px; width: 20px; height: 20px"
+								class="mr-4 rounded-full"
+								alt="ens avatar"
+								src={ensNameAvatarImage}
+							/>{receivingAccountAddressViewValue} ({previewAddr(receivingAccountAddress || '')})
+						</div>
+					{/if}
+					{#if receivingAccountAddressViewValue === receivingAccountAddress}
+						<div class="field-value-alt">
+							{receivingAccountAddressViewValue}
+						</div>
+					{/if}
+				</div>
+				<div class="field-container">
+					<div class="field-title">Amount</div>
+					<div class="field-value-alt">
+						{receivingAmountViewValue ? formatNumber(receivingAmountViewValue) + ' $SLN' : '-'}
+					</div>
 				</div>
 			</div>
-		</div>
+			<div class="field-section" style="width: 100%; position: fixed; bottom: 0;">
+				<!-- svelte-ignore missing-declaration -->
+				<button
+					style="opacity: 0;"
+					class="delay-show-1s gradient-button"
+					on:click={(e) =>
+						// @ts-ignore
+						tokenscript.action.executeTransaction()}>Send</button
+				>
+			</div>
+		{/if}
 	{/if}
 	<Loader show={loading} />
 </div>

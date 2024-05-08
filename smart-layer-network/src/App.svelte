@@ -1,11 +1,11 @@
 <script lang="ts">
 	import context from './lib/context';
+	import Bridge from './routes/Bridge.svelte';
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
-	import Stake from './routes/Stake.svelte';
-	import Unstake from './routes/Unstake.svelte';
 	import Send from './routes/Send.svelte';
-	import Approve from './routes/Approve.svelte';
+	import Buy from './routes/Buy.svelte';
+	import './tailwind.css';
 
 	let token;
 	let initialised = false;
@@ -13,9 +13,8 @@
 	const routingMap = {
 		'#info': Info,
 		'#send': Send,
-		'#approve': Approve,
-		'#stake': Stake,
-		'#unstake': Unstake
+		'#bridge': Bridge,
+		'#buy': Buy
 	};
 
 	let page;

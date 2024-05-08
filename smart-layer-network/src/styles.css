@@ -1,16 +1,57 @@
+@font-face {
+  font-family: 'Neue Plak';
+  src: url('https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/fonts/Neue_Plak_Extended_SemiBold.ttf') format('truetype');
+  /* You can also specify additional font formats here for better browser compatibility */
+}
+
+.neue-plak {
+	font-family: Neue Plak !important
+}
 
 * {
 	font-family: "Rubik", sans-serif;
 	box-sizing: border-box;
 }
 
-body {
+html, body {
 	color: white;
-	background-color: black;
+	margin: 0;
+	background-color: #171822;
 }
 
-#token-container {
-	margin-bottom: 44px;
+textarea {
+	padding: 14px;
+	resize: none;
+}
+
+input:valid:focus, textarea:valid:focus {
+    border-color: #BDFF02 !important;
+    caret-color: #BDFF02 !important;
+    outline: none !important;
+}
+
+input:invalid:focus, textarea:invalid:focus {
+    border-color: #D93F45 !important;
+    caret-color: #D93F45 !important;
+    outline: none !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:autofill, input:-webkit-autofill {
+	background: #1E233C !important;
+	border: 1px #353B5C solid !important;
+	color: white !important;
 }
 
 div, p {
@@ -53,26 +94,96 @@ p.light {
 	height: 100%;
 }
 
-.flex-center {
+.icon-input, .search-input {
 	display: flex;
-	justify-content: center;
+	align-items: center;
+	position: relative;
 }
 
-.flex-between {
-	display: flex;
-	justify-content: space-between;
+.gradient-button {
+	width: 100%;
+	background: linear-gradient(234.79deg, #001aff 37.73%, #4f95ff 118.69%);
+	border: none;
+	color: white;
+	padding: 17px 20px;
+	font-size: 18px;
+	border-radius: 10px;
+	transition: all 0.1s ease;
+}
+
+.gradient-button:hover {
+	opacity: 0.9;
+}
+
+.cursor-button {
+	background: none;
+	color: white;
+	border: none;
+	font-size: 18px;
+}
+
+button {
+	cursor: pointer;
+}
+.gradient-button:disabled, button:disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
+.delay-show-1s {
+    opacity: 0; 
+    animation: fadeIn 0.5s ease-in-out forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.icon-input input {
+	padding-right: 112px;
+}
+
+.search-input input {
+	padding-left: 55px;
+	padding-right: 55px;
+}
+
+.icon-input span {
+	position: absolute;
+	right: 0;
+	width: 100px;
+}
+
+.search-input div:first-child {
+	position: absolute;
+	left: 0;
+	width: 100px;
 }
 
 .field-section {
-	margin: 18px 18px 38px 18px;
+	padding: 18px 16px 38px 18px;
 }
 
 .field-section-heading {
 	margin: 24px 0;
 }
 
+.field-value {
+	color: #BDFF02; font-weight: 600;
+} 
+
+.field-value-alt {
+	font-size: 16px; font-weight: 600;
+}
+
 .field-section-title {
-	font-size: 24px; font-weight: 500;
+	font-size: 18px; font-weight: 600;
 }
 
 .field-icon {
@@ -87,9 +198,57 @@ p.light {
 	margin: 16px 0;
 }
 .field-title {
+	color: #ddd;
 	margin-bottom: 9px;
 }
 
-.field-value {
-	color: #BDFF02
-} 
+.field-wrap {
+	flex-wrap: wrap;
+}
+
+.input-error {
+	font-size: 14px;
+	color: red; 
+	padding-left: 1px;
+}
+
+.max-button {
+	min-width: 28px;
+}
+
+.field-section-alt {
+	padding: 21px 14px 21px 21px;
+	background: #1E233C;
+}
+
+input.large {
+	background: #1E233C;
+	border: 1px #353B5C solid;
+	border-radius: 8px;
+	height: 65px;
+	font-size: 24px;
+	font-weight: 400;
+	color: white;
+	padding: 12px 14px;
+	width: 100%;
+	margin: 5px 0;
+}
+
+input, textarea {
+    background: #1E233C;
+    border: 1px #353B5C solid;
+    border-radius: 8px;
+    height: 51px;
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    padding: 12px 14px;
+    width: 100%;
+    margin: 5px 0;
+    transition: border-color 0.25s ease-in-out; 
+}
+
+.card-header-background {
+	background: no-repeat url('https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-silk-background.png');
+	background-size: 100% 560px;
+}
