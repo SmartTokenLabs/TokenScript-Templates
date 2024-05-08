@@ -1,14 +1,10 @@
 <script lang="ts">
-	import SlnLogo from '../components/SlnLogo.svelte';
-	import SlnTokenLogo from '../components/SlnTokenLogo.svelte';
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	import { formatWithByDecimalPlaces } from '../lib/utils';
-	import Dollar from '../components/Dollar.svelte';
-	import SlnLogo2 from '../components/SLNLogo2.svelte';
-	import EthLogo from '../components/EthLogo.svelte';
+	import SlnLogo from '../components/SLNLogo.svelte';
 	let token: ITokenContextData;
 	let tokenStats: any;
 	let loading = true;
@@ -61,7 +57,10 @@
 					<SlnLogo />
 				</div>
 				<div class="flex items-center justify-center my-12">
-					<SlnTokenLogo />
+					<img
+						alt="sln logo"
+						src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/SlnTokenLogo.svg"
+					/>
 				</div>
 				<div class="grid grid-cols-2 gap-4 my-12">
 					<div class="text-center">
@@ -91,9 +90,10 @@
 			<div class="p-6" style="background-color: #1E233C;">
 				<div class="flex items-center justify-between">
 					<div class="text-lg font-semibold">Market Value</div>
-					<div class="w-6 h-6">
-						<Dollar />
-					</div>
+					<img
+						alt="dollar icon"
+						src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/Dollar.svg"
+					/>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Ethereum</div>
@@ -114,7 +114,10 @@
 				<div class="flex items-center justify-between">
 					<div class="text-lg font-semibold">Token</div>
 					<div class="w-6 h-6">
-						<SlnLogo2 />
+						<img
+							alt="sln logo"
+							src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/SLNLogo2.svg"
+						/>
 					</div>
 				</div>
 				<div class="mt-4">
@@ -133,7 +136,11 @@
 					<div class="text-sm text-gray-400">Chain</div>
 					<div class="flex items-center">
 						<div class="w-6 h-6">
-							<EthLogo />
+							<img
+								style="height: 24px; width: 17px; position: relative; top: -3px;"
+								alt="Ethereum logo"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/EthLogo.svg"
+							/>
 						</div>
 						<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
 							Ethereum Mainnet

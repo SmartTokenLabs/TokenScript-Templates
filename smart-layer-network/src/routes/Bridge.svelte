@@ -124,8 +124,10 @@
 					target="_blank"
 				>
 					<div class="flex items-center">
-						<div style="padding-top: 9px">
-							<Web3Logo web3LogoRef={bridge.logo} />
+						<div style="padding-top: 9px;">
+							<div style="width: 32px;">
+								<Web3Logo web3LogoRef={bridge.logo} />
+							</div>
 							<div style="margin-top: 9px;">
 								<div class="field-title text-white text-3xl">{bridge.title}</div>
 								<div class="field-title text-white text-xl">{bridge.subTitle}</div>

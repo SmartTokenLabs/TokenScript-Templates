@@ -1,69 +1,101 @@
 <script lang="ts">
-	import Arbitrum from '../components/Arbitrum.svelte';
-	import Linea from '../components/Linea.svelte';
-	import Base from '../components/Base.svelte';
-	import Scroll from '../components/Scroll.svelte';
-	import Polygon from '../components/Polygon.svelte';
-	import Optimism from '../components/Optimism.svelte';
-	import PortalBridge from '../components/PortalBridge.svelte';
-	import BitTrue from '../components/BitTrue.svelte';
-	import CoinOne from './CoinOne.svelte';
-	import OKX from '../components/OKX.svelte';
-	import CryptoCOM from '../components/CryptoCOM.svelte';
-	import DragonSwap from '../components/DragonSwap.svelte';
-	import UniSwap from '../components/UniSwap.svelte';
-	import GateIO from '../components/GateIO.svelte';
-	import Kucoin from '../components/Kucoin.svelte';
-	import ZkSync from './ZkSync.svelte';
-
 	export let web3LogoRef: string;
 </script>
 
 {#if web3LogoRef === 'GateIO'}
-	<GateIO />
+	<img
+		alt="GateIO logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/GateIO.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'ZkSync'}
-	<ZkSync />
+	<img
+		alt="ZkSync logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ZkSync.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Kucoin'}
-	<Kucoin />
+	<img
+		alt="Kucoin logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Kucoin.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'BitTrue'}
-	<BitTrue />
+	<img
+		alt="BitTrue logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/BitTrue.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'DragonSwap'}
-	<DragonSwap />
+	<img
+		alt="DragonSwap logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/DragonSwap.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'UniSwap'}
-	<UniSwap />
+	<img
+		style="width: 32px; height: 32px;"
+		alt="UniSwap logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/UniSwap.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'CoinOne'}
-	<CoinOne />
+	<img
+		alt="CoinOne logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/CoinOne.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'OKX'}
-	<OKX />
+	<img
+		alt="OKX logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/OKX.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'CryptoCOM'}
-	<CryptoCOM />
+	<img
+		alt="Crypto.com logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/CryptoCOM.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Arbitrum'}
-	<Arbitrum />
+	<img
+		alt="Arbitrum logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Arbitrum.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'PortalBridge'}
-	<PortalBridge />
+	<img
+		alt="PortalBridge logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/PortalBridge.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Optimism'}
-	<Optimism />
+	<img
+		alt="Optimism logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Optimism.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Polygon'}
-	<Polygon />
+	<img
+		alt="Polygon logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Linea'}
-	<Linea />
+	<img
+		alt="Linea logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Linea.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Base'}
-	<Base />
+	<img
+		alt="Base logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Base.svg"
+	/>
 {/if}
 {#if web3LogoRef === 'Scroll'}
-	<Scroll />
+	<img
+		alt="Scroll logo"
+		src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Scroll.svg"
+	/>
 {/if}

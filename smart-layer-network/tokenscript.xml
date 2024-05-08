@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
-		  xmlns:xml="http://www.w3.org/XML/1998/namespace"
-		  xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd"
-		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		  xmlns:ethereum="urn:ethereum:constantinople"
-		  name="smart-token-layer">
+<ts:token 
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xmlns:xhmtl="http://www.w3.org/1999/xhtml"
+					name="smart-token-layer">
 	<ts:label>
 		<ts:plurals xml:lang="en">
 			<ts:string quantity="one">Smart Layer Network</ts:string>
@@ -14,17 +16,17 @@
 	<ts:meta>
 		<ts:description xml:lang="en">Smart Layer Network Official Tokenscript</ts:description>
 		<ts:aboutUrl xml:lang="en">https://www.smartlayer.network/</ts:aboutUrl>
-		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/sln-tokenscript-cover.png</ts:imageUrl>
+		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-front-facing-logo-ts.webp</ts:iconUrl>
+		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-tokenscript-cover.png</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
-		<!-- <ts:address network="11155111">0x0404ab3994ED48C300cE219546f757AD34484Dc7</ts:address> -->
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
 		<ts:ethereum contract="Token"/>
 	</ts:origins>
-
+	<ts:style></ts:style>
 	<ts:cards>
 		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
 			<ts:include type="html" src="./dist/index.html"/>

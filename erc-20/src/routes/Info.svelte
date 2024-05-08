@@ -4,7 +4,6 @@
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	import { formatWithByDecimalPlaces, chainConfig } from '../lib/utils';
-	import Dollar from '../components/Dollar.svelte';
 	let token: ITokenContextData;
 	let tokenStats: any;
 	let loading = true;
@@ -81,7 +80,10 @@
 				<div class="flex items-center justify-between">
 					<div class="text-lg font-semibold">Market Value</div>
 					<div class="w-6 h-6">
-						<Dollar />
+						<img
+							alt="dollar icon"
+							src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/Dollar.svg"
+						/>
 					</div>
 				</div>
 				<div class="mt-4">

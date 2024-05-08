@@ -2,7 +2,6 @@
 	import context from '../lib/context';
 	import Loader from '../components/Loader.svelte';
 	import Web3Logo from '../components/Web3Logo.svelte';
-	import Badge from '../components/Badge.svelte';
 	import CardArrow from '../components/CardArrow.svelte';
 	import MagnifyingGlass from '../components/MagnifyingGlass.svelte';
 	import Close from '../components/Close.svelte';
@@ -122,8 +121,10 @@
 					target="_blank"
 				>
 					<div style="display: flex; align-items: center" class="">
-						<div style="padding-top: 9px">
-							<Web3Logo web3LogoRef={swap.logo} />
+						<div style="padding-top: 9px;">
+							<div style="width: 32px;">
+								<Web3Logo web3LogoRef={swap.logo} />
+							</div>
 							<div class="flex justify-center items-center" style="margin-top: 9px;">
 								<div class="field-title" style="font-size: 24px; color: white;">{swap.title}</div>
 								<div style="margin-left: 12px; margin-bottom: 12px;">
