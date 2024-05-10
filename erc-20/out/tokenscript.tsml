@@ -1,8 +1,8 @@
-<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="smart-token-layer" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
+<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="erc-20-tokenscript-template" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">Smart Layer Network</ts:string>
-			<ts:string quantity="other">Smart Layer Network</ts:string>
+			<ts:string quantity="one">ERC-20 TokenScript Template</ts:string>
+			<ts:string quantity="other">ERC-20 TokenScript Template</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>
@@ -11,8 +11,8 @@
 		<ts:iconUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
+		<ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address>
 		
-		<ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address>
 	</ts:contract>
 	<ts:origins>
 		
@@ -1406,7 +1406,7 @@ function create_if_block_10(ctx) {
     }
   };
 }
-function create_if_block_9$1(ctx) {
+function create_if_block_9(ctx) {
   let img;
   let img_src_value;
   return {
@@ -1649,7 +1649,7 @@ function create_fragment$9(ctx) {
   );
   let if_block6 = (
     /*web3LogoRef*/
-    ctx[0] === "CoinOne" &amp;&amp; create_if_block_9$1()
+    ctx[0] === "CoinOne" &amp;&amp; create_if_block_9()
   );
   let if_block7 = (
     /*web3LogoRef*/
@@ -1886,7 +1886,7 @@ function create_fragment$9(ctx) {
         if (if_block6)
           ;
         else {
-          if_block6 = create_if_block_9$1();
+          if_block6 = create_if_block_9();
           if_block6.c();
           if_block6.m(t6.parentNode, t6);
         }
@@ -22352,17 +22352,6 @@ function create_if_block_4(ctx) {
   );
   let t9;
   let t10;
-  let show_if_2 = (
-    /*receivingAmountViewValue*/
-    ctx[4] &amp;&amp; Number(
-      /*receivingAmountViewValue*/
-      ctx[4]
-    ) &gt; Number(
-      /*tokenAmount*/
-      ctx[1]
-    )
-  );
-  let t11;
   let show_if_1 = (
     /*receivingAmountViewValue*/
     ctx[4] &amp;&amp; Number(
@@ -22373,10 +22362,10 @@ function create_if_block_4(ctx) {
       ctx[1]
     )
   );
-  let t12;
+  let t11;
   let p;
-  let t13;
-  let t14_value = (
+  let t12;
+  let t13_value = (
     /*tokenAmount*/
     ctx[1] ? formatWithByDecimalPlaces(Number(
       /*tokenAmount*/
@@ -22384,13 +22373,13 @@ function create_if_block_4(ctx) {
     ), 2) + " $" + /*token*/
     ctx[0].symbol : "0.00"
   );
+  let t13;
   let t14;
-  let t15;
   let div6;
-  let t17;
+  let t16;
   let textarea;
+  let t17;
   let t18;
-  let t19;
   let show_if = (
     /*loading*/
     ctx[2] === false &amp;&amp; /*receivingAccountAddress*/
@@ -22399,24 +22388,23 @@ function create_if_block_4(ctx) {
       ctx[3]
     )
   );
+  let t19;
   let t20;
-  let t21;
   let div9;
   let button1;
-  let t22;
+  let t21;
   let mounted;
   let dispose;
-  let if_block0 = show_if_2 &amp;&amp; create_if_block_9();
-  let if_block1 = show_if_1 &amp;&amp; create_if_block_8();
-  let if_block2 = (
+  let if_block0 = show_if_1 &amp;&amp; create_if_block_8();
+  let if_block1 = (
     /*loading*/
     ctx[2] === false &amp;&amp; /*ensNameNotFound*/
     ctx[9] === false &amp;&amp; /*receivingAccountAddressViewValue*/
     ctx[8] !== /*receivingAccountAddress*/
     ctx[3] &amp;&amp; create_if_block_7(ctx)
   );
-  let if_block3 = show_if &amp;&amp; create_if_block_6();
-  let if_block4 = (
+  let if_block2 = show_if &amp;&amp; create_if_block_6();
+  let if_block3 = (
     /*ensNameNotFound*/
     ctx[9] &amp;&amp; create_if_block_5()
   );
@@ -22447,17 +22435,17 @@ function create_if_block_4(ctx) {
       if (if_block0)
         if_block0.c();
       t11 = space();
-      if (if_block1)
-        if_block1.c();
-      t12 = space();
       p = element("p");
-      t13 = text("Your Balance ");
-      t14 = text(t14_value);
-      t15 = space();
+      t12 = text("Your Balance ");
+      t13 = text(t13_value);
+      t14 = space();
       div6 = element("div");
       div6.textContent = "Recipient address";
-      t17 = space();
+      t16 = space();
       textarea = element("textarea");
+      t17 = space();
+      if (if_block1)
+        if_block1.c();
       t18 = space();
       if (if_block2)
         if_block2.c();
@@ -22465,12 +22453,9 @@ function create_if_block_4(ctx) {
       if (if_block3)
         if_block3.c();
       t20 = space();
-      if (if_block4)
-        if_block4.c();
-      t21 = space();
       div9 = element("div");
       button1 = element("button");
-      t22 = text("Review");
+      t21 = text("Review");
       attr(div0, "class", "field-section-title");
       set_style(div0, "font-size", "24px");
       attr(div1, "class", "field-section");
@@ -22539,34 +22524,31 @@ function create_if_block_4(ctx) {
       if (if_block0)
         if_block0.m(div7, null);
       append(div7, t11);
-      if (if_block1)
-        if_block1.m(div7, null);
-      append(div7, t12);
       append(div7, p);
+      append(p, t12);
       append(p, t13);
-      append(p, t14);
-      append(div7, t15);
+      append(div7, t14);
       append(div7, div6);
-      append(div7, t17);
+      append(div7, t16);
       append(div7, textarea);
       set_input_value(
         textarea,
         /*receivingAccountAddressViewValue*/
         ctx[8]
       );
+      append(div7, t17);
+      if (if_block1)
+        if_block1.m(div7, null);
       append(div7, t18);
       if (if_block2)
         if_block2.m(div7, null);
       append(div7, t19);
       if (if_block3)
         if_block3.m(div7, null);
-      append(div7, t20);
-      if (if_block4)
-        if_block4.m(div7, null);
-      insert(target, t21, anchor);
+      insert(target, t20, anchor);
       insert(target, div9, anchor);
       append(div9, button1);
-      append(button1, t22);
+      append(button1, t21);
       if (!mounted) {
         dispose = [
           listen(
@@ -22636,28 +22618,6 @@ function create_if_block_4(ctx) {
         set_data(t9, t9_value);
       if (dirty &amp; /*receivingAmountViewValue, tokenAmount*/
       18)
-        show_if_2 = /*receivingAmountViewValue*/
-        ctx2[4] &amp;&amp; Number(
-          /*receivingAmountViewValue*/
-          ctx2[4]
-        ) &gt; Number(
-          /*tokenAmount*/
-          ctx2[1]
-        );
-      if (show_if_2) {
-        if (if_block0)
-          ;
-        else {
-          if_block0 = create_if_block_9();
-          if_block0.c();
-          if_block0.m(div7, t11);
-        }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
-      }
-      if (dirty &amp; /*receivingAmountViewValue, tokenAmount*/
-      18)
         show_if_1 = /*receivingAmountViewValue*/
         ctx2[4] &amp;&amp; Number(
           /*receivingAmountViewValue*/
@@ -22667,25 +22627,25 @@ function create_if_block_4(ctx) {
           ctx2[1]
         );
       if (show_if_1) {
-        if (if_block1)
+        if (if_block0)
           ;
         else {
-          if_block1 = create_if_block_8();
-          if_block1.c();
-          if_block1.m(div7, t12);
+          if_block0 = create_if_block_8();
+          if_block0.c();
+          if_block0.m(div7, t11);
         }
-      } else if (if_block1) {
-        if_block1.d(1);
-        if_block1 = null;
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
       }
       if (dirty &amp; /*tokenAmount, token*/
-      3 &amp;&amp; t14_value !== (t14_value = /*tokenAmount*/
+      3 &amp;&amp; t13_value !== (t13_value = /*tokenAmount*/
       ctx2[1] ? formatWithByDecimalPlaces(Number(
         /*tokenAmount*/
         ctx2[1]
       ), 2) + " $" + /*token*/
       ctx2[0].symbol : "0.00"))
-        set_data(t14, t14_value);
+        set_data(t13, t13_value);
       if (dirty &amp; /*receivingAccountAddressViewValue*/
       256) {
         set_input_value(
@@ -22701,16 +22661,16 @@ function create_if_block_4(ctx) {
         ctx2[8] !== /*receivingAccountAddress*/
         ctx2[3]
       ) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
         } else {
-          if_block2 = create_if_block_7(ctx2);
-          if_block2.c();
-          if_block2.m(div7, t19);
+          if_block1 = create_if_block_7(ctx2);
+          if_block1.c();
+          if_block1.m(div7, t18);
         }
-      } else if (if_block2) {
-        if_block2.d(1);
-        if_block2 = null;
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
       }
       if (dirty &amp; /*loading, receivingAccountAddress*/
       12)
@@ -22721,31 +22681,31 @@ function create_if_block_4(ctx) {
           ctx2[3]
         );
       if (show_if) {
-        if (if_block3)
+        if (if_block2)
           ;
         else {
-          if_block3 = create_if_block_6();
-          if_block3.c();
-          if_block3.m(div7, t20);
+          if_block2 = create_if_block_6();
+          if_block2.c();
+          if_block2.m(div7, t19);
         }
-      } else if (if_block3) {
-        if_block3.d(1);
-        if_block3 = null;
+      } else if (if_block2) {
+        if_block2.d(1);
+        if_block2 = null;
       }
       if (
         /*ensNameNotFound*/
         ctx2[9]
       ) {
-        if (if_block4)
+        if (if_block3)
           ;
         else {
-          if_block4 = create_if_block_5();
-          if_block4.c();
-          if_block4.m(div7, null);
+          if_block3 = create_if_block_5();
+          if_block3.c();
+          if_block3.m(div7, null);
         }
-      } else if (if_block4) {
-        if_block4.d(1);
-        if_block4 = null;
+      } else if (if_block3) {
+        if_block3.d(1);
+        if_block3 = null;
       }
       if (dirty &amp; /*formIsInValid*/
       128) {
@@ -22756,7 +22716,7 @@ function create_if_block_4(ctx) {
     d(detaching) {
       if (detaching) {
         detach(div8);
-        detach(t21);
+        detach(t20);
         detach(div9);
       }
       if (if_block0)
@@ -22767,28 +22727,8 @@ function create_if_block_4(ctx) {
         if_block2.d();
       if (if_block3)
         if_block3.d();
-      if (if_block4)
-        if_block4.d();
       mounted = false;
       run_all(dispose);
-    }
-  };
-}
-function create_if_block_9(ctx) {
-  let div;
-  return {
-    c() {
-      div = element("div");
-      div.textContent = "Not enough funds.";
-      attr(div, "class", "input-error");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
     }
   };
 }
@@ -24500,7 +24440,7 @@ input, textarea {
 
 	<ts:attribute name="sendingAccountAddress">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">sending account address</ts:string>
@@ -24512,7 +24452,7 @@ input, textarea {
 	
 	<ts:attribute name="receivingAccountAddress">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">receiving account address</ts:string>
@@ -24524,7 +24464,7 @@ input, textarea {
 
 	<ts:attribute name="receivingAmount">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">receiving amount</ts:string>

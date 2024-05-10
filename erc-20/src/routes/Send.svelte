@@ -175,9 +175,6 @@
 					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
 						<div class="input-error">Not enough funds.</div>
 					{/if}
-					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
-						<div class="input-error">Not enough funds.</div>
-					{/if}
 					<p style="font-size: 16px; margin: 12px 0 48px 0">
 						Your Balance {tokenAmount
 							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $' + token.symbol
