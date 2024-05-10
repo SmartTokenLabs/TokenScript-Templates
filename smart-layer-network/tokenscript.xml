@@ -75,8 +75,10 @@
 		</ts:card>
 	</ts:cards>
 
-
 	<ts:attribute name="sendingAccountAddress">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">sending account address</ts:string>
 		</ts:label>
@@ -86,6 +88,9 @@
 	</ts:attribute>
 	
 	<ts:attribute name="receivingAccountAddress">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">receiving account address</ts:string>
 		</ts:label>
@@ -95,6 +100,9 @@
 	</ts:attribute>
 
 	<ts:attribute name="receivingAmount">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">receiving amount</ts:string>
 		</ts:label>
