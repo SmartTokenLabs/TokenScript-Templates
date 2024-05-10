@@ -1,3 +1,5 @@
+import { ethers } from 'ethers';
+
 export function formatWithByDecimalPlaces(num: number, decimalPlaces = 2) {
   return num.toFixed(decimalPlaces);
 }
@@ -10,6 +12,12 @@ export function previewAddr(inputString: string) {
     const lastChars = inputString.substring(inputString.length - 4);
     return `${firstChars}...${lastChars}`;
   }
+}
+
+export function formatTokenBalance(balance: string | number | undefined, decimals: number) {
+  if (!balance) return 0;
+  const _decimals = decimals ?? 18;
+  return ethers.formatUnits(balance, _decimals);
 }
 
 export async function fetchENSImage(ensName: string) {

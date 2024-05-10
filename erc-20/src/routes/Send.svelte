@@ -3,7 +3,12 @@
 	import Loader from '../components/Loader.svelte';
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
-	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
+	import {
+		formatWithByDecimalPlaces,
+		previewAddr,
+		fetchENSImage,
+		formatTokenBalance
+	} from '../lib/utils';
 
 	let token: ITokenContextData;
 	let tokenAmount: number | string = 0;
@@ -21,11 +26,8 @@
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 		token = value.token;
-		// @ts-ignore
-		if (token._count && Number(ethers.formatEther(token._count)) > 0.000000000000000001) {
-			tokenAmount = ethers.formatEther(token._count);
-		}
-
+		const balance = formatTokenBalance(token?._count, token?.decimals);
+		if (balance !== 0) tokenAmount = balance;
 		loading = false;
 	});
 
@@ -173,12 +175,9 @@
 					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
 						<div class="input-error">Not enough funds.</div>
 					{/if}
-					{#if receivingAmountViewValue && Number(receivingAmountViewValue) > Number(tokenAmount)}
-						<div class="input-error">Not enough funds.</div>
-					{/if}
 					<p style="font-size: 16px; margin: 12px 0 48px 0">
 						Your Balance {tokenAmount
-							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + '$' + token.symbol
+							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $' + token.symbol
 							: '0.00'}
 					</p>
 					<div class="field-title">Recipient address</div>
@@ -257,7 +256,7 @@
 					<div class="field-title">Amount</div>
 					<div class="field-value-alt">
 						{receivingAmountViewValue
-							? formatNumber(receivingAmountViewValue) + '$' + token.symbol
+							? formatNumber(receivingAmountViewValue) + ' $' + token.symbol
 							: '-'}
 					</div>
 				</div>
