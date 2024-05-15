@@ -68,6 +68,29 @@
 						<div class="text-lg font-semibold field-value">
 							{tokenBalance ? formatWithByDecimalPlaces(Number(tokenBalance), 2) + '  $SLN' : '-'}
 						</div>
+						{#if token.chainId === 1}
+							<div class="field-value-alt flex justify-center mt-1">
+								<img
+									style="height: 18px;"
+									alt="chain"
+									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+								/>
+							</div>
+						{/if}
+						{#if token.chainId === 137}
+							<div class="field-value-alt flex justify-center mt-1">
+								<img
+									style="height: 18px; margin-right: 7px"
+									alt="chain"
+									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+								/>
+								<img
+									style="height: 18px"
+									alt="chain"
+									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
+								/>
+							</div>
+						{/if}
 					</div>
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Staking</div>
@@ -135,16 +158,39 @@
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Chain</div>
 					<div class="flex items-center">
-						<div class="w-6 h-6">
-							<img
-								style="height: 24px; width: 17px; position: relative; top: -3px;"
-								alt="Ethereum logo"
-								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/EthLogo.svg"
-							/>
-						</div>
-						<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
-							Ethereum Mainnet
-						</div>
+						{#if token.chainId === 1}
+							<div class="flex">
+								<div class="field-value-alt flex">
+									<img
+										style="height: 24px; width: 17px; margin-top: 2px;"
+										alt="chain"
+										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+									/>
+								</div>
+								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+									Ethereum Mainnet
+								</div>
+							</div>
+						{/if}
+						{#if token.chainId === 137}
+							<div class="flex">
+								<div class="field-value-alt flex">
+									<img
+										style="height: 24px; width: 17px; margin-right: 7px; margin-top: 2px;"
+										alt="chain"
+										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+									/>
+									<img
+										style="height: 24px; width: 17px; margin-top: 2px;"
+										alt="chain"
+										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
+									/>
+								</div>
+								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+									Ethereum Polygon
+								</div>
+							</div>
+						{/if}
 					</div>
 				</div>
 				<div class="mt-4">

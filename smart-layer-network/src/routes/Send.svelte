@@ -267,6 +267,32 @@
 						{receivingAmountViewValue ? formatNumber(receivingAmountViewValue) + ' $SLN' : '-'}
 					</div>
 				</div>
+				<div class="field-container">
+					<div class="field-title">Chain</div>
+					{#if token.chainId === 1}
+						<div class="field-value-alt flex">
+							<img
+								style="height: 24px;"
+								alt="chain"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+							/>
+						</div>
+					{/if}
+					{#if token.chainId === 137}
+						<div class="field-value-alt flex">
+							<img
+								style="height: 24px; margin-right: 7px"
+								alt="chain"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+							/>
+							<img
+								style="height: 24px"
+								alt="chain"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
+							/>
+						</div>
+					{/if}
+				</div>
 			</div>
 			<div class="field-section" style="width: 100%; position: fixed; bottom: 0;">
 				<!-- svelte-ignore missing-declaration -->
