@@ -17,7 +17,13 @@
 		<ts:iconUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address>
+		<!-- chainlink  -->
+		<!-- <ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address> -->
+		<!-- USDC  -->
+		<ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address>
+		<!-- DAI -->
+		<!-- <ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address> -->
+		<!-- USDT -->
 		<!-- <ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address> -->
 	</ts:contract>
 	<ts:origins>
