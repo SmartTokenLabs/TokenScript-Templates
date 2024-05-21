@@ -20,7 +20,8 @@
 		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-tokenscript-cover.png</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
+		<!-- <ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address> -->
+		<ts:address network="137">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->

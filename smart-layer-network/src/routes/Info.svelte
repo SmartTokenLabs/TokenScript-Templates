@@ -27,8 +27,9 @@
 	});
 
 	async function setTokenPriceData() {
+		const networkStr = token.chainId === 137 ? 'polygon' : 'eth';
 		const tokenStatsRequest = await fetch(
-			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=0xdb82c0d91e057e05600c8f8dc836beb41da6df14&chain=eth`
+			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=0xdb82c0d91e057e05600c8f8dc836beb41da6df14&chain=${networkStr}`
 		);
 		tokenStats = await tokenStatsRequest.json();
 		if (tokenStats.value && tokenStats.usdPrice) {
@@ -167,27 +168,16 @@
 										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
 									/>
 								</div>
-								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-									Ethereum Mainnet
-								</div>
 							</div>
 						{/if}
 						{#if token.chainId === 137}
 							<div class="flex">
 								<div class="field-value-alt flex">
 									<img
-										style="height: 24px; width: 17px; margin-right: 7px; margin-top: 2px;"
-										alt="chain"
-										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
-									/>
-									<img
 										style="height: 24px; width: 17px; margin-top: 2px;"
 										alt="chain"
 										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
 									/>
-								</div>
-								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-									Ethereum Polygon
 								</div>
 							</div>
 						{/if}
