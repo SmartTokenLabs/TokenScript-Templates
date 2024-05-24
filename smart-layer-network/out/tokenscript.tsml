@@ -12,7 +12,8 @@
 		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-tokenscript-cover.png</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<ts:address network="1">0xdb82c0d91e057e05600c8f8dc836beb41da6df14</ts:address>
+		
+		<ts:address network="137">0x1fe78e67ad10ba3a9583e672cac0480737d1b9f7</ts:address>
 	</ts:contract>
 	<ts:origins>
 		
