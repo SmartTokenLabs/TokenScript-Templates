@@ -109,19 +109,6 @@
 		</ts:origins>
 	</ts:attribute>
 
-	<ts:attribute name="tokenId">
-		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
-		</ts:type>
-		<ts:origins>
-			<ethereum:call function="tokenId" contract="Token" as="uint">
-				<ts:data>
-					<ts:uint256 ref="tokenId"/>
-				</ts:data>
-			</ethereum:call>
-		</ts:origins>
-	</ts:attribute>
-
 	<ts:attribute name="numberOfTokens">
 		<ts:type>
 			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
