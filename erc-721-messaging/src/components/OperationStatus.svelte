@@ -1,26 +1,39 @@
 <script lang="ts">
-	export let result: boolean;
-	export let message: string;
-	// let show
+
+	import { notify } from '../lib/storage';
+	$: {
+		if ($notify.message){
+			setTimeout(()=>{
+				$notify = {message:"", status: true};
+			}, 5000)
+		}
+	}
 </script>
 
-{#if message}
-	<div class="box {result ? 'success' : 'error'}">
-		{message}
-	</div>
-{/if}
+<div class="box {$notify.status ? 'success' : 'error'} {$notify.message ? "active" : ""}">
+	{$notify.message}
+</div>
 
-<style>
+<style lang=scss>
 	.box {
 		background-color: #eee;
 		padding: 10px;
-		margin-top: 10px;
 		word-wrap: break-word;
-	}
-	.box.success {
-		color: green;
-	}
-	.box.error {
-		color: red;
+		position: absolute;
+		right: 30px;
+		top: 15px;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s;
+		max-width: calc(100% - 60px);
+		&.active {
+			opacity: 1;
+		}
+		&.success {
+			color: green;
+		}
+		&.error {
+			color: red;
+		}
 	}
 </style>

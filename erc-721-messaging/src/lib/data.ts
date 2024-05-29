@@ -14,15 +14,13 @@ export async function lookupEnsName(address: string) {
 		}
 	); // TODO: get mainnet RPC URL via engine
 
-	return await provider.lookupAddress(address);
+	return await provider.lookupAddress(address) || "";
 }
 
 export interface CatListItem {
 	tokenId: string;
 	tokenUri: string;
 	owner: string;
-	level: number;
-	canPlay: boolean;
 }
 
 export async function getContract(token: Token) {

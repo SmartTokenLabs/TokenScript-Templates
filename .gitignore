@@ -15,3 +15,5 @@ test-project
 *.pub
 *.pem
 *.DS_Store
+**/artifacts
+**/typechain-types

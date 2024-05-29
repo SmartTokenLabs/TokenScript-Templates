@@ -23,14 +23,12 @@
 	}
 </script>
 
-<div class="message-bubble {message.sendingTokenId == senderTokenId ? 'sender' : ''}">
+<div class="message-bubble {message.sendingTokenId == senderTokenId ? 'sender' : ''} ">
 	<div class="message-content">
-		{message.messageDecoded ? message.messageDecoded : message.message}({message.encrypted
-			? 'enc'
-			: 'raw'})
+		{message.messageDecoded ? message.messageDecoded : message.message}
 	</div>
 	<small class="message-meta">
-		{message.sendingTokenId == senderTokenId && message.read ? '✓ (seen) ' : ''}
+		{message.sendingTokenId == senderTokenId && (message.read || message.openedAt) ? '✓ (seen) ' : ''}
 		{dateString}
 	</small>
 </div>
@@ -40,27 +38,37 @@
 		margin: 5px;
 		border-radius: 10px;
 		width: 80%;
-		background: #70ffa1;
+		background: #EEEEEE;
+		border-radius: 0px 8px 8px 8px;
 		color: #000;
-	}
+	
 
-	.message-content {
-		padding: 6px;
-		font-size: 14px;
-		text-align: left;
-		word-break: break-all;
-	}
+		.message-content {
+			padding: 6px;
+			font-size: 14px;
+			text-align: left;
+			word-break: break-all;
+		}
 
-	.message-meta {
-		padding: 0 6px 6px;
-		font-size: 11px;
-		text-align: right;
-		display: block;
-	}
+		.message-meta {
+			padding: 0 6px 6px;
+			font-size: 11px;
+			text-align: right;
+			display: block;
+			color: #545454;
+			
+		}
 
-	.message-bubble.sender {
-		align-self: end;
-		background: #0084ff;
-		color: #fff;
+		&.sender {
+			align-self: end;
+			border-radius: 8px 0px 8px 8px;
+		}
+		&.new, &.sender  {
+			background: linear-gradient(234.79deg, #001AFF 37.73%, #4F95FF 118.69%);
+			color: #fff;
+			.message-meta {
+				color: #cecece;
+			}
+		}
 	}
 </style>

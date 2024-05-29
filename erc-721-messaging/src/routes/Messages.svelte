@@ -1,19 +1,18 @@
 <script lang="ts">
-	// @ts-ignore
 
 	import context from '../lib/context';
 	import { showLoader } from '../lib/storage';
 
-	import NftIcon from '../components/NftIcon.svelte';
-	import OwnerAddress from '../components/OwnerAddress.svelte';
+
+	import NftCard from '../components/NftCard.svelte';
 	import MessagePopup from '../components/MessagePopup.svelte';
-	import Loader from '../components/Loader.svelte';
-	import { ThreadItem, Token } from '../lib/types';
+	import { ThreadItem, Token, NftCardTypes } from '../lib/types';
 
 	import { signMessage } from '../lib/data';
 	import { MESSAGING_GENERATOR, MESSAGING_PRIME } from '../lib/constants';
 	import { DH } from '../lib/dh';
 	import { hexStringToUint8 } from '../lib/helpers';
+	
 
 	let token: Token;
 	let contract;
@@ -27,10 +26,27 @@
 	let derivedPrivateKey: string;
 	let secret: string;
 
+	let adminChatNft:ThreadItem;
+
 	const loadThreads = async () => {
-		showLoader.set(true);
 		try {
 			client = await context.getMessageClient();
+			const adminUnread = await client.getBroadcastMessageCount();
+			if (adminUnread && adminUnread.hasOwnProperty("count")){
+				adminChatNft = {
+					contract: token.contractAddress,
+					unread: adminUnread.count,
+					tokenUri: token.contractURI,
+					owner: "Admin account",
+					tokenId: "admin",
+					wrongOwner: false,
+					tokenIdName: token.contractName || "ERC721 Contract",
+					friendsSharedKey: "", 
+					yourSharedKey: ""
+				}
+			}
+
+			adminChatNft.unread = adminUnread.count
 			const res = await client.getNewMessages();
 
 			const friendsList = await client.getApprovedFriend();
@@ -79,13 +95,12 @@
 	};
 
 	context.data.subscribe(async (value) => {
-		if (!value.token) return;
-
+		if (!value.token) return;	
 		token = value.token;
 		contract = value.contract;
-
+		$showLoader = true;
 		await loadThreads();
-
+		$showLoader = false;
 		reloadTimer = setInterval(loadThreads, 60000);
 	});
 	context.messagingKey.subscribe((value) => {
@@ -159,35 +174,35 @@
 
 		friend.wrongOwner || (selectedFriendId = friend.tokenId);
 	}
+
+	function adminSelected(){
+		selectedFriendId = "admin"
+	}
 </script>
 
-<h3>Messages</h3>
+<h3 class="text-center">Messages</h3>
+<div class="text-center">Send messages to other NFT owners.</div>
+
+
 <div id="thread-list">
+	{#if adminChatNft}
+	<NftCard nft={adminChatNft}  
+		accountType={NftCardTypes.Admin}
+		on:click={adminSelected}
+		on:keypress={adminSelected}/>
+	{/if}
 	{#if threadsList}
 		{#if threadsList.length}
 			<div class="cat-list">
 				{#each threadsList as friend}
-					<div
-						role="button"
-						tabindex="0"
-						class="cat-list-item {friend.wrongOwner ? 'failed' : ''} {friend.friendsSharedKey
-							? 'encrypted'
-							: 'non_encrypted'}"
-						on:click={() => {
-							friendSelected(friend);
-						}}
-						on:keypress={() => {
-							friendSelected(friend);
-						}}
-					>
-						<NftIcon tokenId={friend.tokenId} />
-						<div class="cat-list-info">
-							<h4>NFT#{friend.tokenId} {friend.wrongOwner ? '(Owner changed)' : ''}</h4>
-							<span style="position: absolute; right: 10px; top: 10px;">{friend.unread} Unread</span
-							>
-							<OwnerAddress address={friend.owner} />
-						</div>
-					</div>
+					<NftCard nft={friend}
+					accountType={NftCardTypes.Messages}
+					on:click={() => {
+						friendSelected(friend);
+					}}
+					on:keypress={() => {
+						friendSelected(friend);
+					}}/>
 				{/each}
 			</div>
 		{:else if !$showLoader}
@@ -197,55 +212,31 @@
 				NFT owner approve your friendship request then you can start chatting
 			</p>
 		{/if}
+	{:else}
+		<div>No message threads.</div>
 	{/if}
 
 	{#if selectedFriendId}
 		<MessagePopup
-			{threadsList}
+			threadsList={selectedFriendId=="admin"?[adminChatNft]:threadsList}
 			friendId={selectedFriendId}
 			{secret}
-			closed={() => (selectedFriendId = '')}
+			closed={() => {selectedFriendId = ''; loadThreads()}}
 		/>
 	{/if}
 </div>
 
 <style lang="scss">
+	#thread-list {
+		margin-top: 40px;
+	}
 	.cat-list {
-		margin: 0 10px;
+		// margin: 0 10px;
 		display: flex;
 		flex-direction: column;
-	}
-
-	.cat-list-item {
-		width: 100%;
-		margin: 6px 0;
-		display: flex;
 		cursor: pointer;
-		border: darkgray 1px solid;
-		border-radius: 10px;
-		overflow: hidden;
-		height: 64px;
-		position: relative;
-		&.encrypted {
-			background-color: lightgreen;
-		}
-		&.non_encrypted {
-			background-color: pink;
-		}
-		&.failed {
-			background: red;
-		}
 	}
-
-	.cat-list-info {
-		flex-grow: 1;
-		text-align: left;
-		padding: 10px 20px;
-		overflow: hidden;
-	}
-
-	.cat-list-info h4 {
-		margin-top: 0;
-		margin-bottom: 5px;
+	.text-center {
+		text-align: center;
 	}
 </style>
