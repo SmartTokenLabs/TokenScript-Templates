@@ -5,71 +5,83 @@
 	import CardArrow from '../components/CardArrow.svelte';
 	import MagnifyingGlass from '../components/MagnifyingGlass.svelte';
 	import Close from '../components/Close.svelte';
-
+	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
+	let token: ITokenContextData;
 	let loading = true;
 	let timeout: any;
 	let searchString: string;
+	let filteredSwaps: any;
 
-	const swaps = [
-		{
-			title: 'BitTrue',
-			type: 'cex',
-			logo: 'BitTrue',
-			url: 'https://www.bitrue.com/trade/sln_usdt'
-		},
-		{
-			title: 'CoinOne',
-			type: 'cex',
-			logo: 'CoinOne',
-			url: 'https://coinone.co.kr/exchange/trade/sln/krw'
-		},
-		{
-			title: 'Crypto.com',
-			type: 'cex',
-			logo: 'CryptoCOM',
-			url: 'https://crypto.com/price/smart-layer-network'
-		},
-		{
-			title: 'DragonSwap',
-			type: 'dex',
-			logo: 'DragonSwap',
-			url: 'https://dgswap.io/swap?inputCurrency=0x5C13E303a62Fc5DEdf5B52D66873f2E59fEdADC2&outputCurrency=0x06A210EAE2b07f9dC22cDb10c2C77cA99b3d8968&chain=klaytn'
-		},
-		{
-			title: 'Gate.io',
-			type: 'cex',
-			logo: 'GateIO',
-			url: 'https://www.gate.io/trade/SLN_USDT'
-		},
-		{
-			title: 'OKX',
-			type: 'cex',
-			logo: 'OKX',
-			url: 'https://www.okx.com/web3/dex-swap#inputChain=1&inputCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&outputChain=1&outputCurrency=0xDb82c0d91E057E05600C8F8dc836bEb41da6df14'
-		},
-		{
-			title: 'kucoin',
-			type: 'cex',
-			logo: 'Kucoin',
-			url: 'https://www.kucoin.com/trade/SLN-USDT'
-		},
-		{
-			title: 'UniSwap',
-			type: 'dex',
-			logo: 'UniSwap',
-			url: 'https://app.uniswap.org/swap?chain=mainnet&exactField=output&outputCurrency=0xDb82c0d91E057E05600C8F8dc836bEb41da6df14&inputCurrency=0xdAC17F958D2ee523a2206206994597C13D831ec7'
-		}
-	];
-
-	let filteredSwaps = swaps;
+	// TODO make this dynamic with regards to the addresses used above.
 
 	context.data.subscribe(async (value) => {
+		if (!value.token) return;
+		token = value.token;
+		// @ts-ignore
+		filteredSwaps = swapList();
 		loading = false;
 	});
 
+	function swapList() {
+		const slnAddress = token.contractAddress;
+		const chainId = token.chainId;
+		return [
+			{
+				title: 'BitTrue',
+				type: 'cex',
+				logo: 'BitTrue',
+				url: 'https://www.bitrue.com/trade/sln_usdt'
+			},
+			{
+				title: 'CoinOne',
+				type: 'cex',
+				logo: 'CoinOne',
+				url: 'https://coinone.co.kr/exchange/trade/sln/krw'
+			},
+			{
+				title: 'Crypto.com',
+				type: 'cex',
+				logo: 'CryptoCOM',
+				url: 'https://crypto.com/price/smart-layer-network'
+			},
+			{
+				title: 'DragonSwap',
+				type: 'dex',
+				logo: 'DragonSwap',
+				url: 'https://dgswap.io/swap?inputCurrency=%22%22&outputCurrency=0x06A210EAE2b07f9dC22cDb10c2C77cA99b3d8968&chain=klaytn'
+			},
+			{
+				title: 'Gate.io',
+				type: 'cex',
+				logo: 'GateIO',
+				url: 'https://www.gate.io/trade/SLN_USDT'
+			},
+			{
+				title: 'OKX',
+				type: 'cex',
+				logo: 'OKX',
+				url: `https://www.okx.com/web3/dex-swap#inputChain=${chainId}&inputCurrency=""&outputChain=1&outputCurrency=${slnAddress}`
+			},
+			{
+				title: 'kucoin',
+				type: 'cex',
+				logo: 'Kucoin',
+				url: 'https://www.kucoin.com/trade/SLN-USDT'
+			},
+			{
+				title: 'UniSwap',
+				type: 'dex',
+				logo: 'UniSwap',
+				url: `https://app.uniswap.org/swap?chain=${
+					chainId === 1 ? 'mainnet' : 'polygon'
+				}&exactField=output&outputCurrency=${slnAddress}&inputCurrency=%22%22`
+			}
+		];
+	}
+
 	function filterSwaps(query: string) {
 		const lowercaseQuery = query.toLowerCase();
-		filteredSwaps = swaps.filter((swap) => {
+		filteredSwaps = swapList().filter((swap: any) => {
 			const { title } = swap;
 			return title.toLowerCase().includes(lowercaseQuery);
 		});
