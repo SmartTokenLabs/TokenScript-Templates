@@ -4,7 +4,6 @@
 	import { ethers } from 'ethers';
 	import type { ITokenContextData } from '@tokenscript/card-sdk/dist/types';
 	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
-	import SlnLogo3 from '../components/SLNLogo3.svelte';
 
 	let token: ITokenContextData;
 	let tokenAmount: number | string = 0;
@@ -172,7 +171,10 @@
 							<div
 								style="align-items: center; height: 24px; width: 24px; border-radius: 24px; background: #001AFF; padding: 1.5px 0 0 1.5px; margin-right: 9px; margin-top:2px"
 							>
-								<SlnLogo3 />
+								<img
+									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/sln/sln-logo-5.svg"
+									alt="sln logo"
+								/>
 							</div>
 							<div style="font-size: 20px;">$SLN</div>
 						</span>
@@ -276,6 +278,9 @@
 								alt="chain"
 								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
 							/>
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
+								Ethereum Mainnet
+							</div>
 						</div>
 					{/if}
 					{#if token.chainId === 137}
@@ -290,6 +295,26 @@
 								alt="chain"
 								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
 							/>
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
+								Polygon
+							</div>
+						</div>
+					{/if}
+					{#if token.chainId === 8217}
+						<div class="field-value-alt flex">
+							<img
+								style="height: 24px; margin-right: 7px"
+								alt="chain"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+							/>
+							<img
+								style="height: 24px"
+								alt="chain"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/klaytn-symbol.svg"
+							/>
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
+								Klaytn
+							</div>
 						</div>
 					{/if}
 				</div>
