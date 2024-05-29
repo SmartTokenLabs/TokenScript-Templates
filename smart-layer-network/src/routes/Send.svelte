@@ -271,16 +271,16 @@
 				</div>
 				<div class="field-container">
 					<div class="field-title">Chain</div>
-					<!-- {#if token.chainId === 1}
+					{#if token.chainId === 1}
 						<div class="field-value-alt flex">
 							<img
 								style="height: 24px;"
 								alt="chain"
 								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
 							/>
-						</div>
-						<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-							Ethereum Mainnet
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
+								Ethereum Mainnet
+							</div>
 						</div>
 					{/if}
 					{#if token.chainId === 137}
@@ -295,12 +295,12 @@
 								alt="chain"
 								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
 							/>
-						</div> 
-						<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-							Polygon
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
+								Polygon
+							</div>
 						</div>
-					{/if} -->
-					{#if token.chainId !== 8217}
+					{/if}
+					{#if token.chainId === 8217}
 						<div class="field-value-alt flex">
 							<img
 								style="height: 24px; margin-right: 7px"
@@ -312,7 +312,7 @@
 								alt="chain"
 								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/klaytn-symbol.svg"
 							/>
-							<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+							<div style="margin-left: 7px; margin-top: 4.5px;" class="text-md font-semibold">
 								Klaytn
 							</div>
 						</div>
