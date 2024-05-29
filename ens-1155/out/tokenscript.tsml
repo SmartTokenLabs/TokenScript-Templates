@@ -31,12 +31,12 @@
 		<ts:viewContent xmlns="http://www.w3.org/1999/xhtml" name="common">
 			
 			
-		<style xmlns="http://www.w3.org/1999/xhtml">/*&lt;![CDATA[*/ 
+		<style>/*&lt;![CDATA[*/ 
 
 .loader-container.svelte-i4cppe.svelte-i4cppe{width:100%;height:100%;display:flex;justify-content:center;align-items:center}.lds-ring.svelte-i4cppe.svelte-i4cppe{display:inline-block;position:relative;width:80px;height:80px}.lds-ring.svelte-i4cppe div.svelte-i4cppe{box-sizing:border-box;display:block;position:absolute;width:64px;height:64px;margin:8px;border:8px solid #656565;border-radius:50%;animation:svelte-i4cppe-lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;border-color:#656565 transparent transparent transparent}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(1){animation-delay:-0.45s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(2){animation-delay:-0.3s}.lds-ring.svelte-i4cppe div.svelte-i4cppe:nth-child(3){animation-delay:-0.15s}@keyframes svelte-i4cppe-lds-ring{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
  /*//]]&gt;*/</style>
-<script xmlns="http://www.w3.org/1999/xhtml" type="module" crossorigin="">//&lt;![CDATA[
+<script type="module" crossorigin="">//&lt;![CDATA[
 
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) =&gt; key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
@@ -19741,9 +19741,9 @@ new App({
 
 
 //]]&gt;</script>
-<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.googleapis.com"/>
-<link xmlns="http://www.w3.org/1999/xhtml" rel="preconnect" href="https://fonts.gstatic.com"/>
-<link xmlns="http://www.w3.org/1999/xhtml" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 
 
 <!-- 
