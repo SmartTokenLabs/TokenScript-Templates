@@ -8,6 +8,25 @@
 	box-sizing: border-box;
 }
 
+.brand-font-color {
+	color: #375bd2;
+}
+.primary-font-color {
+	color: #0c162d;
+}
+.secondary-font-color {
+	color: #6d7380;
+}
+.tertiary-font-color {
+	color: #a5baf5;
+}
+.primary-background-color {
+	color: white;
+}
+.secondary-background-color {
+	color: #0c162d;
+}
+
 html, body {
 	color: black;
 	margin: 0;

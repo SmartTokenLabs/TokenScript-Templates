@@ -135,20 +135,57 @@
 <div>
 	{#if token}
 		{#if subView === 'SEND'}
-			<div id="token-container" class="text-[#0c162d]">
-				<div class="field-section">
+			<div id="token-container" class="primary-font-color">
+				<div class="field-section flex">
 					<div class="field-section-title" style="font-size: 24px;">Send ${token.symbol}</div>
+					<img
+						style="width: 19px; margin: 0px 0px 0px 7px;"
+						alt="chainlink logo"
+						src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/chainlink-link-logo.svg"
+					/>
 				</div>
-				<div class="field-section">
-					<div class="flex justify-between">
+				<div class="field-section mt-8">
+					<div class="field-title">Recipient address</div>
+
+					<textarea
+						cols="1"
+						on:input={(event) => {
+							if (timeout) clearTimeout(timeout);
+							timeout = setTimeout(() => {
+								setRecievingAddress(event);
+							}, 600);
+						}}
+						bind:value={receivingAccountAddressViewValue}
+						placeholder="Wallet address or ENS name"
+						id="sending-account"
+						maxlength="200"
+					/>
+					{#if loading === false && ensNameNotFound === false && receivingAccountAddressViewValue !== receivingAccountAddress}
+						<div style="color: #3DBD00" class="field-title text-md flex items-center">
+							<img
+								style="margin-right: 10px; width: 20px; height: 20px"
+								class="mr-4 rounded-full"
+								alt="ens avatar"
+								src={ensNameAvatarImage}
+							/>
+							<div style="font-size: 14px;">{previewAddr(receivingAccountAddress || '')}</div>
+						</div>
+					{/if}
+					{#if loading === false && receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
+						<div class="input-error">Invalid Address.</div>
+					{/if}
+					{#if ensNameNotFound}
+						<div class="input-error">Invalid Address.</div>
+					{/if}
+					<div class="flex justify-between mt-8">
 						<div class="field-title">Amount</div>
-						<button
+						<!-- <button
 							class="field-value-alt"
 							style="text-decoration: underline;"
 							on:click={(e) => {
 								setTokenAmountMax();
 							}}>Max</button
-						>
+						> -->
 					</div>
 					<div class="icon-input">
 						<input
@@ -183,42 +220,16 @@
 						<div class="input-error">Not enough funds.</div>
 					{/if}
 					<p style="font-size: 16px; margin: 12px 0 48px 0">
-						Your Balance {tokenAmount
-							? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $' + token.symbol
-							: '0.00'}
+						Your Balance <button
+							style="border-bottom: 1px solid #0c162d"
+							on:click={(e) => {
+								setTokenAmountMax();
+							}}
+							>{tokenAmount
+								? formatWithByDecimalPlaces(Number(tokenAmount), 2) + ' $BID'
+								: '0.00'}</button
+						>
 					</p>
-					<div class="field-title">Recipient address</div>
-
-					<textarea
-						cols="1"
-						on:input={(event) => {
-							if (timeout) clearTimeout(timeout);
-							timeout = setTimeout(() => {
-								setRecievingAddress(event);
-							}, 600);
-						}}
-						bind:value={receivingAccountAddressViewValue}
-						placeholder="Wallet address or ENS name"
-						id="sending-account"
-						maxlength="200"
-					/>
-					{#if loading === false && ensNameNotFound === false && receivingAccountAddressViewValue !== receivingAccountAddress}
-						<div style="color: #3DBD00" class="field-title text-md flex items-center">
-							<img
-								style="margin-right: 10px; width: 20px; height: 20px"
-								class="mr-4 rounded-full"
-								alt="ens avatar"
-								src={ensNameAvatarImage}
-							/>
-							<div style="font-size: 14px;">{previewAddr(receivingAccountAddress || '')}</div>
-						</div>
-					{/if}
-					{#if loading === false && receivingAccountAddress && !ethers.isAddress(receivingAccountAddress)}
-						<div class="input-error">Invalid Address.</div>
-					{/if}
-					{#if ensNameNotFound}
-						<div class="input-error">Invalid Address.</div>
-					{/if}
 				</div>
 			</div>
 			<div class="field-section" style="width: 100%; position: fixed; bottom: 14px;">

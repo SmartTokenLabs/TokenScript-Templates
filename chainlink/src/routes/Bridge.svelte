@@ -84,7 +84,7 @@
 </script>
 
 <div>
-	<div id="token-container" class="text-[#0c162d]">
+	<div id="token-container" class="primary-font-color">
 		<div class="field-section flex">
 			<div class="field-section-title text-3xl" style="font-size: 24px;">
 				Bridge ${token.symbol}

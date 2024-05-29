@@ -40,7 +40,7 @@
 
 <div>
 	{#if token}
-		<div id="token-wrapper" class="text-[#0c162d]">
+		<div id="token-wrapper" class="primary-font-color">
 			<div class="card-header-background">
 				<div class="text-center text-2xl pt-12 pb-6 text-[#385bd2] flex justify-center">
 					<img
@@ -50,7 +50,7 @@
 					/>
 				</div>
 				<div class="text-center">
-					<div class="text-lg label">Your Balance</div>
+					<div class="text-lg secondary-font-colour">Your Balance</div>
 					<div class="text-xl font-semibold field-value">
 						{tokenBalance
 							? formatWithByDecimalPlaces(Number(tokenBalance), 2) + '  $' + token.symbol
@@ -59,13 +59,13 @@
 				</div>
 				<div class="grid grid-cols-2 gap-4 my-12">
 					<div class="text-center">
-						<div class="text-sm label">Value ETH</div>
+						<div class="text-sm secondary-font-colour">Value ETH</div>
 						<div class="text-lg font-semibold">
 							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 2)}
 						</div>
 					</div>
 					<div class="text-center">
-						<div class="text-sm label">Value USD</div>
+						<div class="text-sm secondary-font-colour">Value USD</div>
 						<div class="text-lg font-semibold">
 							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
 						</div>
@@ -96,19 +96,19 @@
 					<div class="text-lg font-semibold">Token</div>
 				</div>
 				<div class="mt-4">
-					<div class="text-sm label">Name</div>
+					<div class="text-sm secondary-font-colour">Name</div>
 					<div class="text-lg font-semibold">{token.name ?? '-'}</div>
 				</div>
 				<div class="mt-4">
-					<div class="text-sm label">Symbol</div>
+					<div class="text-sm secondary-font-colour">Symbol</div>
 					<div class="text-lg font-semibold">{token.symbol ?? '-'}</div>
 				</div>
 				<div class="mt-4">
-					<div class="text-sm label">Type</div>
+					<div class="text-sm secondary-font-colour">Type</div>
 					<div class="text-lg font-semibold">ERC-20</div>
 				</div>
 				<div class="mt-4">
-					<div class="text-sm label">Chain</div>
+					<div class="text-sm secondary-font-colour">Chain</div>
 					<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
 						{chainConfig[token.chainId].name}
 					</div>
