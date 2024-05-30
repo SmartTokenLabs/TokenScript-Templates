@@ -1,4 +1,4 @@
-<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="erc-20-tokenscript-template" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
+<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2024/01/tokenscript" xmlns:xhmtl="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="erc-20-tokenscript-template" xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd">
 	<ts:label>
 		<ts:plurals xml:lang="en">
 			<ts:string quantity="one">ERC-20 TokenScript Template</ts:string>
@@ -9,10 +9,10 @@
 		<ts:description xml:lang="en">ERC20 template</ts:description>
 		<ts:aboutUrl xml:lang="en">https://chain.link/</ts:aboutUrl>
 		<ts:iconUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:iconUrl>
+		<ts:imageUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address>
-		
 	</ts:contract>
 	<ts:origins>
 		

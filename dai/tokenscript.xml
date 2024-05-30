@@ -6,21 +6,21 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:ethereum="urn:ethereum:constantinople"
           xmlns:xhmtl="http://www.w3.org/1999/xhtml"
-		  name="erc-20-tokenscript-template">
+		  name="dai-tokenscript-smart-token-labs">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">ERC-20 TokenScript Template</ts:string>
-			<ts:string quantity="other">ERC-20 TokenScript Template</ts:string>
+			<ts:string quantity="one">DAI TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="other">DAI TokenScript by SmartTokenLabs</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>
-		<ts:description xml:lang="en">ERC20 template</ts:description>
-		<ts:aboutUrl xml:lang="en">https://chain.link/</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:iconUrl>
-		<ts:imageUrl xml:lang="en">https://assets-global.website-files.com/5f6b7190899f41fb70882d08/5f760a499b56c47b8fa74fbb_chainlink-logo.svg</ts:imageUrl>
+		<ts:description xml:lang="en">DAI</ts:description>
+		<ts:aboutUrl xml:lang="en">https://coinmarketcap.com/currencies/multi-collateral-dai/</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/dai-logo.svg</ts:iconUrl>
+		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/dai-logo-with-text.png</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<ts:address network="1">0x514910771af9ca656af840dff83e8264ecf986ca</ts:address>
+		<ts:address network="1">0x6b175474e89094c44da98b954eedeac495271d0f</ts:address>
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->
