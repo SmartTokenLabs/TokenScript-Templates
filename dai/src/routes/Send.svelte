@@ -140,8 +140,8 @@
 					<div class="field-section-title" style="font-size: 24px;">Send ${token.symbol}</div>
 					<img
 						style="width: 19px; margin: 0px 0px 0px 7px;"
-						alt="chainlink logo"
-						src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/chainlink-link-logo.svg"
+						alt="dai logo"
+						src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/dai-logo.svg"
 					/>
 				</div>
 				<div class="field-section mt-8">
@@ -149,6 +149,7 @@
 
 					<textarea
 						cols="1"
+						class="tertiary-background-color"
 						on:input={(event) => {
 							if (timeout) clearTimeout(timeout);
 							timeout = setTimeout(() => {
@@ -190,7 +191,7 @@
 					<div class="icon-input">
 						<input
 							style="padding-right: 110px;"
-							class="large"
+							class="tertiary-background-color large"
 							on:input={(event) => {
 								if (timeout) clearTimeout(timeout);
 								timeout = setTimeout(() => {
@@ -208,8 +209,8 @@
 						<span class="flex">
 							<img
 								style="width: 19px; margin: 0px 7px 0 0;"
-								alt="chainlink logo"
-								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/chainlink-link-logo.svg"
+								alt="dai logo"
+								src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/dai-logo.svg"
 							/>
 							<div style="color: #9ca3af; font-size: 18px">
 								${token.symbol}
