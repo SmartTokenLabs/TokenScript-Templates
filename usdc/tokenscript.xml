@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token 
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xmlns:xhmtl="http://www.w3.org/1999/xhtml"
+		  name="usdc-tokenscript-smart-token-labs">
+	<ts:label>
+		<ts:plurals xml:lang="en">
+			<ts:string quantity="one">USDC TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="other">USDC TokenScript by SmartTokenLabs</ts:string>
+		</ts:plurals>
+	</ts:label>
+	<ts:meta>
+		<ts:description xml:lang="en">USDC</ts:description>
+		<ts:aboutUrl xml:lang="en">https://coinmarketcap.com/currencies/usd-coin/</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usd-coin-usdc-logo.svg</ts:iconUrl>
+		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usdc-logo-with-text.png</ts:imageUrl>
+	</ts:meta>
+	<ts:contract interface="erc20" name="Token">
+		<ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address>
+	</ts:contract>
+	<ts:origins>
+		<!-- Define the contract which holds the token that the user will use -->
+		<ts:ethereum contract="Token"/>
+	</ts:origins>
+
+	<ts:cards>
+		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
+			<ts:include type="html" src="./dist/index.html"/>
+			<ts:include type="css" src="./src/styles.css"/>
+		</ts:viewContent>
+
+		<ts:card type="token" name="Info" buttonClass="primary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Info</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Buy" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Buy</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="token" name="Bridge" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Bridge</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="bridge">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+		<ts:card type="action" name="Send" buttonClass="secondary" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Send</ts:string>
+			</ts:label>
+			<ts:transaction>
+				<ethereum:transaction contract="Token" function="transfer" as="uint">
+					<ts:data>
+						<ts:address ref="receivingAccountAddress"/>
+						<ts:uint256 ref="receivingAmount"/>
+					</ts:data>
+				</ethereum:transaction>
+			</ts:transaction>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="send" uiButton="false">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+	</ts:cards>
+
+
+	<ts:attribute name="sendingAccountAddress">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">sending account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+	
+	<ts:attribute name="receivingAccountAddress">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">receiving account address</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="address"/>
+		</ts:origins>
+	</ts:attribute>
+
+	<ts:attribute name="receivingAmount">
+		<ts:type>
+			<ts:syntax></ts:syntax>
+		</ts:type>
+		<ts:label>
+			<ts:string xml:lang="en">receiving amount</ts:string>
+		</ts:label>
+		<ts:origins>
+			<ts:user-entry as="uint"/>
+		</ts:origins>
+	</ts:attribute>
+	
+</ts:token>
