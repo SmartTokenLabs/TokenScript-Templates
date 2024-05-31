@@ -26,11 +26,8 @@
 	});
 
 	async function setTokenPriceData() {
-		let chainName = 'eth';
-		if (token.chainId === 137) chainName = 'matic';
-		if (token.chainId === 8217) chainName = 'klaytn';
 		const tokenStatsRequest = await fetch(
-			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=${token.contractAddress}&chain=${chainName}`
+			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=0xdb82c0d91e057e05600c8f8dc836beb41da6df14&chain=eth`
 		);
 		tokenStats = await tokenStatsRequest.json();
 		if (tokenStats.value && tokenStats.usdPrice) {
@@ -38,7 +35,7 @@
 			tokenStatsPriceUsd = tokenStats?.usdPrice?.toLocaleString('en-US') ?? 'not found';
 			if (token._count) {
 				// @ts-ignore
-				userTokenAccountValueEth = tokenStats.value * ethers.formatEther(token._count);
+				userTokenAccountValueEth = Number(tokenStats.value) * ethers.formatEther(token._count);
 				userTokenAccountValueUsd =
 					Number(tokenStats.usdPrice) * Number(ethers.formatEther(token._count)); // @ts-ignore
 			}
@@ -89,11 +86,6 @@
 						{#if token.chainId === 137}
 							<div class="field-value-alt flex justify-center mt-1">
 								<img
-									style="height: 18px; margin-right: 7px"
-									alt="chain"
-									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
-								/>
-								<img
 									style="height: 18px"
 									alt="chain"
 									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
@@ -102,11 +94,6 @@
 						{/if}
 						{#if token.chainId === 8217}
 							<div class="field-value-alt flex justify-center mt-1">
-								<img
-									style="height: 18px; margin-right: 7px"
-									alt="chain"
-									src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
-								/>
 								<img
 									style="height: 18px"
 									alt="chain"
@@ -122,7 +109,7 @@
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Value ETH</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 2)}
+							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 5)}
 						</div>
 					</div>
 					<div class="text-center">
@@ -183,6 +170,9 @@
 					<div class="flex items-center">
 						{#if token.chainId === 1}
 							<div class="flex">
+								<div style="margin-right: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+									Ethereum Mainnet
+								</div>
 								<div class="field-value-alt flex">
 									<img
 										style="height: 24px; width: 17px; margin-top: 2px;"
@@ -190,46 +180,33 @@
 										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
 									/>
 								</div>
-								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-									Ethereum Mainnet
-								</div>
 							</div>
 						{/if}
 						{#if token.chainId === 137}
 							<div class="flex">
+								<div style="margin-right: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+									Polygon
+								</div>
 								<div class="field-value-alt flex">
-									<img
-										style="height: 24px; width: 17px; margin-right: 7px; margin-top: 2px;"
-										alt="chain"
-										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
-									/>
 									<img
 										style="height: 24px; width: 17px; margin-top: 2px;"
 										alt="chain"
 										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/Polygon.svg"
 									/>
 								</div>
-								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-									Polygon
-								</div>
 							</div>
 						{/if}
 						{#if token.chainId === 8217}
 							<div class="flex">
+								<div style="margin-right: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
+									Klaytn
+								</div>
 								<div class="field-value-alt flex">
-									<img
-										style="height: 24px; width: 17px; margin-right: 7px; margin-top: 2px;"
-										alt="chain"
-										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
-									/>
 									<img
 										style="height: 24px; width: 17px; margin-top: 2px;"
 										alt="chain"
 										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/klaytn-symbol.svg"
 									/>
-								</div>
-								<div style="margin-left: 7px; margin-top: 1.5px;" class="text-lg font-semibold">
-									Klaytn
 								</div>
 							</div>
 						{/if}
@@ -237,7 +214,7 @@
 				</div>
 				<div class="mt-4">
 					<div class="text-sm text-gray-400">Release Date</div>
-					<div class="text-lg font-semibold">March `24</div>
+					<div class="text-lg font-semibold">Feb `24</div>
 				</div>
 			</div>
 		</div>

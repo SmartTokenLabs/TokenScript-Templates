@@ -81,8 +81,19 @@
 
 <div>
 	<div id="token-container" class="text-white">
-		<div class="field-section">
+		<div class="field-section" style="padding-bottom: 12px;">
 			<div class="field-section-title neue-plak text-3xl" style="font-size: 24px;">Bridge $SLN</div>
+			<div
+				class="mt-6 flex"
+				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
+			>
+				<img
+					style="margin-right: 21px; width: 22px;"
+					alt="info"
+					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
+				/>
+				Please ensure that platforms visited are connected and set to the correct chain when making transactions.
+			</div>
 		</div>
 		<div class="field-section">
 			<div class="search-input flex items-center" style="margin-bottom: 12px">
