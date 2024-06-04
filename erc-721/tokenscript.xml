@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ts:token xmlns:ts="http://tokenscript.org/2022/09/tokenscript"
-	xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript http://tokenscript.org/2022/09/tokenscript.xsd"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:ethereum="urn:ethereum:constantinople" name="erc-721">
+<ts:token 
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xmlns:xhmtl="http://www.w3.org/1999/xhtml"
+		  name="erc-721">
 	<ts:label>
 		<ts:plurals xml:lang="en">
 			<ts:string quantity="one">erc-721 Token</ts:string>
