@@ -1,4 +1,4 @@
-<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2022/09/tokenscript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ENS-1155" xsi:schemaLocation="http://tokenscript.org/2022/09/tokenscript https://www.tokenscript.org/schemas/2022-09/tokenscript.xsd">
+<ts:token xmlns:ethereum="urn:ethereum:constantinople" xmlns:ts="http://tokenscript.org/2024/01/tokenscript" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ENS-1155" xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd">
 	<ts:label>
 		<ts:plurals xml:lang="en">
 			<ts:string quantity="one">ENS-1155 Token</ts:string>
@@ -74,7 +74,7 @@ var __privateMethod = (obj, member, method) =&gt; {
   __accessCheck(obj, member, "access private method");
   return method;
 };
-var _listener, _listeners, _cancelled, _allowInsecure, _gzip, _headers, _method, _timeout, _url, _body, _bodyType, _creds, _preflight, _process, _retry, _signal, _throttle, _getUrlFunc, _send, send_fn, _statusCode, _statusMessage, _headers2, _body2, _request, _error, _format, _val, _tens, _checkFormat, checkFormat_fn, _checkValue, checkValue_fn, _add, add_fn, _sub, sub_fn, _mul, mul_fn, _div, div_fn, _names, _data, _dataLength, _writeData, writeData_fn, _data2, _offset, _peekBytes, peekBytes_fn, _r, _s, _v, _networkV, _privateKey, _options, _type, _to, _data3, _nonce, _gasLimit, _gasPrice, _maxPriorityFeePerGas, _maxFeePerGas, _value, _chainId, _sig, _accessList, _types, _fullTypes, _encoderCache, _getEncoder, getEncoder_fn, _offset2, _tokens, _subTokenString, subTokenString_fn, _walkAsync, walkAsync_fn, _getCoder, getCoder_fn, _errors, _events, _functions, _abiCoder, _getFunction, getFunction_fn, _getEvent, getEvent_fn, _transactions, _logs, _startBlock, _iface, _iface2, _filter, _a, _supports2544, _resolver, _fetch, fetch_fn, _getResolver, getResolver_fn, _url2, _processFunc, _name, _chainId2, _plugins, _provider, _poller, _interval, _blockNumber, _poll, poll_fn, _provider2, _poll2, _running, _tag, _lastBlock, _filter2, _hash, _provider3, _filter3, _poller2, _running2, _blockNumber2, _poll3, poll_fn2, _subs, _plugins2, _pausedState, _destroyed, _networkPromise, _anyNetwork, _performCache, _lastBlockNumber, _nextTimer, _timers, _disableCcipRead, _options2, _perform, perform_fn, _call, call_fn, _checkNetwork, checkNetwork_fn, _getAccountValue, getAccountValue_fn, _getBlock, getBlock_fn, _hasSub, hasSub_fn, _getSub, getSub_fn, _provider4, _filterIdPromise, _poller3, _running3, _network, _hault, _poll4, poll_fn3, _teardown, teardown_fn, _event, _options3, _nextId, _payloads, _drainTimer, _notReady, _network2, _pendingDetectNetwork, _scheduleDrain, scheduleDrain_fn, _pollingInterval, _connect;
+var _listener, _listeners, _cancelled, _allowInsecure, _gzip, _headers, _method, _timeout, _url, _body, _bodyType, _creds, _preflight, _process, _retry, _signal, _throttle, _getUrlFunc, _send, send_fn, _statusCode, _statusMessage, _headers2, _body2, _request, _error, _format, _val, _tens, _checkFormat, checkFormat_fn, _checkValue, checkValue_fn, _add, add_fn, _sub, sub_fn, _mul, mul_fn, _div, div_fn, _names, _data, _dataLength, _writeData, writeData_fn, _data2, _offset, _peekBytes, peekBytes_fn, _r, _s, _v, _networkV, _privateKey, _options, _type, _to, _data3, _nonce, _gasLimit, _gasPrice, _maxPriorityFeePerGas, _maxFeePerGas, _value, _chainId, _sig, _accessList, _types, _fullTypes, _encoderCache, _getEncoder, getEncoder_fn, _offset2, _tokens, _subTokenString, subTokenString_fn, _walkAsync, walkAsync_fn, _getCoder, getCoder_fn, _errors, _events, _functions, _abiCoder, _getFunction, getFunction_fn, _getEvent, getEvent_fn, _transactions, _logs, _startBlock, _iface, _iface2, _filter, _a, _supports2544, _resolver, _fetch, fetch_fn, _getResolver, getResolver_fn, _url2, _processFunc, _name, _chainId2, _plugins, _provider, _poller, _interval, _blockNumber, _poll, poll_fn, _provider2, _poll2, _running, _filter2, _hash, _provider3, _filter3, _poller2, _running2, _blockNumber2, _poll3, poll_fn2, _subs, _plugins2, _pausedState, _destroyed, _networkPromise, _anyNetwork, _performCache, _lastBlockNumber, _nextTimer, _timers, _disableCcipRead, _options2, _perform, perform_fn, _call, call_fn, _checkNetwork, checkNetwork_fn, _getAccountValue, getAccountValue_fn, _getBlock, getBlock_fn, _hasSub, hasSub_fn, _getSub, getSub_fn, _provider4, _filterIdPromise, _poller3, _running3, _network, _hault, _poll4, poll_fn3, _teardown, teardown_fn, _event, _options3, _nextId, _payloads, _drainTimer, _notReady, _network2, _scheduleDrain, scheduleDrain_fn, _pollingInterval, _connect;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList &amp;&amp; relList.supports &amp;&amp; relList.supports("modulepreload")) {
@@ -430,7 +430,7 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 &lt;&lt; i % 31;
 }
-function init$2(component, options, instance2, create_fragment2, not_equal, props, append_styles = null, dirty = [-1]) {
+function init$2(component, options, instance2, create_fragment2, not_equal, props, append_styles, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
@@ -1500,7 +1500,7 @@ class NotFound extends SvelteComponent {
     init$2(this, options, null, create_fragment$3, safe_not_equal, {});
   }
 }
-const version = "6.9.0";
+const version = "6.8.1";
 function checkType(value, type, name) {
   const types = type.split("|").map((t) =&gt; t.trim());
   for (let i = 0; i &lt; types.length; i++) {
@@ -2293,7 +2293,7 @@ const _FetchRequest = class _FetchRequest {
     __privateSet(this, _getUrlFunc, null);
   }
   /**
-   *  The fetch URL to request.
+   *  The fetch URI to requrest.
    */
   get url() {
     return __privateGet(this, _url);
@@ -2309,15 +2309,15 @@ const _FetchRequest = class _FetchRequest {
    *  header.
    *
    *  If %%body%% is null, the body is cleared (along with the
-   *  intrinsic ``Content-Type``).
+   *  intrinsic ``Content-Type``) and the .
    *
-   *  If %%body%% is a string, the intrinsic ``Content-Type`` is set to
+   *  If %%body%% is a string, the intrincis ``Content-Type`` is set to
    *  ``text/plain``.
    *
-   *  If %%body%% is a Uint8Array, the intrinsic ``Content-Type`` is set to
+   *  If %%body%% is a Uint8Array, the intrincis ``Content-Type`` is set to
    *  ``application/octet-stream``.
    *
-   *  If %%body%% is any other object, the intrinsic ``Content-Type`` is
+   *  If %%body%% is any other object, the intrincis ``Content-Type`` is
    *  set to ``application/json``.
    */
   get body() {
@@ -2373,7 +2373,7 @@ const _FetchRequest = class _FetchRequest {
    *  The headers that will be used when requesting the URI. All
    *  keys are lower-case.
    *
-   *  This object is a copy, so any changes will **NOT** be reflected
+   *  This object is a copy, so any chnages will **NOT** be reflected
    *  in the ``FetchRequest``.
    *
    *  To set a header entry, use the ``setHeader`` method.
@@ -2466,7 +2466,7 @@ const _FetchRequest = class _FetchRequest {
     __privateSet(this, _allowInsecure, !!value);
   }
   /**
-   *  The timeout (in milliseconds) to wait for a complete response.
+   *  The timeout (in milliseconds) to wait for a complere response.
    *  //(default: 5 minutes)//
    */
   get timeout() {
@@ -2920,7 +2920,7 @@ const _FetchResponse = class _FetchResponse {
     return this.headers[key.toLowerCase()];
   }
   /**
-   *  Returns true if the response has a body.
+   *  Returns true of the response has a body.
    */
   hasBody() {
     return __privateGet(this, _body2) != null;
@@ -10191,6 +10191,9 @@ const _ParamType = class _ParamType {
       result += `[${this.arrayLength &lt; 0 ? "" : String(this.arrayLength)}]`;
     } else {
       if (this.isTuple()) {
+        if (format !== "sighash") {
+          result += this.type;
+        }
         result += "(" + this.components.map((comp) =&gt; comp.format(format)).join(format === "full" ? ", " : ",") + ")";
       } else {
         result += this.type;
@@ -15435,6 +15438,20 @@ function getGasStationPlugin(url) {
     }
   });
 }
+function getPriorityFeePlugin(maxPriorityFeePerGas) {
+  return new FetchUrlFeeDataNetworkPlugin("data:", async (fetchFeeData, provider2, request) =&gt; {
+    const feeData = await fetchFeeData();
+    if (feeData.maxFeePerGas == null || feeData.maxPriorityFeePerGas == null) {
+      return feeData;
+    }
+    const baseFee = feeData.maxFeePerGas - feeData.maxPriorityFeePerGas;
+    return {
+      gasPrice: feeData.gasPrice,
+      maxFeePerGas: baseFee + maxPriorityFeePerGas,
+      maxPriorityFeePerGas
+    };
+  });
+}
 let injected = false;
 function injectCommonNetworks() {
   if (injected) {
@@ -15473,9 +15490,6 @@ function injectCommonNetworks() {
     ensNetwork: 1
   });
   registerEth("arbitrum-goerli", 421613, {});
-  registerEth("base", 8453, { ensNetwork: 1 });
-  registerEth("base-goerli", 84531, {});
-  registerEth("base-sepolia", 84532, {});
   registerEth("bnb", 56, { ensNetwork: 1 });
   registerEth("bnbt", 97, {});
   registerEth("linea", 59144, { ensNetwork: 1 });
@@ -15494,7 +15508,9 @@ function injectCommonNetworks() {
   });
   registerEth("optimism", 10, {
     ensNetwork: 1,
-    plugins: []
+    plugins: [
+      getPriorityFeePlugin(BigInt("1000000"))
+    ]
   });
   registerEth("optimism-goerli", 420, {});
   registerEth("xdai", 100, { ensNetwork: 1 });
@@ -15625,35 +15641,6 @@ class OnBlockSubscriber {
 _provider2 = new WeakMap();
 _poll2 = new WeakMap();
 _running = new WeakMap();
-class PollingBlockTagSubscriber extends OnBlockSubscriber {
-  constructor(provider2, tag) {
-    super(provider2);
-    __privateAdd(this, _tag, void 0);
-    __privateAdd(this, _lastBlock, void 0);
-    __privateSet(this, _tag, tag);
-    __privateSet(this, _lastBlock, -2);
-  }
-  pause(dropWhilePaused) {
-    if (dropWhilePaused) {
-      __privateSet(this, _lastBlock, -2);
-    }
-    super.pause(dropWhilePaused);
-  }
-  async _poll(blockNumber, provider2) {
-    const block = await provider2.getBlock(__privateGet(this, _tag));
-    if (block == null) {
-      return;
-    }
-    if (__privateGet(this, _lastBlock) === -2) {
-      __privateSet(this, _lastBlock, block.number);
-    } else if (block.number &gt; __privateGet(this, _lastBlock)) {
-      provider2.emit(__privateGet(this, _tag), block.number);
-      __privateSet(this, _lastBlock, block.number);
-    }
-  }
-}
-_tag = new WeakMap();
-_lastBlock = new WeakMap();
 class PollingOrphanSubscriber extends OnBlockSubscriber {
   constructor(provider2, filter) {
     super(provider2);
@@ -15822,12 +15809,10 @@ async function getSubscription(_event2, provider2) {
   if (typeof _event2 === "string") {
     switch (_event2) {
       case "block":
+      case "pending":
       case "debug":
       case "error":
-      case "finalized":
-      case "network":
-      case "pending":
-      case "safe": {
+      case "network": {
         return { type: _event2, tag: _event2 };
       }
     }
@@ -16106,10 +16091,10 @@ class AbstractProvider {
     switch (blockTag) {
       case "earliest":
         return "0x0";
-      case "finalized":
       case "latest":
       case "pending":
       case "safe":
+      case "finalized":
         return blockTag;
     }
     if (isHexString(blockTag)) {
@@ -16284,20 +16269,12 @@ class AbstractProvider {
   async getFeeData() {
     const network = await this.getNetwork();
     const getFeeDataFunc = async () =&gt; {
-      const { _block, gasPrice, priorityFee } = await resolveProperties({
+      const { _block, gasPrice } = await resolveProperties({
         _block: __privateMethod(this, _getBlock, getBlock_fn).call(this, "latest", false),
         gasPrice: (async () =&gt; {
           try {
-            const value = await __privateMethod(this, _perform, perform_fn).call(this, { method: "getGasPrice" });
-            return getBigInt(value, "%response");
-          } catch (error) {
-          }
-          return null;
-        })(),
-        priorityFee: (async () =&gt; {
-          try {
-            const value = await __privateMethod(this, _perform, perform_fn).call(this, { method: "getPriorityFee" });
-            return getBigInt(value, "%response");
+            const gasPrice2 = await __privateMethod(this, _perform, perform_fn).call(this, { method: "getGasPrice" });
+            return getBigInt(gasPrice2, "%response");
           } catch (error) {
           }
           return null;
@@ -16307,7 +16284,7 @@ class AbstractProvider {
       let maxPriorityFeePerGas = null;
       const block = this._wrapBlock(_block, network);
       if (block &amp;&amp; block.baseFeePerGas) {
-        maxPriorityFeePerGas = priorityFee != null ? priorityFee : BigInt("1000000000");
+        maxPriorityFeePerGas = BigInt("1000000000");
         maxFeePerGas = block.baseFeePerGas * BN_2 + maxPriorityFeePerGas;
       }
       return new FeeData(gasPrice, maxFeePerGas, maxPriorityFeePerGas);
@@ -16585,9 +16562,6 @@ class AbstractProvider {
         subscriber.pollingInterval = this.pollingInterval;
         return subscriber;
       }
-      case "safe":
-      case "finalized":
-        return new PollingBlockTagSubscriber(this, sub.type);
       case "event":
         return new PollingEventSubscriber(this, sub.filter);
       case "transaction":
@@ -17559,13 +17533,11 @@ class JsonRpcApiProvider extends AbstractProvider {
     __privateAdd(this, _drainTimer, void 0);
     __privateAdd(this, _notReady, void 0);
     __privateAdd(this, _network2, void 0);
-    __privateAdd(this, _pendingDetectNetwork, void 0);
     __privateSet(this, _nextId, 1);
     __privateSet(this, _options3, Object.assign({}, defaultOptions, options || {}));
     __privateSet(this, _payloads, []);
     __privateSet(this, _drainTimer, null);
     __privateSet(this, _network2, null);
-    __privateSet(this, _pendingDetectNetwork, null);
     {
       let resolve = null;
       const promise = new Promise((_resolve) =&gt; {
@@ -17574,12 +17546,7 @@ class JsonRpcApiProvider extends AbstractProvider {
       __privateSet(this, _notReady, { promise, resolve });
     }
     const staticNetwork = this._getOption("staticNetwork");
-    if (typeof staticNetwork === "boolean") {
-      assertArgument(!staticNetwork || network !== "any", "staticNetwork cannot be used on special network 'any'", "options", options);
-      if (staticNetwork &amp;&amp; network != null) {
-        __privateSet(this, _network2, Network.from(network));
-      }
-    } else if (staticNetwork) {
+    if (staticNetwork) {
       assertArgument(network == null || staticNetwork.matches(network), "staticNetwork MUST match network object", "options", options);
       __privateSet(this, _network2, staticNetwork);
     }
@@ -17636,49 +17603,30 @@ class JsonRpcApiProvider extends AbstractProvider {
   async _detectNetwork() {
     const network = this._getOption("staticNetwork");
     if (network) {
-      if (network === true) {
-        if (__privateGet(this, _network2)) {
-          return __privateGet(this, _network2);
-        }
-      } else {
-        return network;
-      }
-    }
-    if (__privateGet(this, _pendingDetectNetwork)) {
-      return await __privateGet(this, _pendingDetectNetwork);
+      return network;
     }
     if (this.ready) {
-      __privateSet(this, _pendingDetectNetwork, (async () =&gt; {
-        const result = Network.from(getBigInt(await this.send("eth_chainId", [])));
-        __privateSet(this, _pendingDetectNetwork, null);
-        return result;
-      })());
-      return await __privateGet(this, _pendingDetectNetwork);
+      return Network.from(getBigInt(await this.send("eth_chainId", [])));
     }
-    __privateSet(this, _pendingDetectNetwork, (async () =&gt; {
-      const payload = {
-        id: __privateWrapper(this, _nextId)._++,
-        method: "eth_chainId",
-        params: [],
-        jsonrpc: "2.0"
-      };
-      this.emit("debug", { action: "sendRpcPayload", payload });
-      let result;
-      try {
-        result = (await this._send(payload))[0];
-        __privateSet(this, _pendingDetectNetwork, null);
-      } catch (error) {
-        __privateSet(this, _pendingDetectNetwork, null);
-        this.emit("debug", { action: "receiveRpcError", error });
-        throw error;
-      }
-      this.emit("debug", { action: "receiveRpcResult", result });
-      if ("result" in result) {
-        return Network.from(getBigInt(result.result));
-      }
-      throw this.getRpcError(payload, result);
-    })());
-    return await __privateGet(this, _pendingDetectNetwork);
+    const payload = {
+      id: __privateWrapper(this, _nextId)._++,
+      method: "eth_chainId",
+      params: [],
+      jsonrpc: "2.0"
+    };
+    this.emit("debug", { action: "sendRpcPayload", payload });
+    let result;
+    try {
+      result = (await this._send(payload))[0];
+    } catch (error) {
+      this.emit("debug", { action: "receiveRpcError", error });
+      throw error;
+    }
+    this.emit("debug", { action: "receiveRpcResult", result });
+    if ("result" in result) {
+      return Network.from(getBigInt(result.result));
+    }
+    throw this.getRpcError(payload, result);
   }
   /**
    *  Sub-classes **MUST** call this. Until [[_start]] has been called, no calls
@@ -17787,8 +17735,6 @@ class JsonRpcApiProvider extends AbstractProvider {
         return { method: "eth_blockNumber", args: [] };
       case "getGasPrice":
         return { method: "eth_gasPrice", args: [] };
-      case "getPriorityFee":
-        return { method: "eth_maxPriorityFeePerGas", args: [] };
       case "getBalance":
         return {
           method: "eth_getBalance",
@@ -18026,7 +17972,6 @@ _payloads = new WeakMap();
 _drainTimer = new WeakMap();
 _notReady = new WeakMap();
 _network2 = new WeakMap();
-_pendingDetectNetwork = new WeakMap();
 _scheduleDrain = new WeakSet();
 scheduleDrain_fn = function() {
   if (__privateGet(this, _drainTimer)) {
@@ -19573,7 +19518,7 @@ function create_fragment(ctx) {
     /*page*/
     ctx[1]
   );
-  function switch_props(ctx2, dirty) {
+  function switch_props(ctx2) {
     return {};
   }
   if (switch_value) {

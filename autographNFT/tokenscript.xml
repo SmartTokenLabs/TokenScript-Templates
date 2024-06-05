@@ -5,7 +5,7 @@
           xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:ethereum="urn:ethereum:constantinople"
-          xmlns:xhmtl="http://www.w3.org/1999/xhtml"
+          xmlns:xhtml="http://www.w3.org/1999/xhtml"
 					name="AutographNFT">
 	<ts:label>
 		<ts:plurals xml:lang="en">

@@ -5,7 +5,7 @@
           xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:ethereum="urn:ethereum:constantinople"
-          xmlns:xhmtl="http://www.w3.org/1999/xhtml"
+          xmlns:xhtml="http://www.w3.org/1999/xhtml"
 		  name="ENS-721">
 	<asnx:module name="ENS-Events">
 		<namedType name="NameRegistered">
@@ -48,7 +48,6 @@
 	</ts:contract>
 
 	<ts:origins>
-		<!-- Define the contract which holds the token that the user will use -->
 		<ts:ethereum contract="ENS"/>
 	</ts:origins>
 
@@ -74,7 +73,7 @@
 
 			<ts:attribute name="renewalSeconds">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
@@ -83,7 +82,7 @@
 
 			<ts:attribute name="renewalPrice">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
@@ -92,7 +91,7 @@
 
 			<ts:attribute name="renewalPricePerYear">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">renewal price per year</ts:string>
@@ -129,7 +128,7 @@
 
 			<ts:attribute name="newRecordValue">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">new record value</ts:string>
@@ -141,7 +140,7 @@
 
 			<ts:attribute name="newRecordKey">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">new record key</ts:string>
@@ -153,7 +152,7 @@
 
 			<ts:attribute name="email">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -167,7 +166,7 @@
 
 			<ts:attribute name="location">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -181,7 +180,7 @@
 
 			<ts:attribute name="notice">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -195,7 +194,7 @@
 
 			<ts:attribute name="display">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -209,7 +208,7 @@
 
 			<ts:attribute name="url">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -223,7 +222,7 @@
 
 			<ts:attribute name="phone">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -237,7 +236,7 @@
 
 			<ts:attribute name="keywords">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -251,7 +250,7 @@
 
 			<ts:attribute name="description">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -265,7 +264,7 @@
 
 			<ts:attribute name="avatar">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax></ts:syntax>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -309,7 +308,7 @@
 
 	<ts:attribute name="ensName">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax></ts:syntax>
 		</ts:type>
 		<ts:origins>
 			<ethereum:event type="NameRegistered" contract="ETHRegistrarController" filter="label=${tokenId}"
@@ -319,7 +318,7 @@
 
 	<ts:attribute name="resolverAddress">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax></ts:syntax>
 		</ts:type>
 		<ts:origins>
 			<ethereum:call function="resolver" contract="registry" as="address">
