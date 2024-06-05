@@ -8,6 +8,7 @@
 		"build:ts": "tokenscript build",
 		"sign": "tokenscript sign",
 		"emulate": "tokenscript emulate",
+		"start": "tokenscript emulate",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
