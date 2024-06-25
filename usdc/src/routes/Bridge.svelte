@@ -85,18 +85,31 @@
 
 <div>
 	<div id="token-container" class="primary-font-color">
-		<div class="field-section flex">
-			<div class="field-section-title text-3xl" style="font-size: 24px;">
-				Bridge ${token.symbol}
+		<div class="field-section" style="padding-bottom: 12px;">
+			<div class="flex field-section" style="padding-left: 0">
+				<div class="text-3xl field-section-title" style="font-size: 24px;">
+					Bridge ${token.symbol}
+				</div>
+				<img
+					style="width: 19px; margin: 0px 0px 0px 7px;"
+					alt="logo"
+					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usd-coin-usdc-logo.svg"
+				/>
 			</div>
-			<img
-				style="width: 19px; margin: 0px 0px 0px 7px;"
-				alt="dai logo"
-				src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usd-coin-usdc-logo.svg"
-			/>
+			<div
+				class="flex mt-6"
+				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
+			>
+				<img
+				style="margin-right: 21px; width: 22px; filter:invert(0.6)"
+					alt="info"
+					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
+				/>
+				Please ensure that platforms visited are set to the correct chain when making transactions.
+			</div>
 		</div>
 		<div class="field-section">
-			<div class="search-input flex items-center" style="margin-bottom: 12px">
+			<div class="flex items-center search-input" style="margin-bottom: 12px">
 				<div class="ml-4">
 					<MagnifyingGlass />
 				</div>
@@ -117,7 +130,7 @@
 				/>
 				{#if searchString}
 					<button
-						class="w-4 h-4 border-0 bg-transparent absolute right-4"
+						class="absolute w-4 h-4 bg-transparent border-0 right-4"
 						on:click={(event) => {
 							event.stopPropagation();
 							searchString = '';
@@ -139,12 +152,12 @@
 						<div style="padding-top: 9px">
 							<Web3Logo web3LogoRef={bridge.logo} />
 							<div style="margin-top: 9px;">
-								<div class="field-title text-white text-3xl">{bridge.title}</div>
+								<div class="text-3xl text-white field-title">{bridge.title}</div>
 								<div class="field-title text-[#cecece] text-xl">{bridge.subTitle}</div>
 							</div>
 						</div>
 					</div>
-					<div class="flex justify-center items-center">
+					<div class="flex items-center justify-center">
 						<CardArrow />
 					</div>
 				</a>

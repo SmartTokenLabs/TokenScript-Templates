@@ -9,8 +9,8 @@
 		  name="tether-tokenscript-smart-token-labs">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">Tether TokenScript by SmartTokenLabs</ts:string>
-			<ts:string quantity="other">Tether TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="one">Tether</ts:string>
+			<ts:string quantity="other">Tether</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>

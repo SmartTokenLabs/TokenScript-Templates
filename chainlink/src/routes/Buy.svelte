@@ -23,13 +23,13 @@
 			title: 'CoinOne',
 			type: 'cex',
 			logo: 'CoinOne',
-			url: 'https://coinone.co.kr/exchange/trade/krw/[TOKEN]'
+			url: 'https://coinone.co.kr/exchange/trade/[TOKEN]/krw'
 		},
 		{
 			title: 'Crypto.com',
 			type: 'cex',
 			logo: 'CryptoCOM',
-			url: 'https://crypto.com/price/[TOKEN]'
+			url: 'https://crypto.com/price/chainlink'
 		},
 		{
 			title: 'DragonSwap',
@@ -37,24 +37,24 @@
 			logo: 'DragonSwap',
 			url: 'https://dgswap.io/swap?inputCurrency=0xdAC17F958D2ee523a2206206994597C13D831ec7&outputCurrency=[TOKEN_ADDRESS]'
 		},
-		{
-			title: 'Gate.io',
-			type: 'cex',
-			logo: 'GateIO',
-			url: 'https://www.gate.io/trade/USDT_[TOKEN]'
-		},
+		// {
+		// 	title: 'Gate.io',
+		// 	type: 'cex',
+		// 	logo: 'GateIO',
+		// 	url: 'https://www.gate.io/trade/USDT_[TOKEN]'
+		// },
 		{
 			title: 'OKX',
 			type: 'cex',
 			logo: 'OKX',
 			url: 'https://www.okx.com/web3/dex-swap#inputChain=1&inputCurrency=0xdAC17F958D2ee523a2206206994597C13D831ec7&outputChain=1&outputCurrency=[TOKEN_ADDRESS]'
 		},
-		{
-			title: 'kucoin',
-			type: 'cex',
-			logo: 'Kucoin',
-			url: 'https://www.kucoin.com/trade/USDT-[TOKEN]'
-		},
+		// {
+		// 	title: 'kucoin',
+		// 	type: 'cex',
+		// 	logo: 'Kucoin',
+		// 	url: 'https://www.kucoin.com/trade/USDT-[TOKEN]'
+		// },
 		{
 			title: 'UniSwap',
 			type: 'dex',
@@ -92,16 +92,31 @@
 
 <div>
 	<div id="token-container" class="primary-font-color">
-		<div class="field-section flex">
-			<div class="field-section-title" style="font-size: 24px;">Buy $Link</div>
-			<img
-				style="width: 19px; margin: 0px 0px 0px 7px;"
-				alt="chainlink logo"
-				src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/chainlink-link-logo.svg"
-			/>
+		<div class="field-section" style="padding-bottom: 12px;">
+			<div class="flex field-section" style="padding-left: 0">
+				<div class="text-3xl field-section-title" style="font-size: 24px;">
+					Buy ${token.symbol}
+				</div>
+				<img
+					style="width: 19px; margin: 0px 0px 0px 7px;"
+					alt="logo"
+					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/chainlink-link-logo.svg"
+				/>
+			</div>
+			<div
+				class="flex mt-6"
+				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
+			>
+				<img
+				style="margin-right: 21px; width: 22px; filter:invert(0.6)"
+					alt="info"
+					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
+				/>
+				Please ensure that platforms visited are set to the correct chain when making transactions.
+			</div>
 		</div>
 		<div class="field-section">
-			<div class="search-input flex items-center" style="margin-bottom: 12px">
+			<div class="flex items-center search-input" style="margin-bottom: 12px">
 				<div class="ml-4">
 					<MagnifyingGlass />
 				</div>
@@ -121,7 +136,7 @@
 				/>
 				{#if searchString}
 					<button
-						class="w-4 h-4 border-0 bg-transparent absolute right-4"
+						class="absolute w-4 h-4 bg-transparent border-0 right-4"
 						on:click={(event) => {
 							event.stopPropagation();
 							searchString = '';
@@ -142,7 +157,7 @@
 					<div style="display: flex; align-items: center" class="">
 						<div style="padding-top: 9px">
 							<Web3Logo web3LogoRef={swap.logo} />
-							<div class="flex justify-center items-center" style="margin-top: 9px;">
+							<div class="flex items-center justify-center" style="margin-top: 9px;">
 								<div class="field-title" style="font-size: 24px; color: white;">{swap.title}</div>
 								<div style="margin-left: 12px; margin-bottom: 12px;">
 									{#if swap.type === 'dex'}
@@ -163,7 +178,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="flex justify-center items-center">
+					<div class="flex items-center justify-center">
 						<CardArrow />
 					</div>
 				</a>

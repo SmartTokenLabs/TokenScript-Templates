@@ -9,8 +9,8 @@
 		  name="usdc-tokenscript-smart-token-labs">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">USDC TokenScript by SmartTokenLabs</ts:string>
-			<ts:string quantity="other">USDC TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="one">USDC</ts:string>
+			<ts:string quantity="other">USDC</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>

@@ -79,13 +79,13 @@
 		const inputElement = event.target as HTMLInputElement;
 		const inputElValue = inputElement.value.replace(/[+-]/g, '');
 		receivingAmountViewValue = inputElValue;
-		receivingAmount = ethers.parseEther(inputElValue);
+		receivingAmount = ethers.parseUnits(inputElValue, token?.decimals ?? 18).toString();
 		updateWeb3Props();
 	}
 
 	async function setTokenAmountMax() {
 		receivingAmountViewValue = tokenAmount;
-		receivingAmount = ethers.parseEther(tokenAmount.toString());
+		receivingAmount = ethers.parseUnits(tokenAmount.toString(), token?.decimals ?? 18);
 		updateWeb3Props();
 	}
 

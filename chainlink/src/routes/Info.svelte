@@ -61,7 +61,7 @@
 					<div class="text-center">
 						<div class="text-sm secondary-font-colour">Value ETH</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 2)}
+							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 5)}
 						</div>
 					</div>
 					<div class="text-center">

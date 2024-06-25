@@ -25,6 +25,7 @@
 
 	// @ts-ignore
 	web3.tokens.dataChanged = async (oldTokens, updatedTokens, cardId) => {
+		
 		if (initialised) return;
 
 		context.setToken(updatedTokens.currentInstance);

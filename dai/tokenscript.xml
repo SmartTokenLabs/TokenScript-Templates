@@ -9,8 +9,8 @@
 		  name="dai-tokenscript-smart-token-labs">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">DAI TokenScript by SmartTokenLabs</ts:string>
-			<ts:string quantity="other">DAI TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="one">DAI</ts:string>
+			<ts:string quantity="other">DAI</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>

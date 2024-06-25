@@ -9,8 +9,8 @@
 					name="smart-token-layer">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">Smart Layer Network</ts:string>
-			<ts:string quantity="other">Smart Layer Network</ts:string>
+			<ts:string quantity="one">SLN (Klaytn)</ts:string>
+			<ts:string quantity="other">SLN (Klaytn)</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>

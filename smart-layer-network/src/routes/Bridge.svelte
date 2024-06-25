@@ -82,9 +82,9 @@
 <div>
 	<div id="token-container" class="text-white">
 		<div class="field-section" style="padding-bottom: 12px;">
-			<div class="field-section-title neue-plak text-3xl" style="font-size: 24px;">Bridge $SLN</div>
+			<div class="text-3xl field-section-title neue-plak" style="font-size: 24px;">Bridge $SLN</div>
 			<div
-				class="mt-6 flex"
+				class="flex mt-6"
 				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
 			>
 				<img
@@ -92,11 +92,11 @@
 					alt="info"
 					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
 				/>
-				Please ensure that platforms visited are connected and set to the correct chain when making transactions.
+				Please ensure that platforms visited are set to the correct chain when making transactions.
 			</div>
 		</div>
 		<div class="field-section">
-			<div class="search-input flex items-center" style="margin-bottom: 12px">
+			<div class="flex items-center search-input" style="margin-bottom: 12px">
 				<div class="ml-4">
 					<MagnifyingGlass />
 				</div>
@@ -116,7 +116,7 @@
 				/>
 				{#if searchString}
 					<button
-						class="w-4 h-4 border-0 bg-transparent absolute right-4"
+						class="absolute w-4 h-4 bg-transparent border-0 right-4"
 						on:click={(event) => {
 							event.stopPropagation();
 							searchString = '';
@@ -130,7 +130,7 @@
 			{#each filteredBridges as bridge}
 				<a
 					style="background: #1E233C; margin-bottom: 18px"
-					class="swap-card flex items-center justify-between border border-gray-700 rounded-lg p-6 text-white cursor-pointer transition duration-300 hover:border-gray-400 hover:text-gray-400"
+					class="flex items-center justify-between p-6 text-white transition duration-300 border border-gray-700 rounded-lg cursor-pointer swap-card hover:border-gray-400 hover:text-gray-400"
 					href={bridge.url}
 					target="_blank"
 				>
@@ -140,12 +140,12 @@
 								<Web3Logo web3LogoRef={bridge.logo} />
 							</div>
 							<div style="margin-top: 9px;">
-								<div class="field-title text-white text-3xl">{bridge.title}</div>
-								<div class="field-title text-white text-xl">{bridge.subTitle}</div>
+								<div class="text-3xl text-white field-title">{bridge.title}</div>
+								<div class="text-xl text-white field-title">{bridge.subTitle}</div>
 							</div>
 						</div>
 					</div>
-					<div class="flex justify-center items-center">
+					<div class="flex items-center justify-center">
 						<CardArrow />
 					</div>
 				</a>

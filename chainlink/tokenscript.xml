@@ -9,8 +9,8 @@
 		  name="chainlink-tokenscript-smart-token-labs">
 	<ts:label>
 		<ts:plurals xml:lang="en">
-			<ts:string quantity="one">ChainLink TokenScript by SmartTokenLabs</ts:string>
-			<ts:string quantity="other">ChainLink TokenScript by SmartTokenLabs</ts:string>
+			<ts:string quantity="one">ChainLink</ts:string>
+			<ts:string quantity="other">ChainLink</ts:string>
 		</ts:plurals>
 	</ts:label>
 	<ts:meta>

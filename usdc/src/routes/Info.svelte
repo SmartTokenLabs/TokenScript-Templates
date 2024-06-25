@@ -22,12 +22,14 @@
 
 	async function setTokenPriceData() {
 		const tokenStatsRequest = await fetch(
-			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=0x514910771af9ca656af840dff83e8264ecf986ca&chain=eth`
+			`https://api.token-discovery.tokenscript.org/get-token-price?blockchain=evm&smartContract=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&chain=eth`
 		);
 		tokenStats = await tokenStatsRequest.json();
 		if (tokenStats.value && tokenStats.usdPrice) {
 			tokenStatsPriceEth = tokenStats.value ?? 'not found';
 			tokenStatsPriceUsd = tokenStats?.usdPrice?.toLocaleString('en-US') ?? 'not found';
+
+			console.log('...', tokenStats);
 
 			if (token._count) {
 				// @ts-ignore
@@ -61,7 +63,7 @@
 					<div class="text-center">
 						<div class="text-sm secondary-font-color">Value ETH</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 2)}
+							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 5)}
 						</div>
 					</div>
 					<div class="text-center">
