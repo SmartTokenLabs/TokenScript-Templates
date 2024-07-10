@@ -67,7 +67,7 @@
 					<div class="text-center">
 						<div class="text-sm secondary-font-colour">Value USD</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
+							{loading ? '-' : `$${formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}`}
 						</div>
 					</div>
 				</div>
@@ -108,9 +108,25 @@
 					<div class="text-lg font-semibold">ERC-20</div>
 				</div>
 				<div class="mt-4">
-					<div class="text-sm secondary-font-colour">Chain</div>
-					<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
-						{chainConfig[token.chainId].name}
+					<div class="text-sm secondary-font-color">Chain</div>
+					<div style="margin-left: 2px;" class="text-lg font-semibold">
+						{#if token.chainId === 1}
+							<div class="flex">
+								<div style="margin-right: 6px;" class="text-lg font-semibold">
+									Ethereum Mainnet
+								</div>
+								<div class="field-value-alt flex">
+									<img
+										style="height: 24px; width: 17px; position: relative; top: 2px;"
+										alt="chain"
+										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+									/>
+								</div>
+							</div>
+						{/if}
+						{#if token.chainId !== 1}
+							chainConfig[token.chainId].name
+						{/if}
 					</div>
 				</div>
 			</div>

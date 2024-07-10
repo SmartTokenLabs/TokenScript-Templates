@@ -19757,7 +19757,7 @@ p.light {
 
 			<ts:attribute name="renewalSeconds">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
@@ -19766,7 +19766,7 @@ p.light {
 
 			<ts:attribute name="renewalPrice">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
@@ -19775,7 +19775,7 @@ p.light {
 
 			<ts:attribute name="baseENSTokenId">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.27</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ts:user-entry as="uint"/>
@@ -19784,7 +19784,7 @@ p.light {
 
 			<ts:attribute name="renewalPricePerYear">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">renewal price per year</ts:string>
@@ -19821,7 +19821,7 @@ p.light {
 
 			<ts:attribute name="newRecordValue">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">new record value</ts:string>
@@ -19833,7 +19833,7 @@ p.light {
 
 			<ts:attribute name="newRecordKey">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:label>
 					<ts:string xml:lang="en">new record key</ts:string>
@@ -19845,7 +19845,7 @@ p.light {
 
 			<ts:attribute name="emailRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19859,7 +19859,7 @@ p.light {
 
 			<ts:attribute name="locationRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19873,7 +19873,7 @@ p.light {
 
 			<ts:attribute name="noticeRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19887,7 +19887,7 @@ p.light {
 
 			<ts:attribute name="displayRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19901,7 +19901,7 @@ p.light {
 
 			<ts:attribute name="urlRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19915,7 +19915,7 @@ p.light {
 
 			<ts:attribute name="phoneRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19929,7 +19929,7 @@ p.light {
 
 			<ts:attribute name="keywordsRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19943,7 +19943,7 @@ p.light {
 
 			<ts:attribute name="descriptionRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19957,7 +19957,7 @@ p.light {
 
 			<ts:attribute name="avatarRecord">
 				<ts:type>
-					<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+					<ts:syntax/>
 				</ts:type>
 				<ts:origins>
 					<ethereum:call as="utf8" contract="PublicResolver" function="text">
@@ -19988,7 +19988,7 @@ p.light {
 
 	<ts:attribute name="ensName">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">ENS Name</ts:string>
@@ -20000,7 +20000,7 @@ p.light {
 	
 	<ts:attribute name="subName">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">ENS subName</ts:string>
@@ -20012,7 +20012,7 @@ p.light {
 
 	<ts:attribute name="ensBaseName">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">ENS Base Name</ts:string>
@@ -20024,7 +20024,7 @@ p.light {
 
 	<ts:attribute name="expiry">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">Expiry</ts:string>
@@ -20036,7 +20036,7 @@ p.light {
 
 	<ts:attribute name="nameHash">
 		<ts:type>
-			<ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+			<ts:syntax/>
 		</ts:type>
 		<ts:label>
 			<ts:string xml:lang="en">Name Hash</ts:string>

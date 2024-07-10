@@ -17,7 +17,7 @@
 		<ts:description xml:lang="en">USDC</ts:description>
 		<ts:aboutUrl xml:lang="en">https://coinmarketcap.com/currencies/usd-coin/</ts:aboutUrl>
 		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usd-coin-usdc-logo.svg</ts:iconUrl>
-		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usdc-logo-with-text.png</ts:imageUrl>
+		<ts:imageUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/usdc-logo-with-text-w-h-padding.png</ts:imageUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<ts:address network="1">0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</ts:address>

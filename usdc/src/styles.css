@@ -25,6 +25,9 @@
 .secondary-background-color {
 	background-color: #2774c9;
 }
+.secondary-background-color-gradient {
+	background: linear-gradient(135deg, #2774c9 50%, #63a4ff 100%);
+}
 .tertiary-background-color {
 	background-color: #383838;
 }
@@ -135,6 +138,10 @@ p.light {
 	background: none;
 	border: none;
 	font-size: 18px;
+}
+
+a.tertiary-background-color:hover {
+	opacity: 0.96;
 }
 
 button {

@@ -141,6 +141,11 @@ p.light {
 button {
 	cursor: pointer;
 }
+
+a.tertiary-background-color:hover {
+	background-color: #092353
+}
+
 .gradient-button:disabled, button:disabled {
 	opacity: 0.3;
 	cursor: default;

@@ -98,14 +98,14 @@
 			</div>
 			<div
 				class="flex mt-6"
-				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
+				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: rgb(56 56 56); font-size: 14px;"
 			>
 				<img
 				style="margin-right: 21px; width: 22px; filter:invert(0.6)"
 					alt="info"
 					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
 				/>
-				Please ensure that platforms visited are set to the correct chain when making transactions.
+				Please ensure that the platforms visited are set to the correct chain when making transactions.
 			</div>
 		</div>
 		<div class="field-section">
@@ -142,8 +142,7 @@
 			</div>
 			{#each filteredBridges as bridge}
 				<a
-					style="background: #0c162d; margin-bottom: 18px"
-					class="swap-card flex items-center justify-between border border-gray-700 rounded-lg p-6 text-[#3e4556] cursor-pointer transition duration-300 hover:border-gray-400 hover:text-[#3e4556]"
+					class="mb-[18px] bg-[#0c162e] swap-card flex items-center justify-between border border-gray-700 rounded-lg p-6 text-[#3e4556] cursor-pointer transition duration-300 hover:bg-[#1f2440] hover:text-[#3e4556]"
 					href={bridge.url}
 					target="_blank"
 				>
