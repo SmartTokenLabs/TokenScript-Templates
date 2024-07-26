@@ -55,20 +55,19 @@
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
 
+		loading = false;
+		
 		updateToken(value.token);
 
 		expiry = dateToUIDate(token.nameExpires * 1000);
 
 		init();
 
-		// You can load other data before hiding the loader
-		loading = false;
 	});
 
 	async function estimateGasPrice() {
 		const feeData = await evmProvider.getFeeData();
 		const gasUnits = await contract.getFunction("renew").estimateGas(token.ensName, renewalSeconds, {value: renewalPrice});
-
 		estimatedGasPriceWei = feeData.gasPrice * gasUnits;
 		estimatedGasPriceEth = ethers.formatEther(estimatedGasPriceWei);
 	}

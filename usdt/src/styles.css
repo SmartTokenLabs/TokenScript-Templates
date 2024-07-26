@@ -151,6 +151,10 @@ button {
     animation-delay: 1s;
 }
 
+a.tertiary-background-color:hover {
+	opacity: 0.96;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -256,7 +260,7 @@ input, textarea {
     padding: 12px 14px;
     width: 100%;
     margin: 5px 0;
-    transition: border-color 0.25s ease-in-out; 
+    transition: all 0.25s ease-in-out; 
 }
 
 .inverted-image {

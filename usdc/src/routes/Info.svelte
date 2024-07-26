@@ -69,12 +69,12 @@
 					<div class="text-center">
 						<div class="text-sm secondary-font-color">Value USD</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
+							{loading ? '-' : `$${formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}`}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="p-6 secondary-background-color">
+			<div class="p-6 secondary-background-color-gradient">
 				<div class="flex items-center justify-between text-white">
 					<div class="text-lg font-semibold">Market Value</div>
 				</div>
@@ -99,20 +99,36 @@
 				</div>
 				<div class="mt-4">
 					<div class="text-sm secondary-font-color">Name</div>
-					<div class="text-lg font-semibold">{token.name ?? '-'}</div>
+					<div class="text-[17px] font-semibold">{token.name ?? '-'}</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm secondary-font-color">Symbol</div>
-					<div class="text-lg font-semibold">{token.symbol ?? '-'}</div>
+					<div class="text-[16px] font-semibold">{token.symbol ?? '-'}</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm secondary-font-color">Type</div>
-					<div class="text-lg font-semibold">ERC-20</div>
+					<div class="text-[16px] font-semibold">ERC-20</div>
 				</div>
 				<div class="mt-4">
 					<div class="text-sm secondary-font-color">Chain</div>
-					<div style="margin-left: 2px; margin-top: 1.5px;" class="text-lg font-semibold">
-						{chainConfig[token.chainId].name}
+					<div class="text-[16px] font-semibold">
+						{#if token.chainId === 1}
+							<div class="flex">
+								<div style="margin-right: 6px;" class="font-semibold">
+									Ethereum Mainnet
+								</div>
+								<div class="field-value-alt flex">
+									<img
+										style="height: 24px; width: 17px; position: relative;"
+										alt="chain"
+										src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/ethereum.svg"
+									/>
+								</div>
+							</div>
+						{/if}
+						{#if token.chainId !== 1}
+							chainConfig[token.chainId].name
+						{/if}
 					</div>
 				</div>
 			</div>

@@ -98,14 +98,14 @@
 			</div>
 			<div
 				class="flex mt-6"
-				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: #9ca3af"
+				style="padding: 12px; border: 1px solid #353c5c; border-radius: 10px; color: rgb(56 56 56); font-size: 14px;"
 			>
 				<img
 				style="margin-right: 21px; width: 22px; filter:invert(0.6)"
 					alt="info"
 					src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/icons/info.svg"
 				/>
-				Please ensure that platforms visited are set to the correct chain when making transactions.
+				Please ensure that the platforms visited are set to the correct chain when making transactions.
 			</div>
 		</div>
 		<div class="field-section">

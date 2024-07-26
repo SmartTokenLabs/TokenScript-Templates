@@ -115,7 +115,7 @@
 					<div class="text-center">
 						<div class="text-sm text-gray-400">Value USD</div>
 						<div class="text-lg font-semibold">
-							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
+							{loading ? '-' : `$${formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}`}
 						</div>
 					</div>
 				</div>
