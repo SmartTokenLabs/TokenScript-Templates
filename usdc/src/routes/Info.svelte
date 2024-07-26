@@ -111,7 +111,7 @@
 				</div>
 				<div class="mt-4">
 					<div class="text-sm secondary-font-color">Chain</div>
-					<div style="margin-left: 2px;" class="text-[16px] font-semibold">
+					<div class="text-[16px] font-semibold">
 						{#if token.chainId === 1}
 							<div class="flex">
 								<div style="margin-right: 6px;" class="font-semibold">
