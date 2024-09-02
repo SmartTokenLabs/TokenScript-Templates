@@ -1,228 +1,202 @@
 <script lang="ts">
-
 	import context from '../lib/context';
 	import { showLoader } from '../lib/storage';
-
-
-	import NftCard from '../components/NftCard.svelte';
+	import TokenCard from '../components/TokenCard.svelte';
 	import MessagePopup from '../components/MessagePopup.svelte';
-	import { ThreadItem, Token, NftCardTypes } from '../lib/types';
-
+	import { ThreadItem, Token, TokenCardTypes } from '../lib/types';
 	import { signMessage } from '../lib/data';
 	import { MESSAGING_GENERATOR, MESSAGING_PRIME } from '../lib/constants';
 	import { DH } from '../lib/dh';
 	import { hexStringToUint8 } from '../lib/helpers';
-	
+	import { onDestroy } from 'svelte';
+	import { ethers } from 'ethers';
 
 	let token: Token;
-	let contract;
+	let contract: any; // Replace `any` with the correct type if available
 
-	let threadsList: ThreadItem[] = [] as ThreadItem[];
-	let selectedFriendId: string = '';
-	let reloadTimer;
-	let client;
+	let threadsList: ThreadItem[] = [];
+	let selectedFriendAddress: string = '';
+	let reloadTimer: NodeJS.Timeout;
+	let client: any; // Replace `any` with the correct type if available
 
 	let userSharedKey: string;
 	let derivedPrivateKey: string;
 	let secret: string;
 
-	let adminChatNft:ThreadItem;
+	let adminChatToken: ThreadItem;
 
 	const loadThreads = async () => {
 		try {
 			client = await context.getMessageClient();
 			const adminUnread = await client.getBroadcastMessageCount();
-			if (adminUnread && adminUnread.hasOwnProperty("count")){
-				adminChatNft = {
+			if (adminUnread && adminUnread.hasOwnProperty("count")) {
+				adminChatToken = {
+					friendAddress: "admin",
 					contract: token.contractAddress,
 					unread: adminUnread.count,
 					tokenUri: token.contractURI,
 					owner: "Admin account",
-					tokenId: "admin",
+					tokenAddress: "admin",
 					wrongOwner: false,
-					tokenIdName: token.contractName || "ERC721 Contract",
+					tokenName: token.contractName || "ERC-20 Contract",
 					friendsSharedKey: "", 
 					yourSharedKey: ""
-				}
+				};
 			}
 
-			adminChatNft.unread = adminUnread.count
+			adminChatToken.unread = adminUnread.count;
 			const res = await client.getNewMessages();
-
 			const friendsList = await client.getApprovedFriend();
 
-			// friendship requests can be initiated by both sides
-			// extract friend data
-			let list = friendsList.map((item) => {
-				if (item.sendingTokenId != token.tokenId) {
-					return {
-						tokenId: item.sendingTokenId,
-						owner: item.sendingAddress,
-						friendsSharedKey: item.sendingSharedKey || '',
-						yourSharedKey: item.receivingSharedKey || '',
-						wrongOwner: false,
-						unread: res.senders[item.sendingTokenId]?.unread ?? 0
-					} as ThreadItem;
-				} else {
-					return {
-						tokenId: item.receivingTokenId,
-						owner: item.receivingAddress,
-						friendsSharedKey: item.receivingSharedKey || '',
-						yourSharedKey: item.sendingSharedKey || '',
-						wrongOwner: false,
-						unread: res.senders[item.receivingTokenId]?.unread ?? 0
-					} as ThreadItem;
-				}
+			threadsList = friendsList.map((item:any) => {
+				const isSender = token.ownerAddress.toLocaleLowerCase() !== item.sendingAddress.toLocaleLowerCase();
+				return {
+					owner: isSender ? item.sendingAddress : item.receivingAddress,
+					friendsSharedKey: isSender ? item.sendingSharedKey : item.receivingSharedKey || '',
+					yourSharedKey: isSender ? item.receivingSharedKey : item.sendingSharedKey || '',
+					friendAddress: isSender ? item.sendingAddress : item.receivingAddress || '',
+					wrongOwner: false,
+					unread: res.senders[isSender ? item.sendingAddress : item.receivingSharedKey]?.unread ?? 0
+				} as ThreadItem;
 			});
 
-			threadsList = list.sort((a, b) => {
-				return a.unread < b.unread ? 1 : -1;
-			});
+			threadsList.sort((a, b) => (b.unread ?? 0) - (a.unread ?? 0));
 
-			threadsList = await Promise.all(
-				threadsList.map(async (item) => {
-					let owner = await contract['ownerOf'](item.tokenId);
-					if (!owner || owner.toLowerCase() != item.owner.toLowerCase()) item.wrongOwner = true;
-
-					return item;
-				})
-			);
-		} catch (e) {
-			console.error(e);
-			alert('Message load failed: ' + e.message);
+		} catch (e:any) {
+			console.error('Error loading threads:', e);
+			alert('Message load failed: ' + e?.message);
+		} finally {
+			showLoader.set(false);
 		}
-		showLoader.set(false);
 	};
 
-	context.data.subscribe(async (value) => {
+	// Subscriptions to context data
+	let unsubscribeContextData = context.data.subscribe(async (value) => {
 		if (!value.token) return;	
 		token = value.token;
 		contract = value.contract;
-		$showLoader = true;
+		showLoader.set(true);
 		await loadThreads();
-		$showLoader = false;
+		showLoader.set(false);
 		reloadTimer = setInterval(loadThreads, 60000);
 	});
-	context.messagingKey.subscribe((value) => {
+
+	let unsubscribeMessagingKey = context.messagingKey.subscribe((value) => {
 		userSharedKey = value;
 	});
-	context.derivedPrivateKey.subscribe((value) => {
+
+	let unsubscribeDerivedPrivateKey = context.derivedPrivateKey.subscribe((value) => {
 		derivedPrivateKey = value;
 	});
 
-	async function getDerivedKey() {
-		if (derivedPrivateKey) {
-			return;
-		}
+	onDestroy(() => {
+		// Cleanup subscriptions and timers
+		if (reloadTimer) clearInterval(reloadTimer);
+		unsubscribeContextData();
+		unsubscribeMessagingKey();
+		unsubscribeDerivedPrivateKey();
+	});
 
-		let t = web3.tokens.data.currentInstance;
-		const signature = await signMessage(
-			`Sign this message to enable encryption of messages from [${t.contractAddress}#${t.tokenId}]`
-		);
-		const key = signature.substring(signature.length - 64);
+	async function getDerivedKey() {
+		if (derivedPrivateKey) return;
+		const signature = await signMessage(`Sign this message to enable encryption of messages from [${token.ownerAddress}]`);
+		const key = signature.slice(-64);
 		context.derivedPrivateKey.set(key);
 	}
 
 	async function friendSelected(friend: ThreadItem) {
-		// @ts-ignore
 		showLoader.set(true);
 		try {
 			if (!friend.yourSharedKey && !userSharedKey) {
 				await getDerivedKey();
 
 				const walletDH = new DH(
-					// hexStringToUint8(import.meta.env.VITE_MESSAGING_PRIME),
 					hexStringToUint8(MESSAGING_PRIME),
-					// hexStringToUint8(import.meta.env.VITE_MESSAGING_GENERATOR)
 					hexStringToUint8(MESSAGING_GENERATOR)
 				);
-
 				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey));
-
 				userSharedKey = walletDH.generateKeys();
-
 				context.messagingKey.set(userSharedKey);
-
-				await client.postSecureMessaging(userSharedKey);
-				friend.yourSharedKey = userSharedKey;
-			} else {
-				if (friend.yourSharedKey) {
-					context.messagingKey.set(friend.yourSharedKey);
+				if(userSharedKey) {
+					await client.postSecureMessaging(userSharedKey);
+				} else {
+					console.warn('Failed to generate shared key');
 				}
+				friend.yourSharedKey = userSharedKey;
+			} else if (friend.yourSharedKey) {
+				context.messagingKey.set(friend.yourSharedKey);
 			}
-			// @ts-ignore
-			if (!friend.friendsSharedKey) {
-				console.log('Friend have to sign and send to server');
-			} else {
+			if (friend.friendsSharedKey) {
 				await getDerivedKey();
-
 				const walletDH = new DH(
 					hexStringToUint8(MESSAGING_PRIME),
 					hexStringToUint8(MESSAGING_GENERATOR)
 				);
-
 				walletDH.setPrivateKey(hexStringToUint8(derivedPrivateKey));
-
 				secret = walletDH.computeSecret(hexStringToUint8(friend.friendsSharedKey));
-				console.log('Secret = ', secret);
+			} else {
+				console.log('Friend has to sign and send to server to enable encryption');
 			}
 		} catch (e) {
-			console.log('....Shared key error....');
-			console.log(e);
+			console.error('Shared key error:', e);
+		} finally {
+			showLoader.set(false);
 		}
-		showLoader.set(false);
 
-		friend.wrongOwner || (selectedFriendId = friend.tokenId);
+		if (!friend.wrongOwner) {
+			selectedFriendAddress = friend.owner;
+		}
 	}
 
-	function adminSelected(){
-		selectedFriendId = "admin"
+	function adminSelected() {
+		selectedFriendAddress = "admin";
 	}
 </script>
 
 <h3 class="text-center">Messages</h3>
-<div class="text-center">Send messages to other NFT owners.</div>
-
+<div class="text-center">Send messages to other Token owners.</div>
 
 <div id="thread-list">
-	{#if adminChatNft}
-	<NftCard nft={adminChatNft}  
-		accountType={NftCardTypes.Admin}
-		on:click={adminSelected}
-		on:keypress={adminSelected}/>
+	{#if adminChatToken}
+		<TokenCard 
+			selected={''}
+			tokenItem={adminChatToken}  
+			accountType={TokenCardTypes.Admin}
+			on:click={adminSelected}
+			on:keypress={adminSelected} />
 	{/if}
 	{#if threadsList}
 		{#if threadsList.length}
 			<div class="cat-list">
 				{#each threadsList as friend}
-					<NftCard nft={friend}
-					accountType={NftCardTypes.Messages}
-					on:click={() => {
-						friendSelected(friend);
-					}}
-					on:keypress={() => {
-						friendSelected(friend);
-					}}/>
+					<TokenCard 
+						selected={''}
+						tokenItem={friend}
+						accountType={TokenCardTypes.Messages}
+						on:click={() => friendSelected(friend)}
+						on:keypress={() => friendSelected(friend)} />
 				{/each}
 			</div>
-		{:else if !$showLoader}
+		{:else if !showLoader}
 			<h5>You don't have any messages from your friends yet</h5>
 			<p>
-				Share your NFT ID with other owners or request some NFT to be your friend and when another
-				NFT owner approve your friendship request then you can start chatting
+				Share your address with other owners or request a holding address to be your friend, and when another
+				token owner approves your friendship request, you can start chatting.
 			</p>
 		{/if}
 	{:else}
 		<div>No message threads.</div>
 	{/if}
 
-	{#if selectedFriendId}
+	{#if selectedFriendAddress}
 		<MessagePopup
-			threadsList={selectedFriendId=="admin"?[adminChatNft]:threadsList}
-			friendId={selectedFriendId}
+			threadsList={selectedFriendAddress === "admin" ? [adminChatToken] : threadsList}
+			{selectedFriendAddress}
 			{secret}
-			closed={() => {selectedFriendId = ''; loadThreads()}}
-		/>
+			closed={() => {
+				selectedFriendAddress = '';
+				loadThreads();
+			}} />
 	{/if}
 </div>
 
@@ -231,7 +205,6 @@
 		margin-top: 40px;
 	}
 	.cat-list {
-		// margin: 0 10px;
 		display: flex;
 		flex-direction: column;
 		cursor: pointer;

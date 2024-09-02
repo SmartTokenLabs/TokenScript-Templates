@@ -34,6 +34,7 @@ DH.prototype.computeSecret = function (other) {
 	if (!(other instanceof Uint8Array)) {
 		throw new Error('computeSecret param must be Uint8Array');
 	}
+	// check why 32?
 	if (other.length != 32) {
 		throw new Error('wrong shared secret length');
 	}

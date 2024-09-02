@@ -8,7 +8,6 @@ export type Token = {
 	name: string;
 	ownerAddress: string;
 	symbol: string;
-	tokenId: string;
 	contractOwner?: string;
 	contractName?: string;
 	contractURI?: string;
@@ -24,30 +23,29 @@ export type MessagesData = {
 export type Invite = {
 	createdAt: string;
 	sendingAddress: string;
-	sendingTokenId: string;
 };
 
 export type Friend = {
 	receivingAddress: string;
 	receivingSharedKey?: string;
-	receivingTokenId: string;
 	sendingAddress: string;
-	sendingTokenId: string;
 	sendingSharedKey?: string;
 };
 
-type NftCardData = {
-	tokenIdName?: string;
+type TokenCardData = {
+	tokenName?: string;
 };
 
 export type ThreadItem = CatListItem & {
 	contract?: string;
 	chainId?: string;
 	wrongOwner: boolean;
+	tokenAddress:string
+	friendAddress:string
 } & MessagesData &
-	NftCardData;
+	TokenCardData;
 
-export const NftCardTypes = {
+export const TokenCardTypes = {
 	Messages: 0,
 	Friends: 1,
 	Admin: 2

@@ -1,13 +1,13 @@
 <script lang="ts">
 	export let message: {
 		createdAt: number;
-		sendingTokenId: number;
+		senderTokenAddress: string;
 		message: string;
 		messageDecoded: string;
 		read: boolean;
 		encrypted: boolean;
 	};
-	export let senderTokenId: number;
+	export let senderTokenAddress: string;
 
 	let dateString: string;
 
@@ -23,12 +23,12 @@
 	}
 </script>
 
-<div class="message-bubble {message.sendingTokenId == senderTokenId ? 'sender' : ''} ">
+<div class="message-bubble {message.senderTokenAddress == senderTokenAddress ? 'sender' : ''} ">
 	<div class="message-content">
 		{message.messageDecoded ? message.messageDecoded : message.message}
 	</div>
 	<small class="message-meta">
-		{message.sendingTokenId == senderTokenId && (message.read || message.openedAt) ? '✓ (seen) ' : ''}
+		{message.senderTokenAddress == senderTokenAddress && (message.read || message.openedAt) ? '✓ (seen) ' : ''}
 		{dateString}
 	</small>
 </div>

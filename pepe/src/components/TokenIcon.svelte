@@ -5,7 +5,7 @@
 	import { metadataCache } from '../lib/storage';
 	import { allowedChainsDiscovery } from '../lib/constants';
 
-	export let tokenId: string;
+	export let tokenAddress: string;
 	let token: Token;
 	let contract: any;
 
@@ -17,7 +17,7 @@
 	let src: string;
 
 	onMount(async () => {
-		if (tokenId == "admin"){
+		if (tokenAddress == "admin"){
 			if (!token.contractURI) return;
 			try {
 				const meta = await (
@@ -32,28 +32,16 @@
 			return;
 		}
 		try {
-			src = $metadataCache[tokenId];
+			src = $metadataCache[tokenAddress];
 			
 			if (src){
 				return;
 			}
 
 			let chainName = allowedChainsDiscovery[token.chainId.toString()]
-			if (chainName){
-				try {
-					const meta = await (
-						await fetch(`https://api.token-discovery.tokenscript.org/get-token?chain=${chainName}&collectionAddress=${token.contractAddress}&tokenId=${tokenId}`, {
-							headers: {
-								'Content-type': 'text/plain'
-							}
-						})
-					).json();
-					if (meta && meta.image) src = meta.image;
-				} catch(e){}
-			}
-				
+			
 			if (!src){
-				let tokenUri = await contract['tokenURI'](tokenId);
+				let tokenUri = await contract['tokenURI'](tokenAddress);
 				const meta = await (
 					await fetch(tokenUri, {
 						headers: {
@@ -63,7 +51,7 @@
 				).json();
 				src = meta.image;
 			}
-			$metadataCache[tokenId] = src
+			$metadataCache[tokenAddress] = src
 		} catch (e) {
 			console.log('failed to fetch image URL');
 		}

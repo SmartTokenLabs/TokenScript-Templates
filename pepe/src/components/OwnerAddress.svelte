@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { lookupEnsName } from '../lib/data';
-	import { NftCardTypes } from '../lib/types';
+	import { TokenCardTypes } from '../lib/types';
 
 	export let address: string;
-	export let accountType = NftCardTypes.Friends
+	export let accountType = TokenCardTypes.Friends
 
 	let ensName: string;
 
@@ -17,7 +17,7 @@
 </script>
 
 <small class="eth-address" title={address}>
-	{#if accountType != NftCardTypes.Admin}
+	{#if accountType != TokenCardTypes.Admin}
 		<span class=fw600>Owner:</span>
 	{/if}
 	<span>{ensName ? `${ensName} (${address})` : address}</span>

@@ -1,25 +1,23 @@
 <script lang="ts">
 	import context from '../lib/context';
-	import { Token, ThreadItem, Invite, Friend, NftCardTypes } from '../lib/types';
+	import { Token, ThreadItem, Invite, Friend, TokenCardTypes } from '../lib/types';
 	import { showLoader, notify } from '../lib/storage';
-	import NftCard from '../components/NftCard.svelte';
+	import TokenCard from '../components/TokenCard.svelte';
 	import { MessageClient } from '../lib/messageClient';
 
 	export let activeTabValue = 1;
 	export let friendsTabActive = true;
-	let friendId = '';
+	let friendAddress = '';
 
 	let selectedInvite = "-1";
 
 	let invites: Invite[] = [];
 	let ownInvites: Invite[] = [];
 	let friends: Friend[] = [];
-
 	let token: Token;
 
 	let loading = false;
 	let client: MessageClient;
-	// let reloadTimer;
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
@@ -30,7 +28,6 @@
 		await loadInvites();
 		await loadOwnInvites();
 		showLoader.set(false);
-		// reloadTimer = setInterval(() => loadThreads(), 60000);
 	});
 
 	async function loadOwnInvites(){
@@ -42,32 +39,17 @@
 		}
 	}
 
-	async function inviteFriend(localFriendId: string = "") {
-
-		localFriendId = localFriendId != "" ? localFriendId : friendId;
-		if (localFriendId == "") {
-			$notify = {status: false, message: "Please enter the NFT#ID and try again"}
+	async function inviteFriend(localFriendAddress: string = "") {
+		if (!localFriendAddress || localFriendAddress == "") {
+			$notify = {status: false, message: "Please enter the Wallet Address and try again"}
 			return;
 		}
 		showLoader.set(true);
 		try {
-			let t = web3.tokens.data.currentInstance;
-
-			// try {
-				// localFriendId = BigInt(localFriendId).toString();
-			// } catch (e) {
-			// 	throw new Error('Invalid token ID. Number or hex string allowed only');
-			// }
-			// if (!localFriendId || !t.tokenId) {
-			// 	throw new Error('TokenId missing');
-			// }
-
-			// Change localFriendId to string / user address.
-
-			const result = await client.postInviteFriend(localFriendId);
+			const result = await client.postInviteFriend(localFriendAddress);
 			console.log({ result });
 			$notify = {status: true, message: result.message}
-			friendId = '';
+			friendAddress = '';
 			await loadOwnInvites()
 			await loadInvites()
 		} catch (e) {
@@ -79,12 +61,12 @@
 	const loadInvites = async () => {
 		try {
 			invites = await client.getFriendInvites();
-		} catch (e) {
+		} catch (e:any) {
 			$notify = {status: false, message: 'Invite send failed: ' + e.message}
 		}
 	};
 
-	function inviteToNft(invite: Invite) {
+	function inviteToTokenHolder(invite: Invite) {
 		return {
 			unread: 0,
 			contract: token.contractAddress,
@@ -92,12 +74,14 @@
 			wrongOwner: false,
 			friendsSharedKey: '',
 			yourSharedKey: '',
-			tokenId: invite.sendingTokenId,
 			owner: invite.sendingAddress
 		} as ThreadItem;
 	}
 
-	function friendToNft(fiend: Friend) {
+	function friendToTokenHolder(friend: Friend) {
+		let displayAddr = '';
+		if(token.ownerAddress.toLocaleLowerCase() == friend.receivingAddress.toLocaleLowerCase()) displayAddr = friend.sendingAddress;
+		if(token.ownerAddress.toLocaleLowerCase() == friend.sendingAddress.toLocaleLowerCase()) displayAddr = friend.receivingAddress;
 		return {
 			unread: 0,
 			contract: token.contractAddress,
@@ -105,9 +89,7 @@
 			wrongOwner: false,
 			friendsSharedKey: '',
 			yourSharedKey: '',
-			tokenId:
-				fiend.sendingTokenId == token.tokenId ? fiend.receivingTokenId : fiend.sendingTokenId,
-			owner: fiend.sendingTokenId == token.tokenId ? fiend.receivingAddress : fiend.sendingAddress
+			owner: displayAddr
 		} as ThreadItem;
 	}
 
@@ -126,7 +108,7 @@
 
 	<div class="friends-header">
 		<h2>Friends</h2>
-		<div>Accept and request friendship from other NFT owners</div>
+		<div>Accept and request friendship from other { token.symbol ? '$'+token.symbol : 'Token' } holders</div>
 	</div>
 
 	<div class="tabs-wrap">
@@ -155,27 +137,28 @@
 		{#if activeTabValue == 1}
 			<div class="tab-content-wrap">
 				<div class="description">
-					Enter Token ID to send Friend Request. Friendship required for chatting.
+					Enter Wallet Address to send Friend Request. Friendship required for chatting.
 				</div>
 				<div id="invite-friend">
 					<input
 						type="text"
 						id="message-input"
-						bind:value={friendId}
+						bind:value={friendAddress}
 						disabled={loading}
-						placeholder="Token ID"
+						placeholder="Wallet Address"
 					/>
-					<div
-						class="btn-gradient {(loading || !friendId.length) ? "" : "active" }"
-						on:click={()=>{inviteFriend(friendId)}}
-						disabled={loading || !friendId.length}
+					<button
+						class="btn-gradient {(loading || !friendAddress.length) ? "" : "active" }"
+						on:click={()=>{inviteFriend(friendAddress)}}
+						disabled={loading || !friendAddress.length}
+						type="button"
 					>
 						Send Request
-					</div>
+					</button>
 				</div>
 
 				<div class="friends-tabs">
-					<div
+					<button
 						class={friendsTabActive ? 'active' : ''}
 						on:click={() => {
 							friendsTabActive = true;
@@ -185,8 +168,8 @@
 						}}
 					>
 						Friends {friends.length ? '(' + friends.length + ')' : ''}
-					</div>
-					<div
+					</button>
+					<button
 						class={friendsTabActive ? '' : 'active'}
 						on:click={() => {
 							friendsTabActive = false;
@@ -196,22 +179,23 @@
 						}}
 					>
 						Pending {ownInvites.length ? '(' + ownInvites.length + ')' : ''}
-					</div>
+					</button>
 				</div>
 
 				{#if friendsTabActive}
 					{#if friends.length}
-						{#each friends.map(friendToNft) as friend}
-							<NftCard nft={friend} accountType={NftCardTypes.Friends}/>
+						{#each friends.map(friendToTokenHolder) as friend}
+							<TokenCard tokenItem={friend} accountType={TokenCardTypes.Friends} selected={''}/>
 						{/each}
 					{:else}
 						<div>No friends yet</div>
 					{/if}
 				{:else if ownInvites.length}
-					{#each ownInvites.map(inviteToNft) as friend}
-						<NftCard 
-							accountType={NftCardTypes.Friends}
-							nft={friend} 
+					{#each ownInvites.map(inviteToTokenHolder) as friend}
+						<TokenCard 
+							selected={''}
+							accountType={TokenCardTypes.Friends}
+							tokenItem={friend} 
 							clickable={false} />
 					{/each}
 				{:else}
@@ -223,25 +207,25 @@
 				{#if invites && invites.length}
 					<h2>Confirm Friends Requests:</h2>
 					<h4>
-						Please click friends requests to confirm friendship if you want to chat with those NFT
+						Please click friends requests to confirm friendship if you want to chat with those Token
 						owners.
 					</h4>
-					{#each invites.map(inviteToNft) as invite}
-						<NftCard
-							nft={invite}
-							accountType={NftCardTypes.Friends}
+					{#each invites.map(inviteToTokenHolder) as invite}
+						<TokenCard
+							tokenItem={invite}
+							accountType={TokenCardTypes.Friends}
 							selected={selectedInvite}
-							on:click={() => {selectedInvite = invite.tokenId}}
+							on:click={() => {selectedInvite = invite.owner}}
 						/>
 					{/each}
 				{:else}
 					<div>You don't have pending incoming Friends Requests</div>
 				{/if}
 
-				<div class="accept btn-gradient 
+				<button class="accept btn-gradient 
 					{selectedInvite=="-1" ? "disabled" : ""}" 
 					on:click={() => {console.log({selectedInvite});selectedInvite != "-1" && inviteFriend(selectedInvite);}}
-				>Accept Request</div>
+				>Accept Request</button>
 
 			</div>
 		{/if}
@@ -315,10 +299,7 @@
 		ul {
 			display: flex;
 			flex-wrap: wrap;
-			// padding-left: 0;
-			// margin-bottom: 0;
 			list-style: none;
-			// border-bottom: 1px solid #dee2e6;
 			background: #eee;
 			padding: 8px;
 			box-shadow: 0px 0px 2px 0px #00000080;
@@ -337,7 +318,6 @@
 				&.active,
 				&:hover {
 					outline: none;
-					// background-color: #001aff;
 					border-radius: 4px;
 					color: #fff;
                     background: linear-gradient(234.79deg, #001AFF 37.73%, #4F95FF 118.69%);
@@ -346,8 +326,6 @@
 		}
 	}
 	.tab-content-wrap {
-		// margin-bottom: 10px;
-		// padding: 15px;
 		flex-grow: 1;
 		display: flex;
 		flex-direction: column;
@@ -357,13 +335,8 @@
 	}
 
 	#invite-friend {
-		// display: flex;
-		// justify-content: center;
 		width: 100%;
 		input {
-			// border: 1px solid;
-			// border-image-source: linear-gradient(0deg, #858585, #858585),
-			// 	linear-gradient(0deg, #969696, #969696);
 			margin-bottom: 10px;
 			margin-top: 10px;
 			width: 100%;
@@ -388,3 +361,4 @@
 		flex-grow: 1;
 	}
 </style>
+

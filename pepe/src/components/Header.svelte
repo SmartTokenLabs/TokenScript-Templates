@@ -6,25 +6,26 @@
 
 	context.data.subscribe((value) => {
 		if (value.token) token = value.token;
+
 	});
 </script>
 
 {#if token}
 	<div class="cat-header">
 		<div>
-			<img alt="your NFT" class="nft-image" src={token.image_preview_url} />
+			<img alt="your Token" class="token-image" src={token.image_preview_url} />
 		</div>
 		<div class="cat-details">
 			<h2>{token.name}</h2>
 			<div class="cat-stats">
-				<div>NFT ID: {token.tokenId}</div>
+				<div>ID: {token.ownerAddress}</div>
 			</div>
 		</div>
 	</div>
 {/if}
 
 <style>
-	.nft-image {
+	.token-image {
 		max-width: 100%;
 		width: 100px;
 	}

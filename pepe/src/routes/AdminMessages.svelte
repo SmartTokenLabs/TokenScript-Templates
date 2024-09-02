@@ -48,7 +48,7 @@
 
 {#if !loading}
 	{#if token && token.contractOwner == token.ownerAddress}
-		<h3>Send Admin Message to all NFTs under that contract</h3>
+		<h3>Send Admin Message to all Tokens under that contract</h3>
 		<div id="send-message">
 			<textarea id="message-input" bind:value={newMessageText} disabled={loading} />
 			<button
@@ -59,7 +59,7 @@
 		</div>
 	{:else}
 		<h2>Admin Messages</h2>
-		<h4>Broadcast notifications will be here. Messages for every NFT under this contract</h4>
+		<h4>Broadcast notifications will be here. Messages for every Token under this contract</h4>
 	{/if}
 {/if}
 {#if messages}

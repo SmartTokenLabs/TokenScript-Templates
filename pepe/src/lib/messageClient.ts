@@ -11,7 +11,7 @@ export class MessageClient {
 
 	private challengeExp = null;
 	private challengeText = null;
-	private challengeSig = null;
+	private challengeSig:null|string = null;
 
 	constructor(private tokenContext: Token) {}
 
@@ -24,10 +24,11 @@ export class MessageClient {
 	}
 
 	public async getSecureMessaging(friendAddress: string) {
-		return await this.requestWithAuth(
+		const friendSharedKey = await this.requestWithAuth(
 			`/shared-key/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${friendAddress}`,
 			'get'
 		);
+		return friendSharedKey;
 	}
 
 	public async postSecureMessaging(sharedKey: string) {
@@ -73,6 +74,7 @@ export class MessageClient {
 		);
 	}
 
+	// sendingAddress is empty.
 	public async sendMessage(message: string, friendAddress: string, encrypted: boolean) {
 		return await this.requestWithAuth(
 			`/send-message/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${friendAddress}`,
@@ -111,7 +113,7 @@ export class MessageClient {
 			throw new Error('Error in token data. missing properties');
 		}
 
-		if (!this.challengeText || this.challengeExp < Date.now()) {
+		if (!this.challengeText || this.challengeExp && this.challengeExp < Date.now()) {
 			await this.fetchAndSignChallenge();
 		}
 
@@ -140,6 +142,7 @@ export class MessageClient {
 				e = 'User rejected signing.';
 			}
 			// console.error("Authentication failed: ", e);
+			// @ts-ignore
 			throw new Error(e);
 		}
 	}
