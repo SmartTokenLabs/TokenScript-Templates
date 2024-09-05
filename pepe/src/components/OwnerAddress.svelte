@@ -17,7 +17,7 @@
 </script>
 
 <small class="eth-address" title={address}>
-	{#if accountType != TokenCardTypes.Admin}
+	{#if accountType != TokenCardTypes.Group}
 		<span class=fw600>Owner:</span>
 	{/if}
 	<span>{ensName ? `${ensName} (${address})` : address}</span>

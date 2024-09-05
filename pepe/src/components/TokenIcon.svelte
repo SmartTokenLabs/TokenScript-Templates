@@ -17,7 +17,7 @@
 	let src: string;
 
 	onMount(async () => {
-		if (tokenAddress == "admin"){
+		if (tokenAddress == "group"){
 			if (!token.contractURI) return;
 			try {
 				const meta = await (

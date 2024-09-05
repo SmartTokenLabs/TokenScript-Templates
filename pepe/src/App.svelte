@@ -9,7 +9,6 @@
 	import OperationStatus from './components/OperationStatus.svelte';
 	import LoaderGlobal from './components/LoaderGlobal.svelte';
 
-
 	let token: Token;
 	let initialised = false;
 

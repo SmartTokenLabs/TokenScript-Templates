@@ -74,7 +74,6 @@ export class MessageClient {
 		);
 	}
 
-	// sendingAddress is empty.
 	public async sendMessage(message: string, friendAddress: string, encrypted: boolean) {
 		return await this.requestWithAuth(
 			`/send-message/${this.tokenContext.chainId}/${this.tokenContext.contractAddress}/${friendAddress}`,

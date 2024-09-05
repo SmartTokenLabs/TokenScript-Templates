@@ -48,6 +48,6 @@ export type ThreadItem = CatListItem & {
 export const TokenCardTypes = {
 	Messages: 0,
 	Friends: 1,
-	Admin: 2
+	Group: 2
 };
 

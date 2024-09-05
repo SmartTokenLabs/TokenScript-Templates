@@ -23,20 +23,20 @@
 	let derivedPrivateKey: string;
 	let secret: string;
 
-	let adminChatToken: ThreadItem;
+	let groupChatToken: ThreadItem;
 
 	const loadThreads = async () => {
 		try {
 			client = await context.getMessageClient();
-			const adminUnread = await client.getBroadcastMessageCount();
-			if (adminUnread && adminUnread.hasOwnProperty("count")) {
-				adminChatToken = {
-					friendAddress: "admin",
+			const groupUnread = await client.getBroadcastMessageCount();
+			if (groupUnread && groupUnread.hasOwnProperty("count")) {
+				groupChatToken = {
+					friendAddress: "group",
 					contract: token.contractAddress,
-					unread: adminUnread.count,
+					unread: groupUnread.count,
 					tokenUri: token.contractURI,
-					owner: "Admin account",
-					tokenAddress: "admin",
+					owner: "Group Chat",
+					tokenAddress: "group",
 					wrongOwner: false,
 					tokenName: token.contractName || "ERC-20 Contract",
 					friendsSharedKey: "", 
@@ -44,7 +44,7 @@
 				};
 			}
 
-			adminChatToken.unread = adminUnread.count;
+			groupChatToken.unread = groupUnread.count;
 			const res = await client.getNewMessages();
 			const friendsList = await client.getApprovedFriend();
 
@@ -148,8 +148,8 @@
 		}
 	}
 
-	function adminSelected() {
-		selectedFriendAddress = "admin";
+	function groupSelected() {
+		selectedFriendAddress = "group";
 	}
 </script>
 
@@ -157,13 +157,13 @@
 <div class="text-center">Send messages to other Token owners.</div>
 
 <div id="thread-list">
-	{#if adminChatToken}
+	{#if groupChatToken}
 		<TokenCard 
 			selected={''}
-			tokenItem={adminChatToken}  
-			accountType={TokenCardTypes.Admin}
-			on:click={adminSelected}
-			on:keypress={adminSelected} />
+			tokenItem={groupChatToken}  
+			accountType={TokenCardTypes.Group}
+			on:click={groupSelected}
+			on:keypress={groupSelected} />
 	{/if}
 	{#if threadsList}
 		{#if threadsList.length}
@@ -190,7 +190,7 @@
 
 	{#if selectedFriendAddress}
 		<MessagePopup
-			threadsList={selectedFriendAddress === "admin" ? [adminChatToken] : threadsList}
+			threadsList={selectedFriendAddress === "group" ? [groupChatToken] : threadsList}
 			{selectedFriendAddress}
 			{secret}
 			closed={() => {
