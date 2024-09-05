@@ -1,0 +1,28 @@
+* {
+	font-family: 'Rubik', sans-serif;
+	box-sizing: border-box;
+}
+body {
+	color: #0b0b0b;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h5 {
+	font-size: 16px;
+	margin-bottom: 12px;
+}
+
+p.light {
+	color: #545454;
+}
+
+body > h1 {
+	font-size: 22px;
+}
