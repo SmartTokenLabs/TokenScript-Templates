@@ -4,10 +4,8 @@ import { Token } from './types';
 export class MessageClient {
 	private static BASE_URL =
 		import.meta.env.VITE_MESSAGING_API_BASE_URL ??
-		// 'https://store-backend-stage.smartlayer.network/messaging';
-		"http://127.0.0.1:3006/messaging-erc20";
-	// "https://chat.tokenscript.org/api/erc721messaging";
-	// "https://stltesting.wallaceit.com.au/sc-chat/api";
+		'https://store-backend-stage.smartlayer.network/messaging-erc20';
+		// "http://127.0.0.1:3006/messaging-erc20";
 
 	private challengeExp = null;
 	private challengeText = null;
