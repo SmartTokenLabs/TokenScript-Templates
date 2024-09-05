@@ -45,7 +45,7 @@
 			if (friendId == "admin"){
 				const result = await client.sendBroadcastMessage(newMessageText);
 				let newMessage = {
-					createdAt: "Now",
+					createdAt: new Date().toISOString(),
 					sendingTokenId: "admin",
 					message: newMessageText,
 					read: false,
