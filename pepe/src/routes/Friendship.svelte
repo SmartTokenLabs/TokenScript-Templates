@@ -102,13 +102,23 @@
 		activeTabValue = 1;
 		await loadOwnInvites();
 	}
+
+	function isValidEthAddress(address:string) {
+  		const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
+  		return ethAddressRegex.test(address);
+	}
 </script>
 
-<div class="iframe-wrap">
+<div class="iframe-wrap" style="margin: 20px 0;">
 
 	<div class="friends-header">
-		<h2>Friends</h2>
-		<div>Accept and request friendship from other { token.symbol ? '$'+token.symbol : 'Token' } holders</div>
+		<div style="display: flex; justify-content: space-evenly;">
+			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+		</div>
+		<h2 style="margin: 24px 0;">Frens</h2>
+		<div>Accept and request frenship from other PEPE fam</div>
 	</div>
 
 	<div class="tabs-wrap">
@@ -120,7 +130,7 @@
 					on:click={friendsHandler}
 					on:keypress={friendsHandler}
 				>
-					Get Friends
+					Get Frens
 				</div>
 			</li>
 			<li class={activeTabValue === 2 ? 'active' : ''}>
@@ -130,14 +140,14 @@
 					on:click={inviteConfirmHandler}
 					on:keypress={inviteConfirmHandler}
 				>
-					Confirm Friends {invites.length ? '(' + invites.length + ')' : ''}
+					Confirm {invites.length ? '(' + invites.length + ')' : ''}
 				</div>
 			</li>
 		</ul>
 		{#if activeTabValue == 1}
 			<div class="tab-content-wrap">
-				<div class="description">
-					Enter Wallet Address to send Friend Request. Friendship required for chatting.
+				<div class="description" style="margin: 10px 0;">
+					Enter Wallet Address to send request. Frenship required for chatting.
 				</div>
 				<div id="invite-friend">
 					<input
@@ -148,12 +158,13 @@
 						placeholder="Wallet Address"
 					/>
 					<button
-						class="btn-gradient {(loading || !friendAddress.length) ? "" : "active" }"
+						style="width: 130px; height: 40px; padding: 0; border: none; margin: 16px 0;"
+						class="btn-gradient {(loading || !isValidEthAddress(friendAddress)) ? "" : "active" }"
 						on:click={()=>{inviteFriend(friendAddress)}}
-						disabled={loading || !friendAddress.length}
+						disabled={loading || !isValidEthAddress(friendAddress)}
 						type="button"
 					>
-						Send Request
+						Send
 					</button>
 				</div>
 
@@ -167,7 +178,7 @@
 							friendsTabActive = true;
 						}}
 					>
-						Friends {friends.length ? '(' + friends.length + ')' : ''}
+						Frens {friends.length ? '(' + friends.length + ')' : ''}
 					</button>
 					<button
 						class={friendsTabActive ? '' : 'active'}
@@ -188,7 +199,7 @@
 							<TokenCard tokenItem={friend} accountType={TokenCardTypes.Friends} selected={''}/>
 						{/each}
 					{:else}
-						<div>No friends yet</div>
+						<div>No frens yet</div>
 					{/if}
 				{:else if ownInvites.length}
 					{#each ownInvites.map(inviteToTokenHolder) as friend}
@@ -205,9 +216,9 @@
 		{:else}
 			<div class="tab-content-wrap">
 				{#if invites && invites.length}
-					<h2>Confirm Friends Requests:</h2>
+					<h2>Confirm Frens</h2>
 					<h4>
-						Please click friends requests to confirm friendship if you want to chat with those Token
+						Please click friends requests to confirm frenship if you want to chat with those Token
 						owners.
 					</h4>
 					{#each invites.map(inviteToTokenHolder) as invite}
@@ -219,7 +230,7 @@
 						/>
 					{/each}
 				{:else}
-					<div>You don't have pending incoming Friends Requests</div>
+					<div>You don't have pending incoming Frens Requests</div>
 				{/if}
 
 				<button class="accept btn-gradient 
@@ -235,6 +246,19 @@
 
 
 <style lang="scss">
+
+	button {
+		cursor: pointer;
+	}
+
+	.friends-tabs button {
+		color: #2f651b;
+    	border: 1px solid #2F651B;
+    	border-radius: 8px;
+    	background: white;
+    	padding: 7px 20px;
+    	margin: 10px 0;
+	}
     .disabled {
         opacity: 0.5;
         pointer-events: none;;
@@ -248,7 +272,7 @@
 		margin-bottom: 10px;
 		div {
 			margin-right: 20px;
-			color: #8b8b8b;
+			color: #2F651B;
 			font-size: 18px;
 			font-weight: 500;
 			float: left;
@@ -259,13 +283,14 @@
 		}
 	}
 	.btn-gradient {
-		background: linear-gradient(234.79deg, #001aff 37.73%, #4f95ff 118.69%);
+		background: #2F651B;
 		padding: 10px;
 		font-size: 18px;
 		font-weight: 600;
 		color: #fff;
 		text-align: center;
 		border-radius: 4px;
+		border: none;
 	}
 	.accept {
 		margin-top: auto;
@@ -300,27 +325,28 @@
 			display: flex;
 			flex-wrap: wrap;
 			list-style: none;
-			background: #eee;
+			background: #2F651B;
 			padding: 8px;
 			box-shadow: 0px 0px 2px 0px #00000080;
-			border-radius: 4px;
+			border-radius: 8px;
 			justify-content: space-between;
 			li {
-				color: #001aff;
+				color: #fff;
 				width: calc(50% - 4px);
 				text-align: center;
 				font-size: 18px;
 				cursor: pointer;
+				transition: all 0.1s;
 				div {
-					padding: 0.5rem 0.1rem;
+					padding: 0.7rem 0.1rem;
 				}
 
 				&.active,
 				&:hover {
 					outline: none;
 					border-radius: 4px;
-					color: #fff;
-                    background: linear-gradient(234.79deg, #001AFF 37.73%, #4F95FF 118.69%);
+					color: #2F651B;
+                    background: #fff;
 				}
 			}
 		}
