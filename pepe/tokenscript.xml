@@ -15,8 +15,8 @@
 	</ts:label>
 	<ts:meta>
 		<ts:description xml:lang="en">PEPE TokenScript</ts:description>
-		<ts:aboutUrl xml:lang="en">-</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">-</ts:iconUrl>
+		<ts:aboutUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png</ts:aboutUrl>
+		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<!-- <ts:address network="1">0x6982508145454ce325ddbe47a25d4ec3d2311933</ts:address> -->
@@ -33,6 +33,16 @@
 			<ts:include type="css" src="./src/styles.css"/>
 		</ts:viewContent>
 
+		<ts:card type="token" name="Info" origins="Token">
+			<ts:label>
+				<ts:string xml:lang="en">Info</ts:string>
+			</ts:label>
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
+				<ts:viewContent name="common"/>
+			</ts:view>
+		</ts:card>
+
+
 		<ts:card type="token" name="friendship" origins="Token">
 			<ts:label>
 				<ts:string xml:lang="en">Get Friends</ts:string>
@@ -47,15 +57,6 @@
 				<ts:string xml:lang="en">Chat with Friends</ts:string>
 			</ts:label>
 			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="messages">
-				<ts:viewContent name="common"/>
-			</ts:view>
-		</ts:card>
-
-		<ts:card type="token" name="Info" origins="Token">
-			<ts:label>
-				<ts:string xml:lang="en">Info</ts:string>
-			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>

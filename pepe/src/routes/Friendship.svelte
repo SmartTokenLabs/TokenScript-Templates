@@ -4,7 +4,9 @@
 	import { showLoader, notify } from '../lib/storage';
 	import TokenCard from '../components/TokenCard.svelte';
 	import { MessageClient } from '../lib/messageClient';
-
+	import { ethers } from 'ethers';
+	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
+	
 	export let activeTabValue = 1;
 	export let friendsTabActive = true;
 	let friendAddress = '';
@@ -35,7 +37,8 @@
 			ownInvites = await client.getOwnFriendInvites();
 			friends = await client.getApprovedFriend();
 		} catch (e: any) {
-			$notify = {status: false, message: 'Message load failed: ' + e.message}
+			console.log({ e });
+			$notify = {status: false, message: 'Failed to load invites'}
 		}
 	}
 
@@ -48,21 +51,24 @@
 		try {
 			const result = await client.postInviteFriend(localFriendAddress);
 			console.log({ result });
-			$notify = {status: true, message: result.message}
+			$notify = {status: true, message: 'Failed to invite friend'}
 			friendAddress = '';
 			await loadOwnInvites()
 			await loadInvites()
 		} catch (e) {
-			$notify = {status: false, message: e.message}
+			console.error(e);
+			$notify = {status: false, message: 'Invite send failed'}
 		}
 		showLoader.set(false);
+		selectedInvite = "-1";
 	}
 
 	const loadInvites = async () => {
 		try {
 			invites = await client.getFriendInvites();
 		} catch (e:any) {
-			$notify = {status: false, message: 'Invite send failed: ' + e.message}
+			console.log({ e });
+			$notify = {status: false, message: 'Invite send failed'}
 		}
 	};
 
@@ -107,9 +113,10 @@
   		const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
   		return ethAddressRegex.test(address);
 	}
+
 </script>
 
-<div class="iframe-wrap" style="margin: 20px 0;">
+<div class="iframe-wrap" style="margin: 40px 0;">
 
 	<div class="friends-header">
 		<div style="display: flex; justify-content: space-evenly;">
@@ -117,7 +124,7 @@
 			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
 			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
 		</div>
-		<h2 style="margin: 24px 0;">Frens</h2>
+		<h2 style="margin: 24px 0 12px 0;">Frens</h2>
 		<div>Accept and request frenship from other PEPE fam</div>
 	</div>
 
@@ -146,7 +153,7 @@
 		</ul>
 		{#if activeTabValue == 1}
 			<div class="tab-content-wrap">
-				<div class="description" style="margin: 10px 0;">
+				<div class="pt-8 pb-2">
 					Enter Wallet Address to send request. Frenship required for chatting.
 				</div>
 				<div id="invite-friend">
@@ -193,31 +200,33 @@
 					</button>
 				</div>
 
-				{#if friendsTabActive}
-					{#if friends.length}
-						{#each friends.map(friendToTokenHolder) as friend}
-							<TokenCard tokenItem={friend} accountType={TokenCardTypes.Friends} selected={''}/>
+				<div class="mb-[40px]">
+					{#if friendsTabActive}
+						{#if friends.length}
+							{#each friends.map(friendToTokenHolder) as friend}
+								<TokenCard tokenItem={friend} accountType={TokenCardTypes.Friends} selected={''}/>
+							{/each}
+						{:else}
+							<div>No frens yet</div>
+						{/if}
+					{:else if ownInvites.length}
+						{#each ownInvites.map(inviteToTokenHolder) as friend}
+							<TokenCard 
+								selected={''}
+								accountType={TokenCardTypes.Friends}
+								tokenItem={friend} 
+								clickable={false} />
 						{/each}
 					{:else}
-						<div>No frens yet</div>
+						<div>No unanswered Invites</div>
 					{/if}
-				{:else if ownInvites.length}
-					{#each ownInvites.map(inviteToTokenHolder) as friend}
-						<TokenCard 
-							selected={''}
-							accountType={TokenCardTypes.Friends}
-							tokenItem={friend} 
-							clickable={false} />
-					{/each}
-				{:else}
-					<div>No unanswered Invites</div>
-				{/if}
+				</div>
 			</div>
 		{:else}
 			<div class="tab-content-wrap">
 				{#if invites && invites.length}
-					<h2>Confirm Frens</h2>
-					<h4>
+					<h2 class="mt-8">Confirm Frens</h2>
+					<h4 class="mt-2 mb-4">
 						Please click friends requests to confirm frenship if you want to chat with those Token
 						owners.
 					</h4>
@@ -226,16 +235,19 @@
 							tokenItem={invite}
 							accountType={TokenCardTypes.Friends}
 							selected={selectedInvite}
-							on:click={() => {selectedInvite = invite.owner}}
+							on:click={() => {
+								selectedInvite = invite.owner
+							}}
 						/>
 					{/each}
 				{:else}
-					<div>You don't have pending incoming Frens Requests</div>
+					<div class="py-4">You don't have pending incoming Frens Requests</div>
 				{/if}
 
 				<button class="accept btn-gradient 
 					{selectedInvite=="-1" ? "disabled" : ""}" 
 					on:click={() => {console.log({selectedInvite});selectedInvite != "-1" && inviteFriend(selectedInvite);}}
+					disabled={selectedInvite=="-1"}
 				>Accept Request</button>
 
 			</div>
@@ -294,6 +306,7 @@
 	}
 	.accept {
 		margin-top: auto;
+		margin-bottom: 20px;
 		width: 100%;
 		cursor: pointer;
 		border-radius: 10px;
@@ -307,8 +320,7 @@
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
-		padding: 20px 0;
-		
+		padding: 0px 0;
 		.tabs-wrap {
 			flex-grow: 1;
 			display: flex;
@@ -355,9 +367,6 @@
 		flex-grow: 1;
 		display: flex;
 		flex-direction: column;
-		.description {
-			margin-top: 10px;
-		}
 	}
 
 	#invite-friend {
@@ -385,6 +394,7 @@
 	}
 	#message-input {
 		flex-grow: 1;
+		color: black;
 	}
 </style>
 

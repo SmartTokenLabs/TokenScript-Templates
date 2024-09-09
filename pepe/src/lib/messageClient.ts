@@ -138,7 +138,7 @@ export class MessageClient {
 			if (typeof e == 'string' && e.toLowerCase().includes('user rejected signing')) {
 				e = 'User rejected signing.';
 			}
-			// console.error("Authentication failed: ", e);
+			console.error("Authentication failed: ", e);
 			// @ts-ignore
 			throw new Error(e);
 		}

@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { lookupEnsName } from '../lib/data';
 	import { TokenCardTypes } from '../lib/types';
-
 	export let address: string;
 	export let accountType = TokenCardTypes.Friends
 
@@ -16,21 +15,19 @@
 	});
 </script>
 
-<small class="eth-address" title={address}>
-	{#if accountType != TokenCardTypes.Group}
-		<span class=fw600>Owner:</span>
-	{/if}
-	<span>{ensName ? `${ensName} (${address})` : address}</span>
-</small>
+<div class="eth-address" title={address}>
+	<span>{ensName ? `${ensName} (${address || ''})` : address}</span>
+</div>
 
 <style>
 	.eth-address {
+		cursor: pointer;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
 		max-width: 100%;
 		display: block;
-		font-size: 12px;
+		font-size: 14px;
 	}
 	.fw600 {
 		font-weight: 600;

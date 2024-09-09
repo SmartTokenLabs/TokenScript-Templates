@@ -2,7 +2,7 @@
 	import context from './lib/context';
 	import Info from './routes/Info.svelte';
 	import NotFound from './routes/NotFound.svelte';
-
+	import './tailwind.css';
 	import Messages from './routes/Messages.svelte';
 	import Friendship from './routes/Friendship.svelte';
 	import { Token } from './lib/types';
@@ -22,7 +22,7 @@
 	let page: any;
 
 	function routeChange() {
-		page = routingMap[document.location.hash || '#messages'] || NotFound;
+		page = routingMap[document.location.hash || '#info'] || NotFound;
 	}
 
 	// @ts-ignore

@@ -1,5 +1,6 @@
 import type { CatListItem } from './data';
 export type Token = {
+	decimals: number | undefined;
 	chainId: number;
 	contractAddress: string;
 	description: string;

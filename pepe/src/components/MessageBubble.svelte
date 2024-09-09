@@ -1,13 +1,23 @@
 <script lang="ts">
+	import { formatTokenBalance } from "../lib/utils";
+	import numeral from "numeral";
+	import { previewAddrStart } from "../lib/utils";
 	export let message: {
 		createdAt: number;
-		senderTokenAddress: string;
+		sendingTokenAddress: string;
+		maskedSendingTokenAddress?: string;
 		message: string;
 		messageDecoded: string;
 		read: boolean;
+		balance?: number;
 		encrypted: boolean;
 	};
-	export let senderTokenAddress: string;
+	export let tokenDecimals: number | undefined;
+	export let ownerAddress: string;
+	export let position:string; // left or right
+
+	const tokenBalance = message.balance && tokenDecimals ? formatTokenBalance(message.balance, tokenDecimals) : undefined;
+	const tokenBalanceFormatted = numeral(tokenBalance).format("0.0a");
 
 	let dateString: string;
 
@@ -23,26 +33,76 @@
 	}
 </script>
 
-<div class="message-bubble {message.senderTokenAddress == senderTokenAddress ? 'sender' : ''} ">
-	<div class="message-content">
-		{message.messageDecoded ? message.messageDecoded : message.message}
+<!-- Group Chat -->
+{#if message.maskedSendingTokenAddress && position === "left" }
+	<div class="flex my-3 mb-[30px]">
+		<img class="w-[48px]" style="width: 38px;height: 38px; border-radius: 38px;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png" alt="avatar" />					
+		<div class="message-bubble {message.sendingTokenAddress?.toLowerCase() == ownerAddress?.toLowerCase() ? 'sender' : ''} ">
+			<div class="message-content">
+				{message.messageDecoded ? message.messageDecoded : message.message}
+			</div>
+			<small class="message-meta relative top-[30px]">
+				{dateString}
+				{message?.maskedSendingTokenAddress ? 'Masked Fam Addr: ' + message?.maskedSendingTokenAddress.substring(0, 10) : ''}
+				{tokenBalance ? 'HODLS: ' + tokenBalanceFormatted : ''}
+			</small>
+		</div>
 	</div>
-	<small class="message-meta">
-		{message.senderTokenAddress == senderTokenAddress && (message.read || message.openedAt) ? '✓ (seen) ' : ''}
-		{dateString}
-	</small>
-</div>
+{:else if message.maskedSendingTokenAddress && position === "right" }
+	<div class="flex justify-end my-3 right-side mb-[30px]">
+		<div class="message-bubble {message.sendingTokenAddress?.toLowerCase() == ownerAddress ? 'sender' : ''} ">
+			<div class="message-content">
+				{message.messageDecoded ? message.messageDecoded : message.message}
+			</div>
+			<small class="message-meta relative top-[30px]">
+				{dateString}
+				{message?.maskedSendingTokenAddress ? 'Masked Fam Addr: ' + message?.maskedSendingTokenAddress.substring(0, 10) : ''}
+				{tokenBalance ? 'HODLS: ' + tokenBalanceFormatted : ''}
+			</small>
+		</div>
+		<img class="w-[48px]" style="width: 38px;height: 38px; border-radius: 38px;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png" alt="avatar" />					
+	</div>
+{/if}
+
+<!-- Peer to Peer -->
+{#if message.sendingTokenAddress && message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase() }
+	<div class="flex my-3 mb-[30px]">
+		<img class="w-[48px]" style="width: 38px;height: 38px; border-radius: 38px;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png" alt="avatar" />					
+		<div class="message-bubble {message.sendingTokenAddress?.toLowerCase() == ownerAddress?.toLowerCase() ? 'sender' : ''} ">
+			<div class="message-content">
+				{message.messageDecoded ? message.messageDecoded : message.message}
+			</div>
+			<small class="message-meta relative top-[30px]">
+				{dateString}
+				{message.sendingTokenAddress && message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase() ?  '('+previewAddrStart(message.sendingTokenAddress)+')' : '(you)'}
+			</small>
+		</div>
+	</div>
+{:else if message.sendingTokenAddress && !(message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase())}
+	<div class="flex justify-end my-3 right-side mb-[30px]">
+		<div class="message-bubble {message.sendingTokenAddress?.toLowerCase() == ownerAddress ? 'sender' : ''} ">
+			<div class="message-content">
+				{message.messageDecoded ? message.messageDecoded : message.message}
+			</div>
+			<small class="message-meta relative top-[30px]">
+				{dateString}
+
+				{message.sendingTokenAddress && message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase() ? '('+previewAddrStart(message.sendingTokenAddress)+')' : '(you)'}
+			</small>
+		</div>
+		<img class="w-[48px]" style="width: 38px;height: 38px; border-radius: 38px;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png" alt="avatar" />					
+	</div>
+{/if}
 
 <style lang="scss">
 	.message-bubble {
-		margin: 5px;
+		margin-left: 10px;
 		border-radius: 10px;
 		width: 80%;
-		background: #EEEEEE;
+		border: 1px solid #2f651b;
+		color: #2f651b;
 		border-radius: 0px 8px 8px 8px;
-		color: #000;
 	
-
 		.message-content {
 			padding: 6px;
 			font-size: 14px;
@@ -53,21 +113,29 @@
 		.message-meta {
 			padding: 0 6px 6px;
 			font-size: 11px;
-			text-align: right;
+			text-align: left;
 			display: block;
 			color: #545454;
-			
 		}
 
 		&.sender {
 			align-self: end;
 			border-radius: 8px 0px 8px 8px;
 		}
-		&.new, &.sender  {
-			background: linear-gradient(234.79deg, #001AFF 37.73%, #4F95FF 118.69%);
+	}
+
+	.right-side {
+		.message-bubble {
+			margin-left: 0;
+			margin-right: 10px;
+			border-radius: 8px 0px 8px 8px;
+			background: #2f651b;
 			color: #fff;
+			.message-content {
+				text-align: left;
+			}
 			.message-meta {
-				color: #cecece;
+				text-align: right;
 			}
 		}
 	}

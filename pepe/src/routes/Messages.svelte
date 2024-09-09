@@ -9,8 +9,7 @@
 	import { DH } from '../lib/dh';
 	import { hexStringToUint8 } from '../lib/helpers';
 	import { onDestroy } from 'svelte';
-	import { ethers } from 'ethers';
-
+	
 	let token: Token;
 	let contract: any; // Replace `any` with the correct type if available
 
@@ -64,7 +63,8 @@
 
 		} catch (e:any) {
 			console.error('Error loading threads:', e);
-			alert('Message load failed: ' + e?.message);
+			// alert('Message load failed: ' + e?.message);
+			throw new Error('Error loading messages');
 		} finally {
 			showLoader.set(false);
 		}
@@ -99,9 +99,13 @@
 
 	async function getDerivedKey() {
 		if (derivedPrivateKey) return;
-		const signature = await signMessage(`Sign this message to enable encryption of messages from [${token.ownerAddress}]`);
-		const key = signature.slice(-64);
-		context.derivedPrivateKey.set(key);
+		try {
+			const signature = await signMessage(`Sign this message to enable encryption of messages from [${token.ownerAddress}]`);
+			const key = signature.slice(-64);
+			context.derivedPrivateKey.set(key);
+		} catch (e) {
+			throw new Error('Error signing message');
+		}
 	}
 
 	async function friendSelected(friend: ThreadItem) {
@@ -153,51 +157,58 @@
 	}
 </script>
 
-<h3 class="text-center">Messages</h3>
-<div class="text-center">Send messages to other Token owners.</div>
+<div class="iframe-wrap" style="margin: 40px 0;">
+	<div style="text-align: center;">
+		<div style="display: flex; justify-content: center;">
+			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+		</div>
+		<h2 style="margin: 24px 0 12px 0;">Messages</h2>
+		<div>Send messages to PEPE fam</div>
+	</div>
 
-<div id="thread-list">
-	{#if groupChatToken}
-		<TokenCard 
-			selected={''}
-			tokenItem={groupChatToken}  
-			accountType={TokenCardTypes.Group}
-			on:click={groupSelected}
-			on:keypress={groupSelected} />
-	{/if}
-	{#if threadsList}
-		{#if threadsList.length}
-			<div class="cat-list">
-				{#each threadsList as friend}
-					<TokenCard 
-						selected={''}
-						tokenItem={friend}
-						accountType={TokenCardTypes.Messages}
-						on:click={() => friendSelected(friend)}
-						on:keypress={() => friendSelected(friend)} />
-				{/each}
-			</div>
-		{:else if !showLoader}
-			<h5>You don't have any messages from your friends yet</h5>
-			<p>
-				Share your address with other owners or request a holding address to be your friend, and when another
-				token owner approves your friendship request, you can start chatting.
-			</p>
+	<div id="thread-list">
+		{#if groupChatToken}
+			<TokenCard 
+				selected={''}
+				tokenItem={groupChatToken}  
+				accountType={TokenCardTypes.Group}
+				on:click={groupSelected}
+				on:keypress={groupSelected} />
 		{/if}
-	{:else}
-		<div>No message threads.</div>
-	{/if}
+		{#if threadsList}
+			{#if threadsList.length}
+				<div class="cat-list">
+					{#each threadsList as friend}
+						<TokenCard 
+							selected={''}
+							tokenItem={friend}
+							accountType={TokenCardTypes.Messages}
+							on:click={() => friendSelected(friend)}
+							on:keypress={() => friendSelected(friend)} />
+					{/each}
+				</div>
+			{:else if !showLoader}
+				<h5>You don't have any messages from your friends yet</h5>
+				<p>
+					Share your address with other owners or request a holding address to be your friend, and when another
+					token owner approves your friendship request, you can start chatting.
+				</p>
+			{/if}
+		{:else}
+			<div>No message threads.</div>
+		{/if}
 
-	{#if selectedFriendAddress}
-		<MessagePopup
-			threadsList={selectedFriendAddress === "group" ? [groupChatToken] : threadsList}
-			{selectedFriendAddress}
-			{secret}
-			closed={() => {
-				selectedFriendAddress = '';
-				loadThreads();
-			}} />
-	{/if}
+		{#if selectedFriendAddress}
+			<MessagePopup
+				threadsList={selectedFriendAddress === "group" ? [groupChatToken] : threadsList}
+				{selectedFriendAddress}
+				{secret}
+				closed={() => {
+					selectedFriendAddress = '';
+					loadThreads();
+				}} />
+		{/if}
+	</div>
 </div>
 
 <style lang="scss">
