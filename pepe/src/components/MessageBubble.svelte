@@ -2,6 +2,7 @@
 	import { formatTokenBalance } from "../lib/utils";
 	import numeral from "numeral";
 	import { previewAddrStart } from "../lib/utils";
+	import { emojiList } from "../lib/emoji-list"; // demo only
 	export let message: {
 		createdAt: number;
 		sendingTokenAddress: string;
@@ -41,6 +42,7 @@
 			<div class="message-content">
 				{message.messageDecoded ? message.messageDecoded : message.message}
 			</div>
+			<img class="w-[35px] h-[35px]" src={emojiList[Math.floor(Math.random() * 50)]} alt="emoji" />
 			<small class="message-meta relative top-[30px]">
 				{dateString}
 				{message?.maskedSendingTokenAddress ? 'Masked Fam Addr: ' + message?.maskedSendingTokenAddress.substring(0, 10) : ''}
@@ -54,6 +56,7 @@
 			<div class="message-content">
 				{message.messageDecoded ? message.messageDecoded : message.message}
 			</div>
+			<img class="w-[35px] h-[35px]" src={emojiList[Math.floor(Math.random() * 50)]} alt="emoji" />
 			<small class="message-meta relative top-[30px]">
 				{dateString}
 				{message?.maskedSendingTokenAddress ? 'Masked Fam Addr: ' + message?.maskedSendingTokenAddress.substring(0, 10) : ''}
