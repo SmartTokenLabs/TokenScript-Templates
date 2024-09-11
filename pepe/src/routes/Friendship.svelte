@@ -4,20 +4,15 @@
 	import { showLoader, notify } from '../lib/storage';
 	import TokenCard from '../components/TokenCard.svelte';
 	import { MessageClient } from '../lib/messageClient';
-	import { ethers } from 'ethers';
-	import { formatWithByDecimalPlaces, previewAddr, fetchENSImage } from '../lib/utils';
-	
 	export let activeTabValue = 1;
 	export let friendsTabActive = true;
+
 	let friendAddress = '';
-
 	let selectedInvite = "-1";
-
 	let invites: Invite[] = [];
 	let ownInvites: Invite[] = [];
 	let friends: Friend[] = [];
 	let token: Token;
-
 	let loading = false;
 	let client: MessageClient;
 
@@ -27,8 +22,8 @@
 		token = value.token;
 		showLoader.set(true);
 		client = await context.getMessageClient();
-		await loadInvites();
-		await loadOwnInvites();
+		const loadInviteSuccess = await loadInvites();
+		if(loadInviteSuccess) await loadOwnInvites();
 		showLoader.set(false);
 	});
 
@@ -38,8 +33,10 @@
 			friends = await client.getApprovedFriend();
 		} catch (e: any) {
 			console.log({ e });
-			$notify = {status: false, message: 'Failed to load invites'}
+			$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+			return false
 		}
+		return true
 	}
 
 	async function inviteFriend(localFriendAddress: string = "") {
@@ -52,9 +49,9 @@
 			const result = await client.postInviteFriend(localFriendAddress);
 			console.log({ result });
 			$notify = {status: true, message: 'Failed to invite friend'}
-			friendAddress = '';
-			await loadOwnInvites()
-			await loadInvites()
+			friendAddress = ''
+			const loadOwnInviteSuccess = await loadOwnInvites()
+			if(loadOwnInviteSuccess) await loadInvites()
 		} catch (e) {
 			console.error(e);
 			$notify = {status: false, message: 'Invite send failed'}
@@ -68,8 +65,10 @@
 			invites = await client.getFriendInvites();
 		} catch (e:any) {
 			console.log({ e });
-			$notify = {status: false, message: 'Invite send failed'}
+			$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+			return false
 		}
+		return true
 	};
 
 	function inviteToTokenHolder(invite: Invite) {
@@ -120,9 +119,9 @@
 
 	<div class="friends-header">
 		<div style="display: flex; justify-content: space-evenly;">
-			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
-			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
-			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+			<img alt="pepe" style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+			<img alt="pepe" style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
+			<img alt="pepe" style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
 		</div>
 		<h2 style="margin: 24px 0 12px 0;">Frens</h2>
 		<div>Accept and request frenship from other PEPE fam</div>
