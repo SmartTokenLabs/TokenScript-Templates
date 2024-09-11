@@ -48,7 +48,6 @@
 		try {
 			const result = await client.postInviteFriend(localFriendAddress);
 			console.log({ result });
-			$notify = {status: true, message: 'Failed to invite friend'}
 			friendAddress = ''
 			const loadOwnInviteSuccess = await loadOwnInvites()
 			if(loadOwnInviteSuccess) await loadInvites()
