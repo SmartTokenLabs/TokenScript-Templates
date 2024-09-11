@@ -5,7 +5,7 @@
 		if ($notify.message){
 			setTimeout(()=>{
 				$notify = {message:"", status: true};
-			}, 5000)
+			}, 7000)
 		}
 	}
 </script>
@@ -19,7 +19,7 @@
 		background-color: #eee;
 		padding: 10px;
 		word-wrap: break-word;
-		position: absolute;
+		position: fixed;
 		right: 30px;
 		top: 15px;
 		opacity: 0;
