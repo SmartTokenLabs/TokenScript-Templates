@@ -8,8 +8,8 @@
 	let loading = true;
 	let tokenStatsPriceEth: number | string = '-';
 	let tokenStatsPriceUsd: number | string = '-';
-	let userTokenAccountValueEth: number | string = '-';
-	let userTokenAccountValueUsd: number | string = '-';
+	let userTokenAccountValueEth: number;
+	let userTokenAccountValueUsd: number;
 	let tokenBalance: number | string | undefined;
 
 	context.data.subscribe(async (value) => {
@@ -36,6 +36,7 @@
 			}
 		}
 	}
+
 </script>
 
 <div>
@@ -47,7 +48,7 @@
 				</div>
 				<h2 style="margin: 24px 0 12px 0;">PEPE</h2>
 			</div>
-			<div class="text-center">
+			<div class="text-center mb-6">
 				<div class="text-lg secondary-font-colour">Your Balance</div>
 				<div class="text-xl font-semibold field-value">
 					{tokenBalance
@@ -55,20 +56,22 @@
 						: '-'}
 				</div>
 			</div>
-			<div class="grid grid-cols-2 gap-4 my-12">
-				<div class="text-center">
-					<div class="text-sm secondary-font-colour">Value ETH</div>
-					<div class="text-lg font-semibold">
-						{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 5)}
+			{#if (Number(userTokenAccountValueUsd) > 0.01)}
+				<div class="grid grid-cols-2 gap-4 my-12">
+					<div class="text-center">
+						<div class="text-sm secondary-font-colour">Value ETH</div>
+						<div class="text-lg font-semibold">
+							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueEth), 5)}
+						</div>
+					</div>
+					<div class="text-center">
+						<div class="text-sm secondary-font-colour">Value USD</div>
+						<div class="text-lg font-semibold">
+							{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
+						</div>
 					</div>
 				</div>
-				<div class="text-center">
-					<div class="text-sm secondary-font-colour">Value USD</div>
-					<div class="text-lg font-semibold">
-						{loading ? '-' : formatWithByDecimalPlaces(Number(userTokenAccountValueUsd), 2)}
-					</div>
-				</div>
-			</div>
+			{/if}
 			<div class="p-6 secondary-background-color rounded-[8px]">
 				<div class="flex items-center justify-between text-white">
 					<div class="text-lg font-semibold">Market Value</div>
@@ -77,14 +80,6 @@
 					<div class="text-sm primary-font-color">Ethereum</div>
 					<div class="text-lg font-semibold">
 						{tokenStatsPriceEth ? tokenStatsPriceEth.toString().substring(0, 12) + ' ETH' : '-'}
-					</div>
-				</div>
-				<div class="mt-4 text-white">
-					<div class="text-sm primary-font-color">USD</div>
-					<div class="text-lg font-semibold">
-						{tokenStatsPriceUsd
-							? '$' + formatWithByDecimalPlaces(Number(tokenStatsPriceUsd), 2)
-							: '-'}
 					</div>
 				</div>
 			</div>
