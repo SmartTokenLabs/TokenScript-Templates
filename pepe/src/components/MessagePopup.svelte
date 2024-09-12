@@ -31,6 +31,7 @@
 	let loading = true;
 	let error = '';
 	let messageItemUIPositionArr:string[] = [];
+	let newMessagesFound:boolean = false;
 
 	function tryToDecryptMessage(msg) {
 		
@@ -59,6 +60,7 @@
 				}
 				messages = [...messages, newMessage];
 				thread.messages = messages;
+				newMessageText = '';
 				scrollToBottom(true);
 			} else {
 				
@@ -91,6 +93,7 @@
 	}
 
 	async function loadMessages(reload = false) {
+		const prevMessageLength = messages?.length;
 		if (selectedFriendAddress == "group"){
 			messages = await client.getBroadcastMessages();
 			messageItemUIPositionArr = [];
@@ -138,6 +141,13 @@
 		}
 		thread.messages = messages;
 		thread.unread = 0;
+
+		if(prevMessageLength && messages && messages.length !== prevMessageLength) {
+			newMessagesFound = prevMessageLength && messages && messages.length > prevMessageLength;
+			if(newMessagesFound) {
+				buttonOpacity = 1;
+			}
+		}
 	}
 
 	function scrollToBottom(smooth = false) {
@@ -146,6 +156,8 @@
 			smooth
 				? messageHistory.scroll({ top: messageHistory.scrollHeight, behavior: 'smooth' })
 				: (messageHistory.scrollTop = messageHistory.scrollHeight);
+
+			newMessagesFound = false; // Reset new messages found
 		}, 200);
 	}
 
@@ -250,7 +262,7 @@
 	<div id="send-message" class="mx-[10px] mb-[10px] h-[300px]">
 		<div class="w-full text-right"><button on:click={() => scrollToBottom(true)}
 			style="opacity: {buttonOpacity}; transition: opacity 0.3s;"
-			class="h-[40px] bg-[#2f651c] px-[20px] text-[14px] rounded-md my-[10px] text-white">Jump to latest <span class="text-[11px]">▼</span></button></div>
+			class="h-[40px] bg-[#2f651c] px-[20px] text-[14px] rounded-md my-[10px] text-white">Jump to latest { newMessagesFound ? `(New Message(s))` : '' } <span class="text-[11px]">▼</span></button></div>
 		<div class="flex">
 			<div class="input-wrapper mr-[12px] h-[50px]">
 				<textarea placeholder="Messsage" class="h-[50px] m-0" bind:value={newMessageText} disabled={loading} />
