@@ -18,7 +18,6 @@
 
 	context.data.subscribe(async (value) => {
 		if (!value.token) return;
-
 		token = value.token;
 		showLoader.set(true);
 		client = await context.getMessageClient();
@@ -51,6 +50,7 @@
 			friendAddress = ''
 			const loadOwnInviteSuccess = await loadOwnInvites()
 			if(loadOwnInviteSuccess) await loadInvites()
+			$notify = {status: true, message: 'Invite sent'}
 		} catch (e) {
 			console.error(e);
 			$notify = {status: false, message: 'Invite send failed'}
