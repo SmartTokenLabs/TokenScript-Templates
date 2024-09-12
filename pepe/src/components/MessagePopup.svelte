@@ -1,15 +1,17 @@
 <script lang="ts">
+  	import { onMount } from 'svelte'; 
 	import context from '../lib/context';
 	import type { ThreadItem, Token } from '../lib/types';
 	import MessageBubble from './MessageBubble.svelte';
 	import Loader from './Loader.svelte';
 	import CryptoJS from 'crypto-js';
 	import { hexToAscii } from '../lib/helpers';
-	import { showLoader, notify } from '../lib/storage';
+	import { notify } from '../lib/storage';
 	export let closed: () => void;
 	export let selectedFriendAddress: string;
 	export let secret: string;
 	export let threadsList: ThreadItems;
+
 
 	let thread: ThreadItem | undefined = threadsList.find(
 		(thread: ThreadItem) => thread.friendAddress == selectedFriendAddress
@@ -85,7 +87,7 @@
 		}
 
 		loading = false;
-
+		
 	}
 
 	async function loadMessages(reload = false) {
@@ -136,8 +138,6 @@
 		}
 		thread.messages = messages;
 		thread.unread = 0;
-
-		scrollToBottom(reload);
 	}
 
 	function scrollToBottom(smooth = false) {
@@ -158,6 +158,7 @@
 		loading = true;
 		try {
 			await loadMessages();
+			scrollToBottom(false);
 		} catch (e) {
 			console.error(e);
 			error = e.message;
@@ -166,13 +167,45 @@
 		}
 
 		loading = false;
-		reloadTimer = setInterval(() => loadMessages(true), 30000);
+		reloadTimer = setInterval(() => loadMessages(true), 7000);
 	});
 
 	function cleanupAndClose() {
 		if (reloadTimer) clearInterval(reloadTimer);
 		closed();
 	}
+
+	let buttonOpacity = 1; // Initial opacity for the button
+
+    function handleScroll() {
+        const messageHistory = document.getElementById('message-history');
+        if (!messageHistory) return;
+        
+        const scrollTop = messageHistory.scrollTop;
+        const scrollHeight = messageHistory.scrollHeight;
+        const clientHeight = messageHistory.clientHeight;
+        
+        // If scrolled to the bottom, reduce opacity
+        if (scrollTop + clientHeight >= scrollHeight) {
+            buttonOpacity = 0.7;
+        } else {
+            buttonOpacity = 1;
+        }
+    }
+
+	onMount(() => {
+        const messageHistory = document.getElementById('message-history');
+        if (messageHistory) {
+            messageHistory.addEventListener('scroll', handleScroll);
+        }
+
+        // Clean up the event listener on component destroy
+        return () => {
+            if (messageHistory) {
+                messageHistory.removeEventListener('scroll', handleScroll);
+            }
+        };
+    });
 </script>
 
 <div id="message-popup">
@@ -214,14 +247,19 @@
 		  <Loader show={loading} />
 		</div>
 	  </div>
-	<div id="send-message" class="m-[10px] h-[50px]">
-		<div class="input-wrapper mr-[12px] h-[50px]">
-			<textarea placeholder="Messsage" class="h-[50px] m-0" bind:value={newMessageText} disabled={loading} />
+	<div id="send-message" class="mx-[10px] mb-[10px] h-[300px]">
+		<div class="w-full text-right"><button on:click={() => scrollToBottom(true)}
+			style="opacity: {buttonOpacity}; transition: opacity 0.3s;"
+			class="h-[40px] bg-[#2f651c] px-[20px] text-[14px] rounded-md my-[10px] text-white">Jump to latest <span class="text-[11px]">▼</span></button></div>
+		<div class="flex">
+			<div class="input-wrapper mr-[12px] h-[50px]">
+				<textarea placeholder="Messsage" class="h-[50px] m-0" bind:value={newMessageText} disabled={loading} />
+			</div>
+			<button class="btn_send tertiary-background-color h-[50px]"
+				on:click={sendMessage}
+				on:keypress={sendMessage}
+				disabled={loading || !newMessageText.length}>&gt;</button>
 		</div>
-		<button class="btn_send tertiary-background-color h-[50px]"
-			on:click={sendMessage}
-			on:keypress={sendMessage}
-			disabled={loading || !newMessageText.length}>&gt;</button>
 	</div>
 </div>
 
@@ -292,8 +330,8 @@
 		overflow: auto;
 	}
 
+
 	#send-message {
-		display: flex;
 		.input-wrapper {
 			color: #000;
 			flex-grow: 1;
