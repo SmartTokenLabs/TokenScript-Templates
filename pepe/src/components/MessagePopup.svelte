@@ -62,7 +62,6 @@
 				
 				if (!thread) return;
 				loading = true;
-
 				const result = await client.sendMessage(
 					secret
 						? CryptoJS.AES.encrypt(newMessageText, hexToAscii(secret)).toString()
@@ -72,12 +71,12 @@
 				);
 				let t = web3.tokens.data.currentInstance;
 				result.receivingAddress = selectedFriendAddress;
-				result.sendingAddress = t.senderTokenAddress;
+				result.sendingTokenAddress = token.ownerAddress;
 				messages = [...messages, tryToDecryptMessage(result)];
 				thread.messages = messages;
 				newMessageText = '';
 				scrollToBottom(true);
-				console.log(messages);
+				console.log('messages updated:', messages);
 			}
 			
 		} catch (e) {
