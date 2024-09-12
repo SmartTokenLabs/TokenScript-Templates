@@ -77,7 +77,7 @@
 		showLoader.set(true);
 		await loadThreads();
 		showLoader.set(false);
-		reloadTimer = setInterval(loadThreads, 60000);
+		reloadTimer = setInterval(loadThreads, 5000);
 	});
 
 	let unsubscribeMessagingKey = context.messagingKey.subscribe((value) => {

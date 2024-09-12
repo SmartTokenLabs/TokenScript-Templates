@@ -12,7 +12,6 @@
 	export let secret: string;
 	export let threadsList: ThreadItems;
 
-
 	let thread: ThreadItem | undefined = threadsList.find(
 		(thread: ThreadItem) => thread.friendAddress == selectedFriendAddress
 	);
@@ -62,6 +61,7 @@
 				thread.messages = messages;
 				newMessageText = '';
 				scrollToBottom(true);
+				client.getBroadcastMessageCount(); // ensure that message count is updated
 			} else {
 				
 				if (!thread) return;
@@ -143,10 +143,8 @@
 		thread.unread = 0;
 
 		if(prevMessageLength && messages && messages.length !== prevMessageLength) {
-			newMessagesFound = prevMessageLength && messages && messages.length > prevMessageLength;
-			if(newMessagesFound) {
-				buttonOpacity = 1;
-			}
+			newMessagesFound = true;
+			buttonOpacity = 1;
 		}
 	}
 
@@ -197,8 +195,9 @@
         const scrollHeight = messageHistory.scrollHeight;
         const clientHeight = messageHistory.clientHeight;
         
+		const offset = 50; // Offset from the bottom (to cater for any slight differences)
         // If scrolled to the bottom, reduce opacity
-        if (scrollTop + clientHeight >= scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - offset) {
             buttonOpacity = 0.7;
         } else {
             buttonOpacity = 1;
