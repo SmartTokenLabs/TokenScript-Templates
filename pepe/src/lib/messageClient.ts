@@ -129,16 +129,10 @@ export class MessageClient {
 
 	private async fetchAndSignChallenge() {
 		const challenge = await this.request('/challenge', 'get');
-
 		try {
-			// applied to ensure any current tasks are completed before the challenge is set where
-			// issues with some wallets has been observed of not picking up the challenge sig req always - indicating a race condition.
-			// can be removed if not needed / helping the issue.
-			setTimeout(async() => {
-				this.challengeSig = await signMessage(challenge.text);
-				this.challengeExp = challenge.expiry;
-				this.challengeText = challenge.text;
-			}, 0);
+			this.challengeSig = await signMessage(challenge.text);
+			this.challengeExp = challenge.expiry;
+			this.challengeText = challenge.text;
 		} catch (e) {
 			if (typeof e == 'string' && e.toLowerCase().includes('user rejected signing')) {
 				e = 'User rejected signing.';
