@@ -81,6 +81,7 @@
 			<small class="message-meta">
 				{dateString}
 				{message.sendingTokenAddress && message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase() ?  '('+previewAddrStart(message.sendingTokenAddress)+')' : '(you)'}
+				{message.encrypted ? 'Encrypted' : ''}
 			</small>
 		</div>
 	</div>
@@ -95,6 +96,7 @@
 			<small class="message-meta">
 				{dateString}
 				{message.sendingTokenAddress && message.sendingTokenAddress?.toLowerCase() !== ownerAddress?.toLowerCase() ? '('+previewAddrStart(message.sendingTokenAddress)+')' : '(you)'}
+				{message.encrypted ? 'Encrypted' : ''}
 			</small>
 		</div>
 		<img class="w-[48px]" style="width: 38px;height: 38px; border-radius: 38px;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png" alt="avatar" />					
