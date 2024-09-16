@@ -258,7 +258,7 @@
 		  <Loader show={loading} />
 		</div>
 	  </div>
-	<div id="send-message" class="mx-[10px] mb-[10px] h-[300px]">
+	<div id="send-message" class="mx-[10px] mb-[10px]">
 		<div class="w-full text-right"><button on:click={() => scrollToBottom(true)}
 			style="opacity: {buttonOpacity}; transition: opacity 0.3s;"
 			class="h-[40px] bg-[#2f651c] px-[20px] text-[14px] rounded-md my-[10px] text-white">Jump to latest { newMessagesFound ? `(New Message(s))` : '' } <span class="text-[11px]">▼</span></button></div>

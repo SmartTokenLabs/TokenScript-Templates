@@ -62,8 +62,19 @@
 			threadsList.sort((a, b) => (b.unread ?? 0) - (a.unread ?? 0));
 
 		} catch (e:any) {
-			console.error('Error loading threads:', e);
-			$notify = {status: false, message: 'Failed to load / decrypt messages. Or signature request was rejected.'}
+
+			console.error('Error loading threads:', e.message);
+
+			const nonTokenHolder = e.message?.includes('looks like you do not own this token') ? true : false;
+
+			if(nonTokenHolder) {
+				$notify = {status: false, message: "Sorry, looks like you do not own this token. It can be a cache issue, please wait 10 min and try again."}
+			} else {
+				$notify = {status: false, message: 'Failed to load / decrypt messages. Or signature request was rejected.'}
+			}
+
+			onDestroyEvt();
+
 		} finally {
 			showLoader.set(false);
 		}
@@ -88,12 +99,15 @@
 		derivedPrivateKey = value;
 	});
 
-	onDestroy(() => {
-		// Cleanup subscriptions and timers
+	function onDestroyEvt() {
 		if (reloadTimer) clearInterval(reloadTimer);
 		unsubscribeContextData();
 		unsubscribeMessagingKey();
 		unsubscribeDerivedPrivateKey();
+	}
+
+	onDestroy(() => {
+		onDestroyEvt();
 	});
 
 	async function getDerivedKey() {

@@ -31,8 +31,17 @@
 			ownInvites = await client.getOwnFriendInvites();
 			friends = await client.getApprovedFriend();
 		} catch (e: any) {
-			console.log({ e });
-			$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+
+			console.error('Error loading invites:', e.message);
+
+			const nonTokenHolder = e.message?.includes('looks like you do not own this token') ? true : false;
+
+			if(nonTokenHolder) {
+				$notify = {status: false, message: 'You must own PEPE to use this service.'}
+			} else {
+				$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+			}
+
 			return false
 		}
 		return true
@@ -63,8 +72,16 @@
 		try {
 			invites = await client.getFriendInvites();
 		} catch (e:any) {
-			console.log({ e });
-			$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+
+			console.error('Error loading invites:', e.message);
+
+			const nonTokenHolder = e.message?.includes('looks like you do not own this token') ? true : false;
+
+			if(nonTokenHolder) {
+				$notify = {status: false, message: "Sorry, looks like you do not own this token. It can be a cache issue, please wait 10 min and try again."}
+			} else {
+				$notify = {status: false, message: 'Failed to load invites. Or signature request was rejected.'}
+			}
 			return false
 		}
 		return true
