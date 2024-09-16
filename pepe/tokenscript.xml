@@ -19,8 +19,8 @@
 		<ts:iconUrl xml:lang="en">https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
-		<!-- <ts:address network="1">0x6982508145454ce325ddbe47a25d4ec3d2311933</ts:address> -->
-		<ts:address network="11155111">0x779877a7b0d9e8603169ddbd7836e478b4624789</ts:address>
+		<ts:address network="1">0x6982508145454ce325ddbe47a25d4ec3d2311933</ts:address>
+		<!-- <ts:address network="11155111">0x779877a7b0d9e8603169ddbd7836e478b4624789</ts:address> -->
 	</ts:contract>
 	<ts:origins>
 		<!-- Define the contract which holds the token that the user will use -->

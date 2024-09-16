@@ -1,6 +1,6 @@
 <script lang="ts">
 	import context from '../lib/context';
-	import { showLoader } from '../lib/storage';
+	import { showLoader, notify } from '../lib/storage';
 	import TokenCard from '../components/TokenCard.svelte';
 	import MessagePopup from '../components/MessagePopup.svelte';
 	import { ThreadItem, Token, TokenCardTypes } from '../lib/types';
@@ -9,7 +9,7 @@
 	import { DH } from '../lib/dh';
 	import { hexStringToUint8 } from '../lib/helpers';
 	import { onDestroy } from 'svelte';
-	
+
 	let token: Token;
 	let contract: any; // Replace `any` with the correct type if available
 
@@ -62,9 +62,19 @@
 			threadsList.sort((a, b) => (b.unread ?? 0) - (a.unread ?? 0));
 
 		} catch (e:any) {
-			console.error('Error loading threads:', e);
-			// alert('Message load failed: ' + e?.message);
-			throw new Error('Error loading messages');
+
+			console.error('Error loading threads:', e.message);
+
+			const nonTokenHolder = e.message?.includes('looks like you do not own this token') ? true : false;
+
+			if(nonTokenHolder) {
+				$notify = {status: false, message: 'You must own PEPE to use this service.'}
+			} else {
+				$notify = {status: false, message: 'Failed to load / decrypt messages. Or signature request was rejected.'}
+			}
+
+			onDestroyEvt();
+
 		} finally {
 			showLoader.set(false);
 		}
@@ -78,7 +88,7 @@
 		showLoader.set(true);
 		await loadThreads();
 		showLoader.set(false);
-		reloadTimer = setInterval(loadThreads, 60000);
+		reloadTimer = setInterval(loadThreads, 5000);
 	});
 
 	let unsubscribeMessagingKey = context.messagingKey.subscribe((value) => {
@@ -89,12 +99,15 @@
 		derivedPrivateKey = value;
 	});
 
-	onDestroy(() => {
-		// Cleanup subscriptions and timers
+	function onDestroyEvt() {
 		if (reloadTimer) clearInterval(reloadTimer);
 		unsubscribeContextData();
 		unsubscribeMessagingKey();
 		unsubscribeDerivedPrivateKey();
+	}
+
+	onDestroy(() => {
+		onDestroyEvt();
 	});
 
 	async function getDerivedKey() {
@@ -104,7 +117,7 @@
 			const key = signature.slice(-64);
 			context.derivedPrivateKey.set(key);
 		} catch (e) {
-			throw new Error('Error signing message');
+			$notify = {status: false, message: 'Signature request to enable encryption was rejected.'}
 		}
 	}
 

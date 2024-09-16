@@ -129,7 +129,6 @@ export class MessageClient {
 
 	private async fetchAndSignChallenge() {
 		const challenge = await this.request('/challenge', 'get');
-
 		try {
 			this.challengeSig = await signMessage(challenge.text);
 			this.challengeExp = challenge.expiry;
