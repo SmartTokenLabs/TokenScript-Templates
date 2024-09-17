@@ -238,20 +238,15 @@
 				</div>
 			</div>
 		{:else}
-			<div class="tab-content-wrap">
+			<div class="tab-content-wrap pt-6">
 				{#if invites && invites.length}
-					<h2 class="mt-8">Confirm Frens</h2>
-					<h4 class="mt-2 mb-4">
-						Please click friends requests to confirm frenship if you want to chat with those Token
-						owners.
-					</h4>
 					{#each invites.map(inviteToTokenHolder) as invite}
 						<TokenCard
 							tokenItem={invite}
 							accountType={TokenCardTypes.Friends}
 							selected={selectedInvite}
 							on:click={() => {
-								selectedInvite = invite.owner
+								selectedInvite = selectedInvite === invite.owner ? "-1" : invite.owner;
 							}}
 						/>
 					{/each}

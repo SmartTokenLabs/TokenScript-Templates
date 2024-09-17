@@ -1,5 +1,4 @@
 <script lang="ts">
-    import TokenIcon from './TokenIcon.svelte';
     import OwnerAddress from './OwnerAddress.svelte';
     import { ThreadItem, TokenCardTypes } from '../lib/types';
     export let tokenItem:ThreadItem ;
@@ -10,7 +9,7 @@
 
 {#if !tokenItem.wrongOwner }
     <button on:click
-        class="{clickable? "clickable" : ""} {tokenItem.unread ? "unread" : ""} {tokenItem.tokenAddress == selected ? "selected" : ""} cat-list-item" 
+        class="{clickable? "clickable" : ""} {tokenItem.unread ? "unread" : ""} {(tokenItem.owner == selected) ? "selected" : ""} cat-list-item" 
         title="{tokenItem.friendsSharedKey? 'Enabled Encryption' : 'Not enabled Encrypted'}">
         <div class="cat-list-info">
             {#if accountType == TokenCardTypes.Group}
@@ -47,8 +46,9 @@
         &.clickable {
             cursor: pointer;
         }
-        &.unread, &.selected {
-            background-color: #e5e8ff;
+        &.selected {
+            color: white;
+            background-color: #2F651B;
         }
         h4 {
             display: flex;
@@ -86,7 +86,7 @@
                     height: 8px;
                     border-radius: 8px;
                     margin-right: 5px;
-                    background: linear-gradient(234.79deg, #001AFF 37.73%, #4F95FF 118.69%);
+                    background: green;
                 }
             }
         }
