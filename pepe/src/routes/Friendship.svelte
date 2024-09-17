@@ -140,7 +140,7 @@
 			<img alt="pepe" style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
 		</div>
 		<h2 style="margin: 24px 0 12px 0;">Frens</h2>
-		<div>Accept and request frenship from other PEPE fam</div>
+		<div>Accept and request Frenship with other Pepe Token Holders</div>
 	</div>
 
 	<div class="tabs-wrap">

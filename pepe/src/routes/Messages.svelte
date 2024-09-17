@@ -176,7 +176,7 @@
 			<img style="border-radius: 100%; width: 20%;" src="https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/pepe-avatar.png">
 		</div>
 		<h2 style="margin: 24px 0 12px 0;">Messages</h2>
-		<div>Send messages to PEPE fam</div>
+		<div>Send messages to your PEPE fam! Click below to enter group chat or connect 1-on-1 (P2P) with PEPE holders that have accepted your Frenship request.</div>
 	</div>
 
 	<div id="thread-list">
