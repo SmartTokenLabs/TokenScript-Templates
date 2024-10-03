@@ -1,0 +1,62 @@
+{
+	"$schema": "../tstemplate.schema.json",
+	"name": "Empty Svelte Project - recommended",
+	"description": "An empty Svelte project",
+	"templateFields": [
+		{
+			"name": "TokenScript name",
+			"token": "TOKENSCRIPT_NAME",
+			"prompt": "Enter a name for the TokenScript project",
+			"value": "test3"
+		},
+		{
+			"name": "Token type",
+			"token": "TOKEN_TYPE",
+			"updatePrefix": "interface=\"",
+			"prompt": "Select the token type",
+			"options": [
+				"erc721",
+				"erc20",
+				"erc1155"
+			],
+			"value": "erc721"
+		},
+		{
+			"name": "Contract address",
+			"token": "CONTRACT_ADDRESS",
+			"prompt": "Enter the ethereum contract address for the TokenScript",
+			"value": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+		},
+		{
+			"name": "Contract chain",
+			"token": "CONTRACT_CHAIN",
+			"updatePrefix": "network=\"",
+			"prompt": "Enter the ethereum chainID for the TokenScript",
+			"value": "31337"
+		},
+		{
+			"name": "Description",
+			"token": "DESCRIPTION",
+			"prompt": "Enter a short description for the TokenScript",
+			"value": "test3"
+		},
+		{
+			"name": "About URL",
+			"token": "ABOUT_URL",
+			"prompt": "Enter a URL to a website about this TokenScript",
+			"value": "-"
+		},
+		{
+			"name": "Icon URL",
+			"token": "ICON_URL",
+			"prompt": "Enter an icon URL for the TokenScript (base64 image URLs are supported)",
+			"value": "-"
+		},
+		{
+			"name": "Trimmed Name",
+			"token": "TOKENSCRIPT_TRIM",
+			"prompt": "",
+			"value": "test3"
+		}
+	]
+}
