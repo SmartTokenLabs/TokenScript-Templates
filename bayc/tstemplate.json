@@ -1,0 +1,64 @@
+{
+	"$schema": "../tstemplate.schema.json",
+	"name": "Empty React Project - recommended",
+	"description": "An empty React project",
+	"templateFields": [
+		{
+			"name": "TokenScript name",
+			"token": "TOKENSCRIPT_NAME",
+			"prompt": "Enter a name for the TokenScript project",
+			"value": "bayc"
+		},
+		{
+			"name": "Token type",
+			"token": "TOKEN_TYPE",
+			"updatePrefix": "interface=\"",
+			"prompt": "Select the token type",
+			"options": [
+				"erc721",
+				"erc20",
+				"erc1155"
+			],
+			"value": "erc721"
+		},
+		{
+			"name": "Contract address",
+			"token": "CONTRACT_ADDRESS",
+			"prompt": "Enter the ethereum contract address for the TokenScript",
+			"isEnvironment": true,
+			"value": "0xd07dc4262bcdbf85190c01c996b4c06a461d2430"
+		},
+		{
+			"name": "Contract chain",
+			"token": "CONTRACT_CHAIN",
+			"updatePrefix": "network=\"",
+			"prompt": "Enter the ethereum chainID for the TokenScript",
+			"isEnvironment": true,
+			"value": "1"
+		},
+		{
+			"name": "Description",
+			"token": "DESCRIPTION",
+			"prompt": "Enter a short description for the TokenScript",
+			"value": "bayc social tapp"
+		},
+		{
+			"name": "About URL",
+			"token": "ABOUT_URL",
+			"prompt": "Enter a URL to a website about this TokenScript",
+			"value": "https://boredapeyachtclub.com/"
+		},
+		{
+			"name": "Icon URL",
+			"token": "ICON_URL",
+			"prompt": "Enter an icon URL for the TokenScript (base64 image URLs are supported)",
+			"value": "https://cdn.jsdelivr.net/gh/SmartTokenLabs/resources/images/logos/bayc.png"
+		},
+		{
+			"name": "Trimmed Name",
+			"token": "TOKENSCRIPT_TRIM",
+			"prompt": "",
+			"value": "bayc"
+		}
+	]
+}
