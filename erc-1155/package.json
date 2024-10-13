@@ -5,6 +5,7 @@
   "scripts": {
     "start": "tokenscript emulate",
     "emulate": "tokenscript emulate",
+    "emulate:local": "tokenscript emulate -e=http://localhost:3333/",
     "build": "vite build && npm run build:ts",
     "build:ts": "tokenscript build",
     "sign": "tokenscript sign",

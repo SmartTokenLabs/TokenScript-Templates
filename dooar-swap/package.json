@@ -1,0 +1,44 @@
+{
+	"name": "tokenscript",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "tokenscript build",
+		"ts:buildWeb": "vite build",
+		"sign": "tokenscript sign -k ../ethereum/test-signing.key",
+		"sign:prod": "tokenscript sign -k ../ethereum/prod-signing.key",
+		"start": "tokenscript emulate",
+		"emulate": "tokenscript emulate",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^2.1.1",
+		"@sveltejs/kit": "^1.30.4",
+		"@tokenscript/card-sdk": "^1.4.0",
+		"@tokenscript/cli": "^1.2.2",
+		"@types/pako": "^2.0.3",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^8.10.0",
+		"eslint-plugin-svelte": "^2.40.0",
+		"prettier": "^2.8.8",
+		"prettier-plugin-svelte": "^2.10.1",
+		"svelte": "^4.2.18",
+		"svelte-check": "^3.8.1",
+		"svelte-icon": "^2.1.1",
+		"svelte-preprocess": "^5.1.4",
+		"tslib": "^2.6.3",
+		"typescript": "^5.4.5",
+		"vite": "^4.5.3",
+		"vite-plugin-singlefile": "^0.13.5"
+	},
+	"type": "module",
+	"dependencies": {
+		"pako": "^2.1.0"
+	}
+}

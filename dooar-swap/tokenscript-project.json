@@ -1,0 +1,12 @@
+{
+	"$schema": "https://tokenscript.org/schemas/project/tokenscript-project.schema.json",
+	"environment": {
+		"default": {
+			"GMT_CONTRACT_ADDRESS": "0x714DB550b574b3E927af3D93E26127D15721D4C2",
+			"SUT_CONTRACT_ADDRESS": "0x57211299bc356319ba5ca36873eb06896173f8bc",
+			"USDT_CONTRACT_ADDRESS": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+			"DOOARSWAP_CONTRACT_ADDRESS": "0xAcc8e414ceeCF0BBF438f6c4B7417Ca59dcF7E47",
+			"CONTRACT_CHAIN": "137"
+		}
+	}
+}
