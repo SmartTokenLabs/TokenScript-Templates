@@ -44,13 +44,17 @@
 		tokenscript.action.showLoader();
 		quoteLoading = true;
 
+		console.log("Update amounts: ", rightDetails, swapTokenRight);
+
 		try {
+
 			if (left) {
-				const amounts = await router.getAmountsOut(swapAmtLeft, [swapTokenLeft, swapTokenRight]);
-				swapAmtRight = amounts[1];
+				const amounts = await router.getAmountsOut(swapAmtLeft, getInputs().path);
+				console.log(amounts);
+				swapAmtRight = amounts[amounts.length - 1];
 				exactOutput = false;
 			} else {
-				const amounts = await router.getAmountsIn(swapAmtRight, [swapTokenLeft, swapTokenRight]);
+				const amounts = await router.getAmountsIn(swapAmtRight, getInputs().path);
 				swapAmtLeft = amounts[0];
 				exactOutput = true;
 			}
@@ -95,8 +99,13 @@
 	function getInputs(){
 
 		const inputs: any = {
-			path: [swapTokenLeft, swapTokenRight],
 			deadline: Math.floor(Date.now() / 1000) + 60 * 20 // 20 minutes
+		}
+
+		if ((leftDetails.symbol === "SUT" && rightDetails.symbol === "USDT") || (leftDetails.symbol === "USDT" && rightDetails.symbol === "SUT")){
+			inputs.path = [swapTokenLeft, tokenscript.eth.getContractInfo("GMT").address, swapTokenRight];
+		} else {
+			inputs.path = [swapTokenLeft, swapTokenRight];
 		}
 
 		if (exactOutput){
@@ -116,6 +125,7 @@
 
 <style>
     .swap-panel {
+		position: relative;
         display: flex;
         gap: 30px;
         padding: 10px 0 0;
@@ -149,7 +159,7 @@
         height: 80px;
         border-radius: 40px;
         left: calc(50% - 40px);
-        top: 125px;
+        top: 30px;
         background: rgba(31, 31, 31, 1);
         border: 6px solid rgba(25, 25, 25, 1);
         padding: 10px;
@@ -340,7 +350,7 @@
 			{#each Object.keys(TOKEN_DETAILS).filter((addr) => addr !== token.contractAddress) as address}
 				<button class="btn" on:click={async () => {
 					tokenscript.action.showLoader();
-					rightContract = address;
+					swapTokenRight = address;
 					rightDetails = TOKEN_DETAILS[address];
 					rightBalance = 0n;
 					swapAmtRight = 0n;
