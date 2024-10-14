@@ -17,12 +17,159 @@
 	</ts:meta>
 	<ts:contract interface="erc20" name="SUT">
 		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{SUT_CONTRACT_ADDRESS}</ts:address>
+		<ts:abi>
+			<![CDATA[
+			[
+				{
+					"constant": true,
+					"inputs": [
+						{
+							"name": "_owner",
+							"type": "address"
+						}
+					],
+					"name": "balanceOf",
+					"outputs": [
+						{
+							"name": "balance",
+							"type": "uint256"
+						}
+					],
+					"payable": false,
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+						  "internalType": "address",
+						  "name": "owner",
+						  "type": "address"
+						},
+						{
+						  "internalType": "address",
+						  "name": "spender",
+						  "type": "address"
+						}
+					],
+					"name": "allowance",
+					"outputs": [
+						{
+						  "internalType": "uint256",
+						  "name": "",
+						  "type": "uint256"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]
+			]]>
+		</ts:abi>
 	</ts:contract>
 	<ts:contract interface="erc20" name="GMT">
 		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{GMT_CONTRACT_ADDRESS}</ts:address>
+		<ts:abi>
+			<![CDATA[
+			[
+				{
+					"constant": true,
+					"inputs": [
+						{
+							"name": "_owner",
+							"type": "address"
+						}
+					],
+					"name": "balanceOf",
+					"outputs": [
+						{
+							"name": "balance",
+							"type": "uint256"
+						}
+					],
+					"payable": false,
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+						  "internalType": "address",
+						  "name": "owner",
+						  "type": "address"
+						},
+						{
+						  "internalType": "address",
+						  "name": "spender",
+						  "type": "address"
+						}
+					],
+					"name": "allowance",
+					"outputs": [
+						{
+						  "internalType": "uint256",
+						  "name": "",
+						  "type": "uint256"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]
+			]]>
+		</ts:abi>
 	</ts:contract>
 	<ts:contract interface="erc20" name="USDT">
 		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{USDT_CONTRACT_ADDRESS}</ts:address>
+		<ts:abi>
+			<![CDATA[
+			[
+				{
+					"constant": true,
+					"inputs": [
+						{
+							"name": "_owner",
+							"type": "address"
+						}
+					],
+					"name": "balanceOf",
+					"outputs": [
+						{
+							"name": "balance",
+							"type": "uint256"
+						}
+					],
+					"payable": false,
+					"stateMutability": "view",
+					"type": "function"
+				},
+				{
+					"inputs": [
+						{
+						  "internalType": "address",
+						  "name": "owner",
+						  "type": "address"
+						},
+						{
+						  "internalType": "address",
+						  "name": "spender",
+						  "type": "address"
+						}
+					],
+					"name": "allowance",
+					"outputs": [
+						{
+						  "internalType": "uint256",
+						  "name": "",
+						  "type": "uint256"
+						}
+					],
+					"stateMutability": "view",
+					"type": "function"
+				}
+			]
+			]]>
+		</ts:abi>
 	</ts:contract>
 	<ts:contract name="DooarSwapRouter">
 		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{DOOARSWAP_CONTRACT_ADDRESS}</ts:address>
@@ -39,6 +186,10 @@
 		<ts:ethereum contract="USDT"/>
 	</ts:origins>
 
+	<ts:style>
+		<ts:include type="css" src="./src/ui.css" />
+	</ts:style>
+
 	<ts:cards>
 		<ts:viewContent name="common" xmlns="http://www.w3.org/1999/xhtml">
 			<ts:include type="html" src="./dist/index.html"/>
@@ -49,7 +200,7 @@
 			<ts:label>
 				<ts:string xml:lang="en">Swap</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="swap">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="swap" uiButton="false">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>

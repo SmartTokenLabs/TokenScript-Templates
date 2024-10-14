@@ -1,0 +1,86 @@
+
+.ts-token-background {
+    background-color: #444444;
+
+}
+
+.ts-token-container {
+    background-color: #212121;
+    color: #fff;
+    border-radius: 25px;
+}
+
+.ts-token-container.popover-container {
+    background-color: #444444 !important;
+}
+
+.ts-token-container * {
+    color: #fff;
+}
+
+.ts-token-container .owner-count {
+    color: #fff;
+}
+
+.btn {
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ts-card-button.btn-primary {
+    background: linear-gradient(106.84deg, rgba(255, 140, 74, 0.9) 6.22%, rgba(255, 96, 95, 0.9) 90.19%) !important;
+    border: none;
+}
+
+.ts-card-button.btn-primary:hover, .ts-card-button.btn-primary:disabled {
+    background: linear-gradient(106.84deg, #FF8C4A 6.22%, #FF605F 90.19%) !important;
+    border: none;
+}
+
+.ts-card-button.btn-primary:disabled {
+    background: #4A4747 !important;
+    border: none !important;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.ts-card-button.btn-primary span {
+    color: white;
+}
+
+.ts-card-button.btn-secondary {
+    border: 1px solid rgb(255, 88, 36);
+    border-color: rgb(255, 88, 36) !important;
+    background: transparent;
+}
+
+.ts-card-button.btn-secondary:disabled {
+    border: 1px solid #5C5857 !important;
+    background: #212121 !important;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.ts-card-button.btn-secondary span {
+    background-image: linear-gradient(106.84deg, rgb(255, 140, 74) 6.22%, rgb(255, 96, 95) 90.19%);
+    background-clip: text;
+    color: transparent;
+}
+
+.ts-card-button.btn-secondary:disabled span {
+    color: #83807F !important;
+    background-image: unset !important;
+}
+
+.ts-card-button.btn-secondary:hover {
+    border: 1px solid rgb(255, 88, 36);
+    background: rgba(194, 140, 109, 0.06);
+}
+
+.ts-token-container .attribute-item {
+    border: none;
+    background-color: #292929;
+}
