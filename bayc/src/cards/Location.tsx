@@ -10,11 +10,7 @@ interface LocationProps {
   token: any;
 }
 
-// /city-location/set-city-location-token-owner-erc-721/:signature/:contractAddress/:chainId/:country/:city/:tokenImageUrl/:tokenId",
-// /city-location/set-city-location-token-owner-erc-721/:signature/:contractAddress/:chainId/:country/:city/:tokenImageUrl/:tokenId",
-// /city-location/city-location-token-owners/:contractAddress/:chainId/:city/:country",
-
-const BASE_URL = "http://127.0.0.1:3006/city-location";
+const BASE_URL = "http://localhost:3006/city-location";
 
 export const Location: React.FC<LocationProps> = ({ token }) => {
   const [loading, setLoading] = useState(true);
@@ -26,34 +22,59 @@ export const Location: React.FC<LocationProps> = ({ token }) => {
   const countries: Record<string, string[]> = citiesData;
 
   useEffect(() => {
+    fetchLocation();
     setLoading(false);
   }, []);
 
+  const fetchLocation = async () => {
+    try {
+      const locationReq = await fetch(`${BASE_URL}/city-location-token-owner/${token.ownerAddress}/${token.contractAddress}/${token.chainId}`);
+      
+      if (!locationReq.ok) {
+        console.error('Error fetching location:', locationReq.statusText);
+        return;
+      }
+  
+      const locationReqJson = await locationReq.json();
+      
+      if(locationReqJson.country && locationReqJson.city) {
+        setSelectedCountry(locationReqJson.country);
+        setSelectedCity(locationReqJson.city);
+        setUserMessage(locationReqJson.optionalUserMessage ?? "");
+        setEditMode(false);
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const saveLocation = async (country: string, city: string) => {
 
-    const userSignature = await fetchAndSignChallenge();
-    
-    if(token && token.contractAddress && token.tokenId && token.chainId && userSignature) {
+    const _userSignature = await fetchAndSignChallenge();
 
-      fetch(`${BASE_URL}/set-city-location-token-owner-erc-721/${userSignature}/${token.contractAddress}/${token.chainId}/${country}/${city}/${encodeURIComponent(token.image_preview_url)}/${token.tokenId}/${encodeURIComponent(userMessage)}`, {
+    if(token && token.contractAddress && token.tokenId && token.chainId && _userSignature) {
+
+      fetch(`${BASE_URL}/set-city-location-token-owner-erc-721`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          ownerAddress: token.ownerAddress,
+          signature: _userSignature,
+          contractAddress: token.contractAddress.toString(),
+          chainId: Number(token.chainId),
           country,
           city,
+          tokenImageUrl: token.image_preview_url,
+          tokenId: token.tokenId.toString(),
+          optionalUserMessage: userMessage
         }),
       }).then((response) => {
 
         if (response.ok) {
-          console.log("Location saved successfully");
           setEditMode(false);
-
-          setTimeout(() => {
-            window.close();
-          }, 3000);
-
         } else {
           console.log("Failed to save location");
         }
@@ -109,7 +130,7 @@ export const Location: React.FC<LocationProps> = ({ token }) => {
           )}
           {selectedCountry && selectedCity && (
             <Button
-            className="my-1"
+            className="my-3"
             disabled={!selectedCity}
             onClick={() => {
               saveLocation(selectedCountry, selectedCity);
@@ -136,7 +157,7 @@ export const Location: React.FC<LocationProps> = ({ token }) => {
             <Input value={userMessage} disabled className="disabled:opacity-1" />
           )}
 
-          <div className="my-1">
+          <div className="my-3">
             <Button
               className="float-right"
               disabled={!selectedCity}
