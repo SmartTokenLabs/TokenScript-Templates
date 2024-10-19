@@ -19,13 +19,16 @@ export async function signMessage(msg: string): Promise<string> {
 	});
 }
 
-export async function fetchAndSignChallenge() {
+export async function fetchAndSignChallenge(): Promise<{ challengeText: string | undefined, challengeSignature: string | undefined, challengeExpiry: number | undefined }> {
   try {
     const challengeReq = await fetch(`${BASE_URL}/location-challenge`);
     const challengeReqJson = await challengeReq.json();
     const userSignature = await signMessage(challengeReqJson.text);
-    // @ts-ignore
-    return userSignature;
+    return {
+      challengeSignature: userSignature,
+      challengeText: challengeReqJson.text,
+      challengeExpiry: challengeReqJson.expiry
+    };
   } catch (e: any) {
     if (typeof e === 'string' && e.toLowerCase().includes('user rejected signing')) {
       e = 'User rejected signing.';
