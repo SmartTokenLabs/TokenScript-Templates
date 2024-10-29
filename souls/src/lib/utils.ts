@@ -1,7 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-export const BASE_URL = "http://127.0.0.1:3006/city-location";
+export const BASE_URL = "http://127.0.0.1:3006/city-location"; // test
+// export const BASE_URL = "https://store-backend-stage.smartlayer.network/city-location"; // stage
+// export const BASE_URL = "https://store-backend.smartlayer.network/city-location"; // prod
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

@@ -82,9 +82,17 @@ export const Check: React.FC<LocationProps> = ({ token }) => {
   return (
     <div>
       {loading ? (
-        <h1>Loading...</h1>
+        <div className="m-6">
+        <Card className="m-6 p-4 space-y-3 shadow-lg rounded-lg border border-gray-200 bg-white">
+          Loading...
+        </Card>
+      </div>
       ) : error ? (
-        <p>{error}</p>
+        <div className="m-6">
+          <Card className="m-6 p-4 space-y-3 shadow-lg rounded-lg border border-gray-200 bg-white">
+            {error}
+          </Card>
+        </div>
       ) : (
         <div>
           <div className="m-6">

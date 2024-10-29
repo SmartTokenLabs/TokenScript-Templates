@@ -103,6 +103,24 @@ export const Info: React.FC = ({ token }) => {
           </Button>
         </CardContent>
       </Card>
+      
+      <Card className="w-full mb-6">
+        <CardContent className="mt-6 text-[#555555] font-bold">
+          Social
+        </CardContent>
+        <CardContent className="text-[#555555] text-center px-10">
+          <Button asChild className="w-full bg-[#000000] text-white mb-4">
+            <a href="https://twitter.com/souls_galaxy" target="_blank" rel="noopener noreferrer">
+              X
+            </a>
+          </Button>
+          <Button asChild className="w-full bg-[#5865f2] text-white">
+            <a href="https://discord.com/invite/WUKF35W8Qb" target="_blank" rel="noopener noreferrer">
+              Discord
+            </a>
+          </Button>
+        </CardContent>
+      </Card>
 
     </div>
   );

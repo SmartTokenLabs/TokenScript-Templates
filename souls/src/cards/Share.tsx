@@ -10,7 +10,7 @@ import {
 } from "../components/ui/select";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { fetchAndSignChallenge } from "../lib/utils";
+import { BASE_URL, fetchAndSignChallenge } from "../lib/utils";
 
 interface LocationProps {
   token: {
@@ -21,8 +21,6 @@ interface LocationProps {
     image_preview_url: string;
   };
 }
-
-const BASE_URL = "http://localhost:3006/city-location";
 
 export const Share: React.FC<LocationProps> = ({ token }) => {
   const [loading, setLoading] = useState(true);
