@@ -80,17 +80,25 @@ export const Info: React.FC = ({ token }) => {
 
       <Card className="w-full mb-6">
         <CardContent className="mt-6 text-[#555555] font-bold">
-          Buy Tokens
+          Play
         </CardContent>
         <CardContent className="text-[#555555] text-center px-10">
-          {/* <Button asChild className="mb-4 w-full bg-[#ff6c5a] text-white">
-            <a href="https://mooar.com/collection/souls/" target="_blank" rel="noopener noreferrer">
-              Buy from Mooar
+          <Button asChild className="w-full bg-[#7a27e6] text-white">
+            <a href="https://soulsgalaxy.io/" target="_blank" rel="noopener noreferrer">
+              Souls Galaxy
             </a>
-          </Button> */}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="w-full mb-6">
+        <CardContent className="mt-6 text-[#555555] font-bold">
+          Buy
+        </CardContent>
+        <CardContent className="text-[#555555] text-center px-10">
           <Button asChild className="w-full bg-[#2081e2] text-white">
             <a href="https://opensea.io/collection/souls" target="_blank" rel="noopener noreferrer">
-              Buy from OpenSea
+              OpenSea
             </a>
           </Button>
         </CardContent>

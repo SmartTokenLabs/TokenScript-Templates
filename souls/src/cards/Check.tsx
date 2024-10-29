@@ -92,7 +92,7 @@ export const Check: React.FC<LocationProps> = ({ token }) => {
           </div>
 
           {users.map((user) => (
-            <Card key={user.ownerAddress} className="mx-6 p-4 space-y-3 shadow-lg rounded-lg border border-gray-200 bg-white">
+            <Card key={user.ownerAddress} className="m-6 p-4 space-y-3 shadow-lg rounded-lg border border-gray-200 bg-white">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-gray-800 font-semibold">#{previewAddr(user.tokenId)} 
                   { user.tokenId === token.tokenId && <span className="ml-1 text-gray-400">(You)</span> }

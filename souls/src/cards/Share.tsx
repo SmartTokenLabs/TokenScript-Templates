@@ -76,10 +76,8 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
     try {
       let currentSignature = signatureData;
 
-      // if (!currentSignature?.challengeExpiry || currentSignature.challengeExpiry < Date.now()) {
-        currentSignature = await fetchAndSignChallenge();
-        setSignatureData(currentSignature);
-      // }
+      currentSignature = await fetchAndSignChallenge();
+      setSignatureData(currentSignature);
 
       const { challengeText, challengeSignature } = currentSignature;
 
@@ -91,14 +89,13 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
             "X-SmartCat-Auth": `${challengeText}:${challengeSignature}`,
           },
           body: JSON.stringify({
-            ownerAddress: token.ownerAddress,
             contractAddress: token.contractAddress,
             chainId: token.chainId,
             country,
             city,
             tokenImageUrl: token.image_preview_url,
             tokenId: token.tokenId,
-            optionalUserMessage: userMessage,
+            optionalUserMessage: userMessage ?? "",
           }),
         });
 
@@ -186,7 +183,12 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
               {userMessage && <Input value={userMessage} disabled />}
 
               <div className="my-3">
-                <Button className="float-right" onClick={() => setEditMode(true)}>
+                <Button className="float-right" onClick={() => {
+                  setEditMode(true)
+                  setUserMessage("")
+                  setSelectedCountry("")
+                  setSelectedCity("")
+                }}>
                   Update location
                 </Button>
               </div>
