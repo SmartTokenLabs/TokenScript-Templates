@@ -1,0 +1,64 @@
+{
+	"$schema": "../tstemplate.schema.json",
+	"name": "Empty React Project - recommended",
+	"description": "An empty React project",
+	"templateFields": [
+		{
+			"name": "TokenScript name",
+			"token": "TOKENSCRIPT_NAME",
+			"prompt": "Enter a name for the TokenScript project",
+			"value": "dogematic"
+		},
+		{
+			"name": "Token type",
+			"token": "TOKEN_TYPE",
+			"updatePrefix": "interface=\"",
+			"prompt": "Select the token type",
+			"options": [
+				"erc721",
+				"erc20",
+				"erc1155"
+			],
+			"value": "erc20"
+		},
+		{
+			"name": "Contract address",
+			"token": "CONTRACT_ADDRESS",
+			"prompt": "Enter the ethereum contract address for the TokenScript",
+			"isEnvironment": true,
+			"value": "0xd9d32b18fd437f5de774e926cffdad8f514eeed0"
+		},
+		{
+			"name": "Contract chain",
+			"token": "CONTRACT_CHAIN",
+			"updatePrefix": "network=\"",
+			"prompt": "Enter the ethereum chainID for the TokenScript",
+			"isEnvironment": true,
+			"value": "137"
+		},
+		{
+			"name": "Description",
+			"token": "DESCRIPTION",
+			"prompt": "Enter a short description for the TokenScript",
+			"value": "a simple tapp enabling smart token actions"
+		},
+		{
+			"name": "About URL",
+			"token": "ABOUT_URL",
+			"prompt": "Enter a URL to a website about this TokenScript",
+			"value": "https://polygonscan.com/token/0xd9d32b18fd437f5de774e926cffdad8f514eeed0?a=0x000000000000000000000000000000000000dead"
+		},
+		{
+			"name": "Icon URL",
+			"token": "ICON_URL",
+			"prompt": "Enter an icon URL for the TokenScript (base64 image URLs are supported)",
+			"value": "https://upload.wikimedia.org/wikipedia/en/d/d0/Dogecoin_Logo.png"
+		},
+		{
+			"name": "Trimmed Name",
+			"token": "TOKENSCRIPT_TRIM",
+			"prompt": "",
+			"value": "dogematic"
+		}
+	]
+}
