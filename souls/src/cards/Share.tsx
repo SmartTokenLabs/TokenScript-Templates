@@ -41,6 +41,7 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
   const countries: Record<string, string[]> = citiesData;
 
   useEffect(() => {
+
     const fetchLocation = async () => {
       try {
         const res = await fetch(
@@ -68,6 +69,7 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
     };
 
     fetchLocation();
+
   }, [token]);
 
   const saveLocation = async (country: string, city: string) => {
@@ -114,8 +116,8 @@ export const Share: React.FC<LocationProps> = ({ token }) => {
         <div className="m-6">
           <h1 className="text-2xl font-bold mb-4">
             {editMode
-              ? "Set your city location and an optional message, to be shared with token holders."
-              : "Your shared city location with token holders."}
+              ? "Set your city location and an optional message, to be shared with the community."
+              : "Your shared city location."}
           </h1>
 
           {editMode ? (

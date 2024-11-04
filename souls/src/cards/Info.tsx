@@ -63,7 +63,7 @@ export const Info: React.FC = ({ token }) => {
             Description
           </p>
           <p className="text-black text-sm pt-1 pb-4">
-            {token.description}
+            A collection of 10,000 unique interactive art beings living on ethereum created by SiA and David OReilly. SOULS began as a series of simple colorful paintings that grew over time into an expansive collection of never before seen digital beings built with love and shaped between two friends. SOULS exist as virtual objects that can bounce, wiggle, dance, sleep, and even sing. Join the galaxy to see what we can create together!
           </p>
           {nftStats?.floorPrice && (
             <div>
@@ -84,7 +84,7 @@ export const Info: React.FC = ({ token }) => {
         </CardContent>
         <CardContent className="text-[#555555] text-center px-10">
           <Button asChild className="w-full bg-[#7a27e6] text-white">
-            <a href="https://soulsgalaxy.io/" target="_blank" rel="noopener noreferrer">
+            <a href="https://soulsgalaxy.io/" target="_blank">
               Souls Galaxy
             </a>
           </Button>
@@ -97,7 +97,7 @@ export const Info: React.FC = ({ token }) => {
         </CardContent>
         <CardContent className="text-[#555555] text-center px-10">
           <Button asChild className="w-full bg-[#2081e2] text-white">
-            <a href="https://opensea.io/collection/souls" target="_blank" rel="noopener noreferrer">
+            <a href="https://opensea.io/collection/souls" target="_blank">
               OpenSea
             </a>
           </Button>
@@ -110,15 +110,24 @@ export const Info: React.FC = ({ token }) => {
         </CardContent>
         <CardContent className="text-[#555555] text-center px-10">
           <Button asChild className="w-full bg-[#000000] text-white mb-4">
-            <a href="https://twitter.com/souls_galaxy" target="_blank" rel="noopener noreferrer">
+            <a href="https://twitter.com/souls_galaxy" target="_blank">
               X
             </a>
           </Button>
           <Button asChild className="w-full bg-[#5865f2] text-white">
-            <a href="https://discord.com/invite/WUKF35W8Qb" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.com/invite/WUKF35W8Qb" target="_blank">
               Discord
             </a>
           </Button>
+        </CardContent>
+      </Card>
+      
+      <Card className="w-full mb-6">
+        <CardContent className="mt-6 text-[#555555] font-bold">
+          Community Sharing
+        </CardContent>
+        <CardContent className="text-[#555555] text-left">
+          This Tapp empowers Souls Galaxy holders to share their location and a brief message with the community. Use it to let others know your city, your travel spots, where to connect, or simply to share a fun update. What you share is entirely up to you!
         </CardContent>
       </Card>
 
