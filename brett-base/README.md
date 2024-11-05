@@ -19,6 +19,7 @@ interface IUniswapRouter {
     ) external payable returns (uint[] memory amounts);
 }
 
+
 contract BrettTokenPurchase is Ownable {
     address public uniswapRouter;
     address public brettToken;
@@ -41,6 +42,10 @@ contract BrettTokenPurchase is Ownable {
     constructor(address _uniswapRouter, address _brettToken) {
         uniswapRouter = _uniswapRouter;
         brettToken = _brettToken;
+    }
+
+    function getReferralCode(address userAddr) {
+        return userCode[userAddr]
     }
 
     // Generate a unique referral code for the given user address
@@ -67,33 +72,32 @@ contract BrettTokenPurchase is Ownable {
         uint256 feeAmount = (amountIn * feePercentage) / 100;
         uint256 purchaseAmount = amountIn - feeAmount;
 
-        // Split the fee: 5% to pool, 5% to the referral addresses linked to the code
+        // Split the fee: 5% to pool, 5% to referral addresses linked to the code
         uint256 poolFee = feeAmount / 2;
         uint256 referralFee = feeAmount - poolFee;
+        uint256 roundedFeeInETH = (referralFee + 5 * 10**17) / 10**18; // Round to nearest whole ether
         poolBalance += poolFee;
 
-        // Add the buyer to the referral list if not already in the list
         address[] storage referralAddresses = codes[code].addressList;
-        bool isAlreadyReferred = false;
-        for (uint i = 0; i < referralAddresses.length; i++) {
-            if (referralAddresses[i] == msg.sender) {
-                isAlreadyReferred = true;
-                break;
-            }
-        }
-        if (!isAlreadyReferred) {
-            referralAddresses.push(msg.sender);
+        uint256 numRecipients = referralAddresses.length;
+
+        // If the referral fee in ether is less than the number of recipients, limit the payout to that number
+        if (roundedFeeInETH < numRecipients) {
+            // Cap the number of recipients to the value in ether, but ensure a minimum of 1
+            numRecipients = roundedFeeInETH > 0 ? roundedFeeInETH : 1;
         }
 
-        // Distribute referral fees among all addresses linked to the code
-        uint256 perUserReward = referralFee / referralAddresses.length;
-        for (uint i = 0; i < referralAddresses.length; i++) {
+        // Calculate per-user reward, ensuring it is split evenly among the decided number of recipients
+        uint256 perUserReward = (numRecipients > 0) ? referralFee / numRecipients : 0;
+
+        // Distribute rewards
+        for (uint i = 0; i < numRecipients; i++) {
             payable(referralAddresses[i]).transfer(perUserReward);
         }
 
         // Uniswap swap path: ETH -> Brett
         address;
-        path[0] = uniswapRouter.WETH();
+        path[0] = IUniswapRouter(uniswapRouter).WETH();
         path[1] = brettToken;
 
         // Swap ETH for Brett tokens
@@ -104,8 +108,9 @@ contract BrettTokenPurchase is Ownable {
             block.timestamp + 300 // Deadline: 5 minutes
         );
 
-        emit TokensPurchased(msg.sender, purchaseAmount, feeAmount, code);
+        emit TokensPurchased(msg.sender, purchaseAmount, feeAmount, code);  
     }
+
 
     function withdrawPool() external onlyOwner {
         require(poolBalance > 0, "No funds in pool");

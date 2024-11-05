@@ -34,7 +34,7 @@
 			<ts:label>
 				<ts:string xml:lang="en">Info</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="info">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
@@ -43,7 +43,7 @@
 			<ts:label>
 				<ts:string xml:lang="en">Open CoinGecko</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="price">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
@@ -52,7 +52,7 @@
 			<ts:label>
 				<ts:string xml:lang="en">Buy $1 of Brett on Base</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="buy">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>
@@ -61,7 +61,7 @@
 			<ts:label>
 				<ts:string xml:lang="en">Share To Earn</ts:string>
 			</ts:label>
-			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" urlFragment="sharetoearn">
+			<ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 				<ts:viewContent name="common"/>
 			</ts:view>
 		</ts:card>

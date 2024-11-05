@@ -4,39 +4,22 @@ import { Buy } from "./cards/Buy";
 import { Price } from "./cards/Price";
 import { ShareToEarn } from "./cards/ShareToEarn";
 import { NotFound } from "./cards/NotFound";
-import {ITokenContextData} from "@tokenscript/card-sdk/dist/types";
+import { ITokenContextData } from "@tokenscript/card-sdk/dist/types";
 
 const App: FC = () => {
-	// add TokenScript Card views here
 	enum CardName {
-		Info = "#info",
-		Buy = "#buy",
-		Price = "#price",
-		ShareToEarn = "#sharetoearn",
-		NotFound = "#notFound",
+		Info = "Info",
+		Buy = "Buy",
+		Price = "Price",
+		ShareToEarn = "ShareToEarn",
+		NotFound = "NotFound",
 	}
 
-	const [CurrentPageName, setCurrentPageName] = useState<CardName>(
-		CardName.Info
-	);
+	const [CurrentPage, setCurrentPage] = useState<React.FC>(() => Info);
 	const [token, setToken] = useState<ITokenContextData>();
+	const [referralCode, setReferralCode] = useState<string | null>(null);
 
-	const mapCardName = (card: string | null): CardName => {
-		switch (card) {
-			case CardName.Info:
-				return CardName.Info;
-			case CardName.Buy:
-				return CardName.Buy;
-			case CardName.Price:
-				return CardName.Price;
-			case CardName.ShareToEarn:
-				return CardName.ShareToEarn;
-			default:
-				return CardName.NotFound;
-		}
-	};
-
-	const cardComponents: { [key in CardName]: React.FC } = {
+	const routingMap: Record<string, React.FC> = {
 		[CardName.Info]: Info,
 		[CardName.Buy]: Buy,
 		[CardName.Price]: Price,
@@ -44,15 +27,18 @@ const App: FC = () => {
 		[CardName.NotFound]: NotFound,
 	};
 
-	const CurrentPage = cardComponents[CurrentPageName];
+	const routeChange = () => {
+		const params = new URLSearchParams(window.location.hash.substring(1));
+		const card = params.get("card");
+		const code = params.get("referralCode");
+
+		const SelectedComponent = routingMap[card as CardName] || NotFound;
+
+		setCurrentPage(() => SelectedComponent);
+		if(code) setReferralCode(code);
+	};
 
 	useEffect(() => {
-		const routeChange = () => {
-			const card = document.location.hash;
-			const mappedCardName = mapCardName(card);
-			setCurrentPageName(mappedCardName);
-		};
-
 		tokenscript.tokens.dataChanged = (prevTokens, newTokens, id) => {
 			setToken(newTokens.currentInstance);
 		};
@@ -62,14 +48,14 @@ const App: FC = () => {
 		}
 
 		window.addEventListener("hashchange", routeChange);
-		routeChange(); // Handle initial load
+		routeChange(); // Initial load
 
 		return () => {
 			window.removeEventListener("hashchange", routeChange);
 		};
 	}, []);
 
-	return <CurrentPage token={token} />;
+	return <CurrentPage token={token} referralCode={referralCode} />;
 };
 
 export default App;
