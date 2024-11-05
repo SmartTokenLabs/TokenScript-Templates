@@ -137,7 +137,7 @@
         align-items: center;
         justify-content: center;
         padding: 20px;
-        margin: 10px 0;
+        margin: 10px;
         background: rgba(31, 31, 31, 1);
         border-radius: 8px;
     }
@@ -149,7 +149,7 @@
         flex: 50%;
         background: rgba(25, 25, 25, 1);
         border-radius: 12px;
-        padding: 10px 30px;
+        padding: 10px 20px;
         text-align: center;
     }
 
@@ -252,6 +252,16 @@
     .close-btn {
         cursor: pointer;
     }
+
+	.max-button {
+        background: rgb(51 51 51);
+        border-color: 1px solid rgb(84 84 84);
+        padding: .05rem .3rem;
+        color: rgb(117 117 117);
+		font-size: 0.8rem;
+        border-radius: .4rem;
+        margin-left: .4rem;
+    }
 </style>
 
 <div>
@@ -265,6 +275,12 @@
 				<div class="balance-box">
 					<span class="label">Balance:</span>
 					<span class="balance">{parseFloat(Number(ethers.formatUnits(leftBalance, leftDetails.decimals)).toFixed(4))}</span>
+					<button class="max-button" on:click={async () => {
+						if (!leftBalance)
+							return;
+						swapAmtLeft = leftBalance;
+						await updateSwapAmounts(true);
+					}}>Max</button>
 				</div>
 				<div class="amount-box">
 					<input class="amount-input" type="number"
@@ -295,6 +311,12 @@
 				<div class="balance-box">
 					<span class="label">Balance:</span>
 					<span class="balance">{parseFloat(Number(ethers.formatUnits(rightBalance, rightDetails.decimals)).toFixed(4))}</span>
+					<button class="max-button" on:click={async () => {
+						if (!rightBalance)
+							return;
+						swapAmtRight = rightBalance;
+						await updateSwapAmounts(false);
+					}}>Max</button>
 				</div>
 				<div class="amount-box">
 					<input class="amount-input" type="number"
