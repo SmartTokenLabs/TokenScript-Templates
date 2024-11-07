@@ -3,52 +3,48 @@
 Contract concept:
 
 ````
-
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import "../github/Uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import "../github/Uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
-interface IUniswapRouter {
-    function swapExactETHForTokens(
-        uint amountOutMin,
-        address[] calldata path,
-        address to,
-        uint deadline
-    ) external payable returns (uint[] memory amounts);
-}
+contract TransactionManager is Ownable {
 
-
-contract BrettTokenPurchase is Ownable {
-    address public uniswapRouter;
-    address public brettToken;
-    uint256 public feePercentage = 10;
-    uint256 public poolBalance;
-    uint256 public codeCounter = 1;
+    ISwapRouter public swapRouter;
+    // 0x532f27101965dd16442e59d40670faf5ebb142e4 - Brett on base
+    address public brettToken;                                          // Brett token address on Base
+    address public weth = 0x4200000000000000000000000000000000000006;   // WETH token address for Uniswap
+    uint24 public constant poolFee = 3000;                              // Uniswap V3 pool fee
+    uint256 public feePercentage = 10;                                  // Percentage fee per transaction
+    uint256 public poolBalance;                                         // Contract pool balance
+    uint256 public codeCounter = 1;                                     // Code generation counter
 
     struct CodeInfo {
         uint256 code;
         address[] addressList;
     }
 
-    // Map each code to CodeInfo (code and its associated addresses)
     mapping(uint256 => CodeInfo) public codes;
     mapping(address => uint256) public userCode;
 
     event CodeGenerated(address indexed user, uint256 code);
     event TokensPurchased(address indexed buyer, uint256 amount, uint256 fee, uint256 code);
 
-    constructor(address _uniswapRouter, address _brettToken) {
-        uniswapRouter = _uniswapRouter;
+    constructor(
+        address initialOwner_,
+        ISwapRouter _swapRouter,
+        address _brettToken
+    ) Ownable(initialOwner_) {
+        swapRouter = _swapRouter;
         brettToken = _brettToken;
     }
 
-    function getReferralCode(address userAddr) {
-        return userCode[userAddr]
+    function getReferralCode(address userAddr) public view returns (uint256) {
+        return userCode[userAddr];
     }
 
-    // Generate a unique referral code for the given user address
     function generateCode(address userAddr) external returns (uint256) {
         require(userCode[userAddr] == 0, "User already has a code");
 
@@ -64,7 +60,6 @@ contract BrettTokenPurchase is Ownable {
         return code;
     }
 
-    // Buy Brett tokens using a referral code
     function buyBrettWithFee(uint256 code) external payable {
         require(codes[code].addressList.length > 0, "Invalid code");
 
@@ -72,45 +67,33 @@ contract BrettTokenPurchase is Ownable {
         uint256 feeAmount = (amountIn * feePercentage) / 100;
         uint256 purchaseAmount = amountIn - feeAmount;
 
-        // Split the fee: 5% to pool, 5% to referral addresses linked to the code
-        uint256 poolFee = feeAmount / 2;
-        uint256 referralFee = feeAmount - poolFee;
-        uint256 roundedFeeInETH = (referralFee + 5 * 10**17) / 10**18; // Round to nearest whole ether
-        poolBalance += poolFee;
+        uint256 poolFeeAmount = feeAmount / 2;
+        uint256 referralFeeAmount = feeAmount - poolFeeAmount;
+        poolBalance += poolFeeAmount;
 
         address[] storage referralAddresses = codes[code].addressList;
         uint256 numRecipients = referralAddresses.length;
+        uint256 perUserReward = (numRecipients > 0) ? referralFeeAmount / numRecipients : 0;
 
-        // If the referral fee in ether is less than the number of recipients, limit the payout to that number
-        if (roundedFeeInETH < numRecipients) {
-            // Cap the number of recipients to the value in ether, but ensure a minimum of 1
-            numRecipients = roundedFeeInETH > 0 ? roundedFeeInETH : 1;
-        }
-
-        // Calculate per-user reward, ensuring it is split evenly among the decided number of recipients
-        uint256 perUserReward = (numRecipients > 0) ? referralFee / numRecipients : 0;
-
-        // Distribute rewards
         for (uint i = 0; i < numRecipients; i++) {
             payable(referralAddresses[i]).transfer(perUserReward);
         }
 
-        // Uniswap swap path: ETH -> Brett
-        address;
-        path[0] = IUniswapRouter(uniswapRouter).WETH();
-        path[1] = brettToken;
+        ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
+            tokenIn: weth,
+            tokenOut: brettToken,
+            fee: poolFee,
+            recipient: msg.sender,
+            deadline: block.timestamp + 300,
+            amountIn: purchaseAmount,
+            amountOutMinimum: 1,
+            sqrtPriceLimitX96: 0
+        });
 
-        // Swap ETH for Brett tokens
-        IUniswapRouter(uniswapRouter).swapExactETHForTokens{value: purchaseAmount}(
-            1, // Minimum amount out
-            path,
-            msg.sender,
-            block.timestamp + 300 // Deadline: 5 minutes
-        );
+        uint256 amountOut = swapRouter.exactInputSingle{value: purchaseAmount}(params);
 
-        emit TokensPurchased(msg.sender, purchaseAmount, feeAmount, code);  
+        emit TokensPurchased(msg.sender, amountOut, feeAmount, code);
     }
-
 
     function withdrawPool() external onlyOwner {
         require(poolBalance > 0, "No funds in pool");
@@ -121,6 +104,5 @@ contract BrettTokenPurchase is Ownable {
 
     receive() external payable {}
 }
-
 
 ````
