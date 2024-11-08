@@ -4,6 +4,10 @@
 		"default": {
 			"CONTRACT_ADDRESS": "0x532f27101965dd16442e59d40670faf5ebb142e4",
 			"CONTRACT_CHAIN": "8453"
+		},
+		"base-degen": {
+			"CONTRACT_ADDRESS": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+			"CONTRACT_CHAIN": "8453"
 		}
 	}
 }

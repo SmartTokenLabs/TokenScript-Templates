@@ -1,0 +1,81 @@
+import {ethers} from "ethers";
+import { computePoolAddress } from '@uniswap/v3-sdk'
+import QuoterV2 from '@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json'
+import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
+import {
+	POOL_FACTORY_CONTRACT_ADDRESS,
+	QUOTER_CONTRACT_ADDRESS,
+} from './constants'
+import { toReadableAmount, fromReadableAmount } from './conversion'
+import {Token} from "@uniswap/sdk-core";
+
+export interface UniswapConfig {
+	rpc: {
+		base: string
+	}
+	tokens: {
+		in: Token
+		amountIn: number
+		out: Token
+		poolFee: number
+	}
+}
+
+export async function quote(config: UniswapConfig): Promise<string> {
+	const quoterContract = new ethers.Contract(
+		QUOTER_CONTRACT_ADDRESS,
+		QuoterV2.abi,
+		tokenscript.eth.getRpcProvider(parseInt(chainID))
+	)
+	const poolConstants = await getPoolConstants(config)
+
+	console.log("Pool constants: ", poolConstants);
+
+	const quoteResult = await quoterContract.getFunction("quoteExactInputSingle").staticCall({
+			tokenIn: poolConstants.token0,
+			tokenOut: poolConstants.token1,
+			fee: poolConstants.fee,
+			amountIn: fromReadableAmount(
+				config.tokens.amountIn,
+			config.tokens.in.decimals
+		).toString(),
+		sqrtPriceLimitX96: 0
+	});
+
+	return quoteResult;
+}
+
+async function getPoolConstants(config: UniswapConfig): Promise<{
+	token0: string
+	token1: string
+	fee: number
+}> {
+	/*const currentPoolAddress = computePoolAddress({
+		factoryAddress: POOL_FACTORY_CONTRACT_ADDRESS,
+		tokenA: config.tokens.in,
+		tokenB: config.tokens.out,
+		fee: config.tokens.poolFee,
+		chainId: parseInt(chainID)
+	})*/
+
+	const currentPoolAddress = "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA";
+
+	console.log("Pool address: ", currentPoolAddress);
+
+	const poolContract = new ethers.Contract(
+		currentPoolAddress,
+		IUniswapV3PoolABI.abi,
+		tokenscript.eth.getRpcProvider(parseInt(chainID))
+	)
+	const [token0, token1, fee] = await Promise.all([
+		poolContract.token0(),
+		poolContract.token1(),
+		poolContract.fee(),
+	])
+
+	return {
+		token0,
+		token1,
+		fee,
+	}
+}
