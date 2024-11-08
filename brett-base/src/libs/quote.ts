@@ -21,7 +21,7 @@ export interface UniswapConfig {
 	}
 }
 
-export async function quote(config: UniswapConfig): Promise<string> {
+export async function quote(config: UniswapConfig): Promise<{amountOut: bigint}> {
 	const quoterContract = new ethers.Contract(
 		QUOTER_CONTRACT_ADDRESS,
 		QuoterV2.abi,

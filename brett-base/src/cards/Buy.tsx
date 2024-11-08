@@ -11,19 +11,19 @@ interface BuyProps {
 }
 
 export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
-	// Example: log the token data or access specific fields
-	console.log("Token data:", token, referralCode);
 
 	const chainId = parseInt(chainID);
 	const [outToken, setOutToken] = useState<Token|null>(null);
 	const [inToken, setInToken] = useState<Token|null>(null);
 	const [amountIn, setAmountIn] = useState<number>(0.0001);
-	const [currentQuote, setCurrentQuote] = useState<string|null>(null);
+	const [currentQuote, setCurrentQuote] = useState<{amountOut: bigint}|null>(null);
 
 	useEffect(() => {
 
 		if (!token)
 			return;
+
+		console.log("Token data:", token, referralCode);
 
 		setOutToken(new Token(
 			token.chainId,
@@ -47,7 +47,7 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 
 	useEffect(() => {
 
-		if (inToken && outToken){
+		if (inToken && outToken && amountIn > 0){
 			const uniswapConfig: UniswapConfig = {
 				rpc: {
 					base: tokenscript.eth.getRpcUrls(chainId)[0]
@@ -66,6 +66,8 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 			});
 
 			console.log("QUOTE STARTED")
+		} else {
+			setCurrentQuote(null);
 		}
 
 	}, [inToken, amountIn]);
@@ -97,11 +99,14 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 
 			<div className="field">
 				<label>Purchase</label>
-				<input type="number" value={amountIn} onChange={(e) => setAmountIn(parseFloat(e.target.value))}/>
+				<input type="number" value={amountIn} onChange={(e) => {
+					const newAmount = parseFloat(e.target.value) ?? 0;
+					setAmountIn(newAmount);
+				}}/>
 			</div>
 
 			{currentQuote && (
-				<div>
+				<div style={{margin: "10px 0"}}>
 					You get approximately:
 					{toReadableAmount(currentQuote.amountOut, outToken.decimals)} {token.symbol}
 				</div>
