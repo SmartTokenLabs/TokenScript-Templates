@@ -14,7 +14,6 @@
 	<ts:meta>
 		<ts:description xml:lang="en">a simple tapp enabling smart token actions</ts:description>
 		<ts:aboutUrl xml:lang="en">https://www.basedbrett.com/</ts:aboutUrl>
-		<ts:iconUrl xml:lang="en">https://assets.coingecko.com/coins/images/33747/large/ogbretttttttt.jpg?1703454425</ts:iconUrl>
 	</ts:meta>
 	<ts:contract interface="erc20" name="Token">
 		<ts:address network="$tst{CONTRACT_CHAIN}">$tst{CONTRACT_ADDRESS}</ts:address>

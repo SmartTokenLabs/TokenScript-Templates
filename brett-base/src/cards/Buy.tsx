@@ -3,9 +3,10 @@ import { ITokenContextData } from "@tokenscript/card-sdk/dist/types";
 import {Ether, Token} from '@uniswap/sdk-core';
 import {ADDRESS_ZERO, FeeAmount} from '@uniswap/v3-sdk';
 import {quote, UniswapConfig} from "../libs/quote.ts";
-import {toReadableAmount} from "../libs/conversion.ts";
+import {fromReadableAmount, toReadableAmount} from "../libs/conversion.ts";
 import {RPC_PROVIDER, SWAP_TOKEN_LIST, TokenDetails} from "../libs/constants.ts";
 import {getERC20Contract, swap} from "../libs/swap.ts";
+import Loader from "../components/loader/loader.tsx";
 
 interface BuyProps {
 	token?: ITokenContextData;
@@ -19,7 +20,8 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 	const [inToken, setInToken] = useState<Token|Ether|null>(null);
 	const [amountIn, setAmountIn] = useState<number>(0.0001);
 	const [currentQuote, setCurrentQuote] = useState<{amountOut: bigint}|null>(null);
-	const [currentBalance, setCurrentBalance] = useState<bigint|null>(null)
+	const [currentBalance, setCurrentBalance] = useState<bigint|null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 
@@ -49,6 +51,8 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 	}, [token]);
 
 	useEffect(() => {
+
+		setIsLoading(true);
 
 		if (inToken){
 
@@ -81,10 +85,12 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 			quote(uniswapConfig).then((newQuote) => {
 				setCurrentQuote(newQuote);
 				console.log("New quote: ", newQuote);
+				setIsLoading(false);
 			});
 
 		} else {
 			setCurrentQuote(null);
+			setIsLoading(false);
 		}
 
 	}, [inToken, amountIn]);
@@ -124,20 +130,36 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 		await swap(config, currentQuote!.amountOut);
 	}
 
-	return (
-		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 auto', width: '400x', padding: "20px 0" }}>
-			<div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+	function getButtonText(){
+
+		if (isLoading)
+			return "Loading quote";
+
+		if (!currentQuote)
+			return "Failed to load quote";
+
+		if (currentBalance && currentBalance < fromReadableAmount(amountIn, inToken!.decimals))
+			return "Insufficient balance";
+
+		return "Swap"
+	}
+
+	function formatAmount(wei, decimals){
+		return parseFloat(Number(ethers.formatUnits(wei, decimals)).toFixed(4));
+	}
+
+	return token && (
+		<div className="swap-container">
+			<div className="swap-panel">
 				<img
-					style={{ width: '200px', borderRadius: '50%' }}
-					src="https://assets.coingecko.com/coins/images/33747/large/ogbretttttttt.jpg?1703454425"
-					alt="Coingecko Logo"
+					style={{width: '200px', borderRadius: '50%'}}
+					src={token.image_preview_url}
+					alt="Token Logo"
 				/>
-				{/* Display token data if available */}
-				{token && (
-					<div style={{ marginTop: '20px' }}>
-						<p><strong>Token Name:</strong> {token.name}</p>
-					</div>
-				)}
+				<h3 style={{marginTop: '20px'}}>
+					<h3>Buy {token.name} with Uniswap</h3>
+				</h3>
+
 				{/*<div className="field">
 					<label>Purchase Currency</label>
 					<select>
@@ -152,34 +174,39 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 					</select>
 				</div>*/}
 
-				<div className="field">
+				<div className="swap-box">
 					<label>Purchase</label>
-					<input type="number" value={amountIn} onChange={(e) => {
+					<input className="amount-input" type="number" value={amountIn} onChange={(e) => {
 						const newAmount = parseFloat(e.target.value) ?? 0;
 						setAmountIn(newAmount);
 					}}/>
-					{inToken?.name}
+					{
+						currentBalance && (
+							<div className="field">
+								<strong>Balance: </strong>
+								<span>{formatAmount(currentBalance, inToken?.decimals)} {inToken?.name}</span>
+							</div>
+						)
+					}
 				</div>
 
-				{
-					currentBalance && (
-						<div className="field">
-							<strong>Balance: </strong>
-							<span>{toReadableAmount(currentBalance, inToken?.decimals)}</span>
-						</div>
-					)
-				}
-
-				{currentQuote && (
-					<div style={{margin: "10px 0"}}>
-						You get approximately:
-						{toReadableAmount(currentQuote.amountOut, outToken.decimals)} {token.symbol}
-					</div>
-				)}
+				<div className="swap-box" style={{margin: "10px 0"}}>
+					{!isLoading && currentQuote && (
+						<>
+							<label>You get approximately:</label>
+							<input className="amount-input"
+							value={formatAmount(currentQuote.amountOut, outToken.decimals)}/>
+							<span>{token.symbol}</span>
+						</>
+					)}
+					<Loader show={isLoading}/>
+				</div>
 
 			</div>
-			<div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-				<button onClick={() => swapToken()}>Swap</button>
+			<div style={{display: 'flex', flexDirection: 'column', width: "100%"}}>
+				<button style={{ width: "100%" }} onClick={() => swapToken()} disabled={isLoading || getButtonText() !== "Swap"}>
+					{getButtonText()}
+				</button>
 			</div>
 		</div>
 	);
