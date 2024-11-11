@@ -3,9 +3,9 @@ import QuoterV2 from '@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.so
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import {
 	POOL_FACTORY_CONTRACT_ADDRESS,
-	QUOTER_CONTRACT_ADDRESS,
+	QUOTER_CONTRACT_ADDRESS, RPC_PROVIDER,
 } from './constants'
-import { toReadableAmount, fromReadableAmount } from './conversion'
+import { fromReadableAmount } from './conversion'
 import {Ether, Token} from "@uniswap/sdk-core";
 
 export interface UniswapConfig {
@@ -25,7 +25,7 @@ export async function quote(config: UniswapConfig): Promise<{amountOut: bigint}>
 	const quoterContract = new ethers.Contract(
 		QUOTER_CONTRACT_ADDRESS,
 		QuoterV2.abi,
-		tokenscript.eth.getRpcProvider(parseInt(chainID))
+		RPC_PROVIDER
 	)
 	const poolConstants = await getPoolConstants(config)
 

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { ITokenContextData } from "@tokenscript/card-sdk/dist/types";
 import {Ether, Token} from '@uniswap/sdk-core';
-import {FeeAmount} from '@uniswap/v3-sdk';
+import {ADDRESS_ZERO, FeeAmount} from '@uniswap/v3-sdk';
 import {quote, UniswapConfig} from "../libs/quote.ts";
-import {fromReadableAmount, toReadableAmount} from "../libs/conversion.ts";
-import {createTrade, executeTrade, getPoolInfo, swap} from "../libs/swap.ts";
+import {toReadableAmount} from "../libs/conversion.ts";
+import {RPC_PROVIDER, SWAP_TOKEN_LIST, TokenDetails} from "../libs/constants.ts";
+import {getERC20Contract, swap} from "../libs/swap.ts";
 
 interface BuyProps {
 	token?: ITokenContextData;
@@ -18,6 +19,7 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 	const [inToken, setInToken] = useState<Token|Ether|null>(null);
 	const [amountIn, setAmountIn] = useState<number>(0.0001);
 	const [currentQuote, setCurrentQuote] = useState<{amountOut: bigint}|null>(null);
+	const [currentBalance, setCurrentBalance] = useState<bigint|null>(null)
 
 	useEffect(() => {
 
@@ -29,21 +31,18 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 		setOutToken(new Token(
 			token.chainId,
 			token.contractAddress as string,
-			18,
-			'Degen',
-			'DEGEN'
+			token.decimals ?? 18,
+			token.name,
+			token.symbol
 		));
 
-		/*setInToken(new Token(
-			chainId,
-			'0x0000000000000000000000000000000000000000',
-			//'0x4200000000000000000000000000000000000006',
-			18,
-			'Base Ethereum',
-			'ETH'
-		));*/
+		/**
+		 * 18,
+		 * 'Degen',
+		 * 'DEGEN'
+		 */
 
-		setInToken(new Ether(chainId));
+		setInCurrency(SWAP_TOKEN_LIST[0]);
 
 		console.log("initial tokens set");
 
@@ -51,7 +50,21 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 
 	useEffect(() => {
 
-		if (inToken && outToken && amountIn > 0){
+		if (inToken){
+
+			if (inToken.isNative){
+				RPC_PROVIDER.getBalance(walletAddress).then((balance) => {
+					setCurrentBalance(balance);
+				});
+			} else {
+				const contract = getERC20Contract(inToken.wrapped.address);
+				contract.getFunction("allowance").staticCall(walletAddress).then((balance) => {
+					setCurrentBalance(balance);
+				})
+			}
+		}
+
+		if (outToken && amountIn > 0){
 
 			const uniswapConfig: UniswapConfig = {
 				rpc: {
@@ -61,7 +74,7 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 					in: inToken.wrapped,
 					amountIn,
 					out: outToken.wrapped,
-					poolFee: FeeAmount.MEDIUM,
+					poolFee: FeeAmount.LOW,
 				}
 			}
 
@@ -70,7 +83,6 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 				console.log("New quote: ", newQuote);
 			});
 
-			console.log("QUOTE STARTED")
 		} else {
 			setCurrentQuote(null);
 		}
@@ -80,6 +92,20 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 	window.onConfirm = async () => {
 		window.open("https://app.uniswap.org/swap?chain=base&inputCurrency=NATIVE&outputCurrency=0x532f27101965dd16442e59d40670faf5ebb142e4&value=1&field=output", "_blank");
 	};
+
+	function setInCurrency(tokenDetails: TokenDetails){
+		setInToken(
+			tokenDetails.address === ADDRESS_ZERO ?
+				new Ether(chainId) :
+				new Token(
+					tokenDetails.chainId,
+					tokenDetails.address,
+					tokenDetails.decimals,
+					tokenDetails.symbol,
+					tokenDetails.name
+				)
+		);
+	}
 
 	async function swapToken(){
 
@@ -91,21 +117,9 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 				in: inToken!,
 				amountIn,
 				out: outToken!,
-				poolFee: FeeAmount.MEDIUM,
+				poolFee: FeeAmount.LOW,
 			}
 		}
-
-		/*try {
-			const tokenTrade = await createTrade(uniswapConfig);
-
-			console.log("Trade: ", tokenTrade);
-
-			const tx = await executeTrade(uniswapConfig, tokenTrade);
-
-			await tx.wait(1);
-		} catch (e) {
-			console.error(e);
-		}*/
 
 		await swap(config, currentQuote!.amountOut);
 	}
@@ -122,15 +136,21 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 				{token && (
 					<div style={{ marginTop: '20px' }}>
 						<p><strong>Token Name:</strong> {token.name}</p>
-						<p><strong>Token ID:</strong> {token.id}</p>
 					</div>
 				)}
-				<div className="field">
+				{/*<div className="field">
 					<label>Purchase Currency</label>
 					<select>
-						<option value={"0x4200000000000000000000000000000000000006"}>Base Ethereum</option>
+						{SWAP_TOKEN_LIST.map((token) => {
+							return (
+								<option onClick={() => setInCurrency(token)}
+								        selected={!!(inToken && token.address === (inToken?.isNative ? ADDRESS_ZERO : inToken.wrapped.address))}>
+									{token.name}
+								</option>
+							)
+						})}
 					</select>
-				</div>
+				</div>*/}
 
 				<div className="field">
 					<label>Purchase</label>
@@ -138,7 +158,17 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 						const newAmount = parseFloat(e.target.value) ?? 0;
 						setAmountIn(newAmount);
 					}}/>
+					{inToken?.name}
 				</div>
+
+				{
+					currentBalance && (
+						<div className="field">
+							<strong>Balance: </strong>
+							<span>{toReadableAmount(currentBalance, inToken?.decimals)}</span>
+						</div>
+					)
+				}
 
 				{currentQuote && (
 					<div style={{margin: "10px 0"}}>

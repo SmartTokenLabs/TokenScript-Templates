@@ -1,5 +1,6 @@
 import {fromReadableAmount} from "./conversion.ts";
 import {UniswapConfig} from "./quote.ts";
+import {CHAIN_ID, RPC_PROVIDER} from "./constants.ts";
 /*import {computePoolAddress, Pool, Route, SwapOptions, SwapQuoter, SwapRouter, Trade} from "@uniswap/v3-sdk";
 import {Currency, CurrencyAmount, Percent, Token, TradeType} from "@uniswap/sdk-core";
 import {POOL_FACTORY_CONTRACT_ADDRESS, QUOTER_CONTRACT_ADDRESS, SWAP_ROUTER_ADDRESS} from "./constants.ts";
@@ -13,8 +14,6 @@ import {
 
 export type TokenTrade = Trade<Token, Token, TradeType>;*/
 
-const chainId = Number(chainID);
-const rpcProvider = tokenscript.eth.getRpcProvider(chainId);
 //const walletProvider = new ethers.BrowserProvider(window.ethereum);
 
 export async function swap(config: UniswapConfig, amountOutMinimum: bigint){
@@ -34,17 +33,21 @@ export async function swap(config: UniswapConfig, amountOutMinimum: bigint){
 
 		console.log("Approved: ", approved);
 
-		if (amountInWei <= approved)
-			return;
+		if (amountInWei > approved){
 
-		console.log("Approval required, sending approve transaction");
+			console.log("Approval required, sending approve transaction");
 
-		if (!await tokenscript.action.executeTransaction({
-			txName: "approveERC20",
-			chainId,
-			contractAddress: config.tokens.in.address
-		})){
-			return;
+			tokenscript.action.setProps({
+				approveAmt: amountInWei
+			});
+
+			if (!await tokenscript.action.executeTransaction({
+				txName: "approveERC20",
+				CHAIN_ID,
+				contractAddress: config.tokens.in.address
+			})){
+				return;
+			}
 		}
 	}
 
@@ -67,7 +70,15 @@ export async function swap(config: UniswapConfig, amountOutMinimum: bigint){
 
 async function getApprovalValue(walletAddr: string, contractAddr: string){
 
-	const contract = new ethers.Contract(contractAddr, [
+	const contract = getERC20Contract(contractAddr);
+
+	const swapRouterAddress = tokenscript.eth.getContractInfo("SwapRouter").address;
+
+	return await contract.getFunction("allowance").staticCall(walletAddr, swapRouterAddress);
+}
+
+export async function getERC20Contract(contractAddr: string): ethers.Contract {
+	return new ethers.Contract(contractAddr, [
 		{
 			"inputs": [
 				{
@@ -92,11 +103,7 @@ async function getApprovalValue(walletAddr: string, contractAddr: string){
 			"stateMutability": "view",
 			"type": "function"
 		}
-	], rpcProvider);
-
-	const swapRouterAddress = tokenscript.eth.getContractInfo("SwapRouter").address;
-
-	return await contract.getFunction("allowance").staticCall(walletAddr, swapRouterAddress);
+	], RPC_PROVIDER);
 }
 
 /*export async function generateRoute(config: UniswapConfig): Promise<SwapRoute | null> {
@@ -104,8 +111,8 @@ async function getApprovalValue(walletAddr: string, contractAddr: string){
 	const walletAddress = (await walletProvider.listAccounts())[0]?.address;
 
 	const router = new AlphaRouter({
-		chainId,
-		provider: rpcProvider,
+		CHAIN_ID,
+		provider: RPC_PROVIDER,
 	})
 
 	const options: SwapOptionsSwapRouter02 = {
@@ -217,7 +224,7 @@ export async function executeTrade(
 
 async function getOutputQuote(config: UniswapConfig, route: Route<Currency, Currency>) {
 
-	if (!rpcProvider) {
+	if (!RPC_PROVIDER) {
 		throw new Error('Provider required to get pool state')
 	}
 
@@ -237,7 +244,7 @@ async function getOutputQuote(config: UniswapConfig, route: Route<Currency, Curr
 		}
 	)
 
-	const quoteCallReturnData = await rpcProvider.call({
+	const quoteCallReturnData = await RPC_PROVIDER.call({
 		to: QUOTER_CONTRACT_ADDRESS,
 		data: calldata,
 	})
@@ -252,7 +259,7 @@ export async function getPoolInfo(config: UniswapConfig) {
 		tokenA: config.tokens.in.wrapped,
 		tokenB: config.tokens.out.wrapped,
 		fee: config.tokens.poolFee,
-		chainId
+		CHAIN_ID
 	});
 
 	console.log("Pool address: ", currentPoolAddress);
@@ -260,7 +267,7 @@ export async function getPoolInfo(config: UniswapConfig) {
 	const poolContract = new ethers.Contract(
 		currentPoolAddress,
 		IUniswapV3PoolABI.abi,
-		rpcProvider
+		RPC_PROVIDER
 	)
 	
 	const [token0, token1, fee, liquidity, slot0] = await Promise.all([
@@ -312,11 +319,11 @@ async function approveErc20(erc20Address: string, amount: bigint){
 
 	const tx = await contract["approve"](SWAP_ROUTER_ADDRESS, amount);
 
-	tokenscript.action.showTransactionToast("submitted", Number(chainID), tx.hash);
+	tokenscript.action.showTransactionToast("submitted", Number(CHAIN_ID), tx.hash);
 
 	await tx.wait(1);
 
-	tokenscript.action.showTransactionToast("confirmed", Number(chainID), tx.hash);
+	tokenscript.action.showTransactionToast("confirmed", Number(CHAIN_ID), tx.hash);
 
 	return true;
 }*/
