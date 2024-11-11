@@ -1,4 +1,3 @@
-import {ethers} from "ethers";
 import { computePoolAddress } from '@uniswap/v3-sdk'
 import QuoterV2 from '@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json'
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
@@ -7,16 +6,17 @@ import {
 	QUOTER_CONTRACT_ADDRESS,
 } from './constants'
 import { toReadableAmount, fromReadableAmount } from './conversion'
-import {Token} from "@uniswap/sdk-core";
+import {Ether, Token} from "@uniswap/sdk-core";
 
 export interface UniswapConfig {
 	rpc: {
 		base: string
 	}
+	walletAddress?: string,
 	tokens: {
-		in: Token
+		in: Token|Ether,
 		amountIn: number
-		out: Token
+		out: Token|Ether,
 		poolFee: number
 	}
 }
@@ -50,15 +50,15 @@ async function getPoolConstants(config: UniswapConfig): Promise<{
 	token1: string
 	fee: number
 }> {
-	/*const currentPoolAddress = computePoolAddress({
+	const currentPoolAddress = computePoolAddress({
 		factoryAddress: POOL_FACTORY_CONTRACT_ADDRESS,
-		tokenA: config.tokens.in,
-		tokenB: config.tokens.out,
+		tokenA: config.tokens.in.wrapped,
+		tokenB: config.tokens.out.wrapped,
 		fee: config.tokens.poolFee,
 		chainId: parseInt(chainID)
-	})*/
+	})
 
-	const currentPoolAddress = "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA";
+	//const currentPoolAddress = "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA";
 
 	console.log("Pool address: ", currentPoolAddress);
 
