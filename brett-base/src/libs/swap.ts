@@ -43,7 +43,8 @@ export async function swap(config: UniswapConfig, amountOutMinimum: bigint){
 
 			if (!await tokenscript.action.executeTransaction({
 				txName: "approveERC20",
-				CHAIN_ID,
+				triggers: [],
+				chainId: CHAIN_ID,
 				contractAddress: config.tokens.in.address
 			})){
 				return;

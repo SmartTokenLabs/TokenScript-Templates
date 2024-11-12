@@ -25,7 +25,7 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 
 	useEffect(() => {
 
-		if (!token)
+		if (!token || outToken)
 			return;
 
 		console.log("Token data:", token, referralCode);
@@ -157,7 +157,7 @@ export const Buy: React.FC<BuyProps> = ({ token, referralCode }) => {
 					alt="Token Logo"
 				/>
 				<h3 style={{marginTop: '20px'}}>
-					<h3>Buy {token.name} with Uniswap</h3>
+					<h3>Buy {token.name} on Uniswap</h3>
 				</h3>
 
 				{/*<div className="field">
